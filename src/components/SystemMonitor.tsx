@@ -31,7 +31,7 @@ const SystemMonitor = () => {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 neo-grid p-4 rounded-lg">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <MonitorCard
           icon={<Cpu className="w-5 h-5" />}
@@ -92,13 +92,19 @@ const MonitorCard = ({
   value: string;
   chart?: React.ReactNode;
 }) => (
-  <div className="retro-container glow-border">
+  <div className="retro-container glow-border monitor-card backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:z-10">
     <div className="flex items-center justify-between mb-2">
-      <span className="text-mentat-highlight/80 text-sm">{title}</span>
-      {icon}
+      <span className="text-mentat-highlight/80 text-sm font-bold tracking-wide">{title}</span>
+      <div className="text-mentat-primary/80 transition-colors duration-300 hover:text-mentat-primary">
+        {icon}
+      </div>
     </div>
-    <div className="text-2xl font-bold retro-text">{value}</div>
-    {chart && <div className="mt-2">{chart}</div>}
+    <div className="text-2xl font-bold retro-text tracking-tight">{value}</div>
+    {chart && (
+      <div className="mt-2 opacity-80 hover:opacity-100 transition-opacity duration-300">
+        {chart}
+      </div>
+    )}
   </div>
 );
 
