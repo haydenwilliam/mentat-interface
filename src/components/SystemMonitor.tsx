@@ -1,5 +1,5 @@
 
-import { Cpu, Activity, Database, Network, HardDrive, Gpu } from "lucide-react";
+import { Cpu, Activity, Database, Network, HardDrive } from "lucide-react";
 import { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
@@ -62,7 +62,7 @@ const SystemMonitor = () => {
           value={`${networkActivity.toFixed(1)} MB/s`}
         />
         <MonitorCard
-          icon={<Gpu className="w-5 h-5" />}
+          icon={<Activity className="w-5 h-5" />}
           title="GPU"
           value={`${gpuUsage.toFixed(1)}%`}
         />
