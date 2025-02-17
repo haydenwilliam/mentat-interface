@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
+import { Terminal as TerminalIcon, Bot, User } from "lucide-react";
 
 interface Message {
   type: 'command' | 'response' | 'system' | 'chat';
@@ -131,7 +131,7 @@ const Terminal = () => {
                   ? 'text-mentat-primary/50 italic bg-mentat-primary/5' 
                   : 'text-mentat-highlight bg-mentat-secondary/5 border border-mentat-secondary/20'}
               `}>
-                {msg.type === 'response' && <Terminal className="w-4 h-4 mt-1 text-mentat-secondary" />}
+                {msg.type === 'response' && <TerminalIcon className="w-4 h-4 mt-1 text-mentat-secondary" />}
                 <div className="flex-1 font-mono text-sm">
                   {msg.content.split('\n').map((line, j) => <div key={j}>{line}</div>)}
                 </div>
