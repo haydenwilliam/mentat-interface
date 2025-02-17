@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
@@ -34,6 +35,16 @@ const Terminal = () => {
       content: "Welcome! I am Thufir, your Mentat interface. You may chat with me directly or use '/' for terminal commands (try /help)",
       sender: 'assistant'
     }]);
+
+    // Add keyboard event listener for Ctrl+C
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === 'c') {
+        setIsInTerminalMode(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const handleInput = (input: string) => {
@@ -96,9 +107,7 @@ const Terminal = () => {
 
   return <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 mb-2 px-2 py-1 bg-mentat-secondary/20 rounded-lg border border-mentat-border/30">
-        <TerminalIcon className="w-4 h-4 text-mentat-highlight/80" />
-        <span className="text-mentat-highlight/80 text-sm">Terminal</span>
-        <div className="flex items-center gap-2 ml-auto text-mentat-primary animate-pulse-glow">
+        <div className="flex items-center gap-2 text-mentat-primary animate-pulse-glow">
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
@@ -128,6 +137,13 @@ const Terminal = () => {
           if (msg.type === 'command') {
             const response = messages[i + 1];
             return <div key={i} className="bg-mentat-secondary/10 rounded-lg border border-mentat-border/30 overflow-hidden">
+              <div className="flex items-center justify-between px-3 py-1 border-b border-mentat-border/30 bg-mentat-secondary/20">
+                <div className="flex items-center gap-2">
+                  <TerminalIcon className="w-3 h-3 text-mentat-highlight/80" />
+                  <span className="text-xs text-mentat-highlight/80">Terminal</span>
+                </div>
+                <span className="text-xs text-mentat-primary/50">{currentDirectory}</span>
+              </div>
               <div className="p-3 border-b border-mentat-border/30">
                 <div className="font-mono text-sm text-mentat-primary">
                   <span className="opacity-70">{username}@mentat:</span> 
@@ -174,3 +190,4 @@ const Terminal = () => {
 };
 
 export default Terminal;
+
