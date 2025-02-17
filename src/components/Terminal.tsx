@@ -1,14 +1,18 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Terminal as TerminalIcon, Bot, User } from "lucide-react";
+
 interface Message {
   type: 'command' | 'response' | 'system' | 'chat';
   content: string;
   sender?: 'user' | 'assistant';
 }
+
 const Terminal = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
+
   const commands = {
     help: "Available commands: help, clear, status, about, agents",
     clear: "Clearing terminal...",
@@ -16,21 +20,14 @@ const Terminal = () => {
     about: "MENTAT v1.0 - Advanced Computing Interface\nCopyright © 2024",
     agents: "Active Agents:\n- Core Agent (Running)\n- File Parser (Idle)\n- Data Analyzer (Standby)"
   };
+
   useEffect(() => {
     setMessages([{
-      type: 'system',
-      content: "MENTAT Terminal v1.0"
-    }, {
-      type: 'system',
-      content: "Initializing system..."
-    }, {
-      type: 'system',
-      content: "Core Agent activated"
-    }, {
       type: 'response',
-      content: "Hello! I am MENTAT's core agent. You can type commands starting with '/' or chat with me directly. Try '/help' to see available commands."
+      content: "Type commands starting with '/' or chat directly. Try '/help' to see available commands."
     }]);
   }, []);
+
   const handleInput = (input: string) => {
     if (input.startsWith('/')) {
       // Handle as command
@@ -61,6 +58,7 @@ const Terminal = () => {
       }]);
     }
   };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
@@ -74,6 +72,7 @@ const Terminal = () => {
       }, 100);
     }
   };
+
   return <div className="h-full flex flex-col">
       <div className="flex items-center justify-between mb-2 px-2">
         <div className="flex items-center gap-2">
@@ -125,4 +124,5 @@ const Terminal = () => {
       </form>
     </div>;
 };
+
 export default Terminal;
