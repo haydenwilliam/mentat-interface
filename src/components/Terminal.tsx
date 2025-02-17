@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
@@ -105,15 +104,15 @@ const Terminal = () => {
     }
   };
 
-  return <div className="h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-2 px-2 py-1 bg-mentat-secondary/20 rounded-lg border border-mentat-border/30">
+  return <div className="h-full flex flex-col p-2">
+      <div className="flex items-center gap-2 mb-2 px-3 py-1 bg-mentat-secondary/20 rounded-lg border border-mentat-border/30">
         <div className="flex items-center gap-2 text-mentat-primary">
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
       </div>
       
-      <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 mb-4 p-2">
+      <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 mb-4">
         {messages.map((msg, i) => {
           if (msg.type === 'chat') {
             return <div key={i} className={`flex items-start gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -190,4 +189,3 @@ const Terminal = () => {
 };
 
 export default Terminal;
-
