@@ -35,7 +35,6 @@ const Terminal = () => {
       sender: 'assistant'
     }]);
 
-    // Add keyboard event listener for Ctrl+C
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === 'c') {
         setIsInTerminalMode(false);
@@ -112,8 +111,8 @@ const Terminal = () => {
         </div>
       </div>
       
-      <div className="flex-1 p-2 border-l border-r border-b rounded-b-lg border-mentat-border/30">
-        <div ref={terminalRef} className="h-full overflow-auto terminal-text space-y-2">
+      <div className="flex-1 flex flex-col border-l border-r border-b rounded-b-lg border-mentat-border/30">
+        <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 p-2">
           {messages.map((msg, i) => {
             if (msg.type === 'chat') {
               return <div key={i} className={`flex items-start gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -166,7 +165,7 @@ const Terminal = () => {
           })}
         </div>
 
-        <form onSubmit={handleSubmit} className="flex items-center gap-2 px-2 py-2 border-t border-mentat-border/30">
+        <form onSubmit={handleSubmit} className="flex items-center gap-2 px-4 py-3 border-t border-mentat-border/30">
           {isInTerminalMode ? (
             <div className="text-xs text-mentat-primary/50 font-mono">
               <span className="opacity-70">{username}@mentat:</span>
