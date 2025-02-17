@@ -21,16 +21,8 @@ const Terminal = () => {
     ls: "Documents  Downloads  Projects  README.md",
     cd: (args: string) => {
       if (!args) return "Usage: cd <directory>";
-      // Simplified directory navigation
-      if (args === "..") {
-        const newPath = currentDirectory.split("/").slice(0, -1).join("/") || "/";
-        setCurrentDirectory(newPath);
-        return `Changed directory to ${newPath}`;
-      } else {
-        const newPath = args.startsWith("/") ? args : `${currentDirectory}/${args}`;
-        setCurrentDirectory(newPath);
-        return `Changed directory to ${newPath}`;
-      }
+      setCurrentDirectory(args);
+      return `Changed directory to ${args}`;
     },
     about: "MENTAT v1.0 - Advanced Computing Interface\nCopyright © 2024"
   };
@@ -100,20 +92,17 @@ const Terminal = () => {
   };
 
   return <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-2 px-2">
-        <div className="flex items-center gap-2">
-          <TerminalIcon className="w-4 h-4 text-mentat-highlight/80" />
-          <span className="text-mentat-highlight/80 text-sm">Terminal</span>
-        </div>
-        <div className="flex items-center gap-2 text-mentat-primary/50 text-xs">
-          <Folder className="w-3 h-3" />
-          <span className="font-mono">{currentDirectory}</span>
-        </div>
+      <div className="flex items-center gap-2 mb-2 px-2">
+        <TerminalIcon className="w-4 h-4 text-mentat-highlight/80" />
+        <span className="text-mentat-highlight/80 text-sm">Terminal</span>
+        <span className="text-xs text-mentat-primary/50 ml-auto">
+          {currentDirectory}
+        </span>
       </div>
       
       <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 mb-4 p-2">
         {messages.map((msg, i) => <div key={i} className={`flex items-start gap-2 ${msg.type === 'chat' && msg.sender === 'user' || msg.type === 'command' ? 'flex-row-reverse' : 'flex-row'}`}>
-            {msg.type === 'command' && <div className="bg-mentat-primary/10 text-mentat-primary rounded-lg p-3 ml-auto max-w-[80%]">
+            {msg.type === 'command' && <div className="bg-mentat-primary/5 border border-mentat-primary/20 text-mentat-primary rounded-lg p-3 ml-auto max-w-[80%]">
                 <div className="flex items-center gap-2 mb-1">
                   <User className="w-4 h-4" />
                   <span className="text-xs opacity-70">Command</span>
@@ -123,23 +112,27 @@ const Terminal = () => {
             
             {msg.type === 'chat' && <div className={`
                 p-3 rounded-lg max-w-[80%]
-                ${msg.sender === 'user' ? 'bg-mentat-primary/10 text-mentat-primary ml-auto' : 'bg-mentat-secondary/20 text-mentat-highlight/90'}
+                ${msg.sender === 'user' 
+                  ? 'bg-mentat-primary/10 text-mentat-primary ml-auto' 
+                  : 'bg-mentat-secondary/10 border border-mentat-highlight/20 text-mentat-highlight/90'}
               `}>
                 <div className="flex items-center gap-2 mb-1">
                   {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   <span className="text-xs opacity-70">
-                    {msg.sender === 'user' ? 'You' : 'MENTAT'}
+                    {msg.sender === 'user' ? 'You' : 'AI Assistant'}
                   </span>
                 </div>
                 <p className="text-sm">{msg.content}</p>
               </div>}
 
             {(msg.type === 'response' || msg.type === 'system') && <div className={`
-                flex items-start gap-2
-                ${msg.type === 'system' ? 'text-mentat-primary/50 italic' : 'text-mentat-highlight'}
+                flex items-start gap-2 rounded-lg p-2
+                ${msg.type === 'system' 
+                  ? 'text-mentat-primary/50 italic bg-mentat-primary/5' 
+                  : 'text-mentat-highlight bg-mentat-secondary/5 border border-mentat-secondary/20'}
               `}>
-                {msg.type === 'response' && <Bot className="w-4 h-4 mt-1" />}
-                <div className="flex-1 font-mono">
+                {msg.type === 'response' && <Terminal className="w-4 h-4 mt-1 text-mentat-secondary" />}
+                <div className="flex-1 font-mono text-sm">
                   {msg.content.split('\n').map((line, j) => <div key={j}>{line}</div>)}
                 </div>
               </div>}
@@ -147,10 +140,7 @@ const Terminal = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="flex items-center gap-2 px-2 py-2 border-t border-mentat-border/30">
-        <div className="flex items-center gap-2 text-mentat-primary/50">
-          <span className="text-xs font-mono">{currentDirectory}</span>
-          <span>&gt;</span>
-        </div>
+        <span className="text-mentat-primary/50">&gt;</span>
         <input 
           type="text" 
           value={input} 
