@@ -103,15 +103,16 @@ const Terminal = () => {
     }
   };
 
-  return <div className="h-full flex flex-col">
-      <div className="flex items-center w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border border-mentat-border/30">
+  return (
+    <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-secondary/10 rounded-lg flex flex-col">
+      <div className="flex items-center w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border-b border-mentat-border/30">
         <div className="flex items-center gap-2 text-mentat-primary">
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
       </div>
       
-      <div className="flex-1 flex flex-col border-l border-r border-b rounded-b-lg border-mentat-border/30">
+      <div className="flex-1 flex flex-col">
         <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 p-2">
           {messages.map((msg, i) => {
             if (msg.type === 'chat') {
@@ -186,7 +187,8 @@ const Terminal = () => {
           />
         </form>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default Terminal;
