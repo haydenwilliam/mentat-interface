@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
@@ -104,8 +103,7 @@ const Terminal = () => {
     }
   };
 
-  return (
-    <>
+  return <div className="h-full flex flex-col">
       <div className="flex items-center w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border border-mentat-border/30">
         <div className="flex items-center gap-2 text-mentat-primary">
           <Folder className="w-4 h-4" />
@@ -188,8 +186,7 @@ const Terminal = () => {
           />
         </form>
       </div>
-    </>
-  );
+    </div>;
 };
 
 export default Terminal;
