@@ -107,7 +107,7 @@ const Terminal = () => {
 
   return <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 mb-2 px-2 py-1 bg-mentat-secondary/20 rounded-lg border border-mentat-border/30">
-        <div className="flex items-center gap-2 text-mentat-primary animate-pulse-glow">
+        <div className="flex items-center gap-2 text-mentat-primary">
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
