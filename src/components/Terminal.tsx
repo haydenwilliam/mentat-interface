@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Terminal as TerminalIcon, Bot, User } from "lucide-react";
+import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
 interface Message {
   type: 'command' | 'response' | 'system' | 'chat';
@@ -11,49 +11,75 @@ interface Message {
 const Terminal = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [currentDirectory, setCurrentDirectory] = useState("/home/user");
   const terminalRef = useRef<HTMLDivElement>(null);
 
   const commands = {
-    help: "Available commands: help, clear, status, about, agents",
+    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information",
     clear: "Clearing terminal...",
-    status: "All systems operational. Running diagnostics...",
-    about: "MENTAT v1.0 - Advanced Computing Interface\nCopyright © 2024",
-    agents: "Active Agents:\n- Core Agent (Running)\n- File Parser (Idle)\n- Data Analyzer (Standby)"
+    pwd: currentDirectory,
+    ls: "Documents  Downloads  Projects  README.md",
+    cd: (args: string) => {
+      if (!args) return "Usage: cd <directory>";
+      // Simplified directory navigation
+      if (args === "..") {
+        const newPath = currentDirectory.split("/").slice(0, -1).join("/") || "/";
+        setCurrentDirectory(newPath);
+        return `Changed directory to ${newPath}`;
+      } else {
+        const newPath = args.startsWith("/") ? args : `${currentDirectory}/${args}`;
+        setCurrentDirectory(newPath);
+        return `Changed directory to ${newPath}`;
+      }
+    },
+    about: "MENTAT v1.0 - Advanced Computing Interface\nCopyright © 2024"
   };
 
   useEffect(() => {
     setMessages([{
       type: 'response',
-      content: "Type commands starting with '/' or chat directly. Try '/help' to see available commands."
+      content: "Welcome! Chat directly or use '/' for terminal commands (try /help)"
     }]);
   }, []);
 
   const handleInput = (input: string) => {
     if (input.startsWith('/')) {
       // Handle as command
-      const cmd = input.slice(1).trim().toLowerCase();
-      if (cmd === "clear") {
+      const fullCmd = input.slice(1).trim();
+      const [cmd, ...args] = fullCmd.split(" ");
+      const cmdKey = cmd.toLowerCase();
+
+      if (cmdKey === "clear") {
         setMessages([]);
-      } else {
-        const response = commands[cmd as keyof typeof commands] || "Unknown command. Type /help for available commands.";
-        setMessages(prev => [...prev, {
-          type: 'command',
-          content: input,
-          sender: 'user'
-        }, {
-          type: 'response',
-          content: response
-        }]);
+        return;
       }
+
+      const command = commands[cmdKey as keyof typeof commands];
+      let response;
+      
+      if (typeof command === "function") {
+        response = command(args.join(" "));
+      } else {
+        response = command || "Unknown command. Type /help for available commands.";
+      }
+
+      setMessages(prev => [...prev, {
+        type: 'command',
+        content: input,
+        sender: 'user'
+      }, {
+        type: 'response',
+        content: response
+      }]);
     } else {
-      // Handle as chat
+      // Handle as chat (default mode)
       setMessages(prev => [...prev, {
         type: 'chat',
         content: input,
         sender: 'user'
       }, {
         type: 'chat',
-        content: "I understand you're trying to chat. Let me assist you with that.",
+        content: "I understand your message. How can I assist you further?",
         sender: 'assistant'
       }]);
     }
@@ -79,8 +105,10 @@ const Terminal = () => {
           <TerminalIcon className="w-4 h-4 text-mentat-highlight/80" />
           <span className="text-mentat-highlight/80 text-sm">Terminal</span>
         </div>
-        <span className="text-mentat-primary/50 text-xs">Status: Online
-      </span>
+        <div className="flex items-center gap-2 text-mentat-primary/50 text-xs">
+          <Folder className="w-3 h-3" />
+          <span className="font-mono">{currentDirectory}</span>
+        </div>
       </div>
       
       <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 mb-4 p-2">
@@ -111,16 +139,27 @@ const Terminal = () => {
                 ${msg.type === 'system' ? 'text-mentat-primary/50 italic' : 'text-mentat-highlight'}
               `}>
                 {msg.type === 'response' && <Bot className="w-4 h-4 mt-1" />}
-                <div className="flex-1">
+                <div className="flex-1 font-mono">
                   {msg.content.split('\n').map((line, j) => <div key={j}>{line}</div>)}
                 </div>
               </div>}
           </div>)}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex items-center px-2 py-2 border-t border-mentat-border/30">
-        <span className="text-mentat-primary mr-2">&gt;</span>
-        <input type="text" value={input} onChange={e => setInput(e.target.value)} className="flex-1 bg-transparent border-none outline-none terminal-text" placeholder="Type a command (/help) or chat message..." spellCheck="false" autoComplete="off" />
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 px-2 py-2 border-t border-mentat-border/30">
+        <div className="flex items-center gap-2 text-mentat-primary/50">
+          <span className="text-xs font-mono">{currentDirectory}</span>
+          <span>&gt;</span>
+        </div>
+        <input 
+          type="text" 
+          value={input} 
+          onChange={e => setInput(e.target.value)} 
+          className="flex-1 bg-transparent border-none outline-none terminal-text" 
+          placeholder="Chat directly or use / for commands..." 
+          spellCheck="false" 
+          autoComplete="off" 
+        />
       </form>
     </div>;
 };
