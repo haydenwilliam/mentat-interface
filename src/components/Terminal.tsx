@@ -1,6 +1,5 @@
-
 import { useState, useEffect, useRef } from "react";
-import { Terminal as TerminalIcon, Bot, User } from "lucide-react";
+import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
 interface Message {
   type: 'command' | 'response' | 'system' | 'chat';
@@ -12,7 +11,9 @@ const Terminal = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentDirectory, setCurrentDirectory] = useState("/home/user");
+  const [isInTerminalMode, setIsInTerminalMode] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const username = "mentat";
 
   const commands = {
     help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information",
@@ -37,13 +38,14 @@ const Terminal = () => {
 
   const handleInput = (input: string) => {
     if (input.startsWith('/')) {
-      // Handle as command
+      setIsInTerminalMode(true);
       const fullCmd = input.slice(1).trim();
       const [cmd, ...args] = fullCmd.split(" ");
       const cmdKey = cmd.toLowerCase();
 
       if (cmdKey === "clear") {
         setMessages([]);
+        setIsInTerminalMode(false);
         return;
       }
 
@@ -58,14 +60,14 @@ const Terminal = () => {
 
       setMessages(prev => [...prev, {
         type: 'command',
-        content: input.slice(1), // Remove the / from displayed command
+        content: input.slice(1),
         sender: 'user'
       }, {
         type: 'response',
         content: response
       }]);
     } else {
-      // Handle as chat (default mode)
+      setIsInTerminalMode(false);
       setMessages(prev => [...prev, {
         type: 'chat',
         content: input,
@@ -93,25 +95,20 @@ const Terminal = () => {
   };
 
   return <div className="h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-2 px-2">
+      <div className="flex items-center gap-2 mb-2 px-2 py-1 bg-mentat-secondary/20 rounded-lg border border-mentat-border/30">
         <TerminalIcon className="w-4 h-4 text-mentat-highlight/80" />
         <span className="text-mentat-highlight/80 text-sm">Terminal</span>
-        <span className="text-xs text-mentat-primary/50 ml-auto">
-          {currentDirectory}
-        </span>
+        <div className="flex items-center gap-2 ml-auto text-mentat-primary animate-pulse-glow">
+          <Folder className="w-4 h-4" />
+          <span className="text-xs font-mono">{currentDirectory}</span>
+        </div>
       </div>
       
       <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 mb-4 p-2">
-        {messages.map((msg, i) => <div key={i} className={`flex items-start gap-2 ${msg.type === 'chat' && msg.sender === 'user' || msg.type === 'command' ? 'flex-row-reverse' : 'flex-row'}`}>
-            {msg.type === 'command' && <div className="bg-mentat-secondary/20 border-l-4 border-mentat-primary text-mentat-primary rounded-lg p-3 ml-auto max-w-[80%]">
-                <div className="flex items-center gap-2 mb-1">
-                  <User className="w-4 h-4" />
-                  <span className="text-xs opacity-70">Terminal Command</span>
-                </div>
-                <p className="text-sm font-mono">$ {msg.content}</p>
-              </div>}
-            
-            {msg.type === 'chat' && <div className={`
+        {messages.map((msg, i) => {
+          if (msg.type === 'chat') {
+            return <div key={i} className={`flex items-start gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+              <div className={`
                 p-3 rounded-lg max-w-[80%]
                 ${msg.sender === 'user' 
                   ? 'bg-mentat-primary/10 text-mentat-primary ml-auto' 
@@ -124,24 +121,45 @@ const Terminal = () => {
                   </span>
                 </div>
                 <p className="text-sm">{msg.content}</p>
-              </div>}
-
-            {(msg.type === 'response' || msg.type === 'system') && <div className={`
-                flex items-start gap-2 rounded-lg p-2
-                ${msg.type === 'system' 
-                  ? 'text-mentat-primary/50 italic bg-mentat-primary/5' 
-                  : 'text-mentat-highlight bg-mentat-secondary/20 border-l-4 border-mentat-secondary'}
-              `}>
-                {msg.type === 'response' && <TerminalIcon className="w-4 h-4 mt-1 text-mentat-secondary" />}
-                <div className="flex-1 font-mono text-sm">
-                  {msg.content.split('\n').map((line, j) => <div key={j}>{line}</div>)}
+              </div>
+            </div>;
+          }
+          
+          if (msg.type === 'command') {
+            const response = messages[i + 1];
+            return <div key={i} className="bg-mentat-secondary/10 rounded-lg border border-mentat-border/30 overflow-hidden">
+              <div className="p-3 border-b border-mentat-border/30">
+                <div className="font-mono text-sm text-mentat-primary">
+                  <span className="opacity-70">{username}@mentat:</span> 
+                  <span className="text-mentat-highlight">{currentDirectory}</span>
+                  <span className="text-mentat-primary">$ </span>
+                  {msg.content}
                 </div>
-              </div>}
-          </div>)}
+              </div>
+              {response && response.type === 'response' && (
+                <div className="p-3 font-mono text-sm text-mentat-highlight/90">
+                  {response.content.split('\n').map((line, j) => (
+                    <div key={j}>{line}</div>
+                  ))}
+                </div>
+              )}
+            </div>;
+          }
+          
+          return null;
+        })}
       </div>
 
       <form onSubmit={handleSubmit} className="flex items-center gap-2 px-2 py-2 border-t border-mentat-border/30">
-        <span className="text-mentat-primary/50">&gt;</span>
+        {isInTerminalMode ? (
+          <div className="text-xs text-mentat-primary/50 font-mono">
+            <span className="opacity-70">{username}@mentat:</span>
+            <span className="text-mentat-highlight">{currentDirectory}</span>
+            <span className="text-mentat-primary">$ </span>
+          </div>
+        ) : (
+          <span className="text-mentat-primary/50">&gt;</span>
+        )}
         <input 
           type="text" 
           value={input} 
