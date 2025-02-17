@@ -29,8 +29,9 @@ const Terminal = () => {
 
   useEffect(() => {
     setMessages([{
-      type: 'response',
-      content: "Welcome! Chat directly or use '/' for terminal commands (try /help)"
+      type: 'chat',
+      content: "Welcome! I am Thufir, your Mentat interface. You may chat with me directly or use '/' for terminal commands (try /help)",
+      sender: 'assistant'
     }]);
   }, []);
 
@@ -57,7 +58,7 @@ const Terminal = () => {
 
       setMessages(prev => [...prev, {
         type: 'command',
-        content: input,
+        content: input.slice(1), // Remove the / from displayed command
         sender: 'user'
       }, {
         type: 'response',
@@ -102,12 +103,12 @@ const Terminal = () => {
       
       <div ref={terminalRef} className="flex-1 overflow-auto terminal-text space-y-2 mb-4 p-2">
         {messages.map((msg, i) => <div key={i} className={`flex items-start gap-2 ${msg.type === 'chat' && msg.sender === 'user' || msg.type === 'command' ? 'flex-row-reverse' : 'flex-row'}`}>
-            {msg.type === 'command' && <div className="bg-mentat-primary/5 border border-mentat-primary/20 text-mentat-primary rounded-lg p-3 ml-auto max-w-[80%]">
+            {msg.type === 'command' && <div className="bg-mentat-secondary/20 border-l-4 border-mentat-primary text-mentat-primary rounded-lg p-3 ml-auto max-w-[80%]">
                 <div className="flex items-center gap-2 mb-1">
                   <User className="w-4 h-4" />
-                  <span className="text-xs opacity-70">Command</span>
+                  <span className="text-xs opacity-70">Terminal Command</span>
                 </div>
-                <p className="text-sm font-mono">{msg.content}</p>
+                <p className="text-sm font-mono">$ {msg.content}</p>
               </div>}
             
             {msg.type === 'chat' && <div className={`
@@ -119,7 +120,7 @@ const Terminal = () => {
                 <div className="flex items-center gap-2 mb-1">
                   {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   <span className="text-xs opacity-70">
-                    {msg.sender === 'user' ? 'You' : 'AI Assistant'}
+                    {msg.sender === 'user' ? 'You' : 'Thufir'}
                   </span>
                 </div>
                 <p className="text-sm">{msg.content}</p>
@@ -129,7 +130,7 @@ const Terminal = () => {
                 flex items-start gap-2 rounded-lg p-2
                 ${msg.type === 'system' 
                   ? 'text-mentat-primary/50 italic bg-mentat-primary/5' 
-                  : 'text-mentat-highlight bg-mentat-secondary/5 border border-mentat-secondary/20'}
+                  : 'text-mentat-highlight bg-mentat-secondary/20 border-l-4 border-mentat-secondary'}
               `}>
                 {msg.type === 'response' && <TerminalIcon className="w-4 h-4 mt-1 text-mentat-secondary" />}
                 <div className="flex-1 font-mono text-sm">
