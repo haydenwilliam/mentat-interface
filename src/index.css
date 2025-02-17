@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DejaVu+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -48,7 +48,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-display;
   }
 
   .retro-container {
