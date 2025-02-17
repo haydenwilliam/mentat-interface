@@ -101,7 +101,8 @@ export default {
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
       },
       fontFamily: {
-        mono: ["JetBrains Mono", "monospace"],
+        mono: ['Centima Mono', 'monospace'],
+        serif: ['DejaVu Serif', 'serif'],
       },
     },
   },
