@@ -30,7 +30,7 @@ const Terminal = () => {
   useEffect(() => {
     setMessages([{
       type: 'chat',
-      content: "Welcome! I am Thufir, your Mentat interface. You may chat with me directly or use '/' for terminal commands (try /help)",
+      content: "Welcome! I am Thufir, your Mentat Assistant. You may chat with me directly or use '/' for terminal commands (try /help)",
       sender: 'assistant'
     }]);
 

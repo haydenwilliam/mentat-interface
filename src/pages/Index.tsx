@@ -34,11 +34,6 @@ const Index = () => {
 
         {/* Main Content */}
         <main className="flex-1 p-4 overflow-hidden flex flex-col">
-          <header className="mb-4">
-            <h1 className="text-2xl font-bold retro-text">MENTAT</h1>
-            <p className="text-mentat-highlight/60 text-sm">Mission Control</p>
-          </header>
-
           <Collapsible open={showMonitor}>
             <CollapsibleContent className="mb-4">
               <SystemMonitor />
