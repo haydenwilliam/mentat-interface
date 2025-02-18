@@ -20,7 +20,7 @@ export const InputBar = ({
   return <div className="p-4 border-t border-mentat-border/30 bg-mentat-secondary/10 px-[10px]">
       <div className="space-y-3 px-3">
         {/* Mode Toggle */}
-        <div className="flex justify-start space-x-4 py-[4px] px-0 mx-[6px]">
+        <div className="flex justify-start space-x-4 px-0 py-0 mx-[14px]">
           <button onClick={() => setIsInTerminalMode(false)} className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${!isInTerminalMode ? 'border-mentat-highlight text-mentat-highlight' : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'}`}>
             <Bot className="w-4 h-4" />
             Chat
