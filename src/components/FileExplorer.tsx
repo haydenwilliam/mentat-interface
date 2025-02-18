@@ -146,14 +146,14 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
   };
 
   return (
-    <div className="w-64 bg-mentat-secondary/10 border-l border-mentat-border">
+    <div className="h-full w-64 bg-mentat-secondary/10 border-l border-mentat-border flex flex-col">
       <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 px-3 py-2.5 border-b border-mentat-border">
         <h3 className="text-mentat-highlight text-sm font-medium flex items-center justify-center gap-2">
           <FolderTree className="w-4 h-4" /> File Explorer
         </h3>
       </div>
 
-      <div className="p-2 space-y-1">
+      <div className="flex-1 p-2 space-y-1 overflow-y-auto">
         {Object.entries(mockFiles).map(([folder]) => renderItem(folder, true))}
       </div>
     </div>
