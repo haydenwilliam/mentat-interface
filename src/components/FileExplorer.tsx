@@ -51,44 +51,70 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
 
     return (
       <div key={fullPath} className="relative">
-        {level > 0 && (
-          <div 
-            className="absolute left-3 top-0 bottom-0 w-px bg-mentat-border/20"
-            style={{ transform: `translateX(${(level - 1) * 16}px)` }}
+        {/* Indentation guides */}
+        {level > 0 && Array.from({ length: level }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-px bg-mentat-border/20"
+            style={{
+              left: `${(i + 1) * 16 - 8}px`,
+              top: 0,
+              bottom: 0,
+            }}
           />
-        )}
+        ))}
         
-        <button
-          onClick={() => handleItemClick(fullPath, isFolder)}
+        <div
           className={`
-            w-full flex items-center gap-2 p-1.5 rounded-sm transition-all duration-200
-            relative pl-${level * 4 + 4}
+            relative flex items-center gap-2 rounded-sm transition-all duration-200 
+            ml-${level * 4} pl-2 pr-4 py-1
             ${isSelected ? 'bg-mentat-secondary/40' : 'hover:bg-mentat-secondary/20'}
             ${isCurrent ? 'text-mentat-highlight' : 'text-mentat-primary/80'}
-            group
+            group cursor-pointer
           `}
+          onClick={() => handleItemClick(fullPath, isFolder)}
         >
-          {isFolder && (
-            <span onClick={(e) => { e.stopPropagation(); toggleFolder(name); }} className="flex items-center">
-              {isExpanded ? (
-                <ChevronDown className="w-4 h-4 text-mentat-primary/60" />
-              ) : (
-                <ChevronRight className="w-4 h-4 text-mentat-primary/60" />
-              )}
-            </span>
-          )}
-          {isFolder ? (
-            <Folder className={`w-4 h-4 ${isCurrent ? 'text-mentat-highlight' : 'text-mentat-primary/60'}`} />
-          ) : (
-            <File className="w-4 h-4 text-mentat-primary/60" />
-          )}
-          <span className={`text-sm transition-colors duration-200 ${isCurrent ? 'text-mentat-highlight' : 'text-mentat-primary/80'} group-hover:text-mentat-primary`}>
+          <div className="flex items-center gap-1.5 min-w-[24px]">
+            {isFolder && (
+              <button
+                onClick={(e) => { e.stopPropagation(); toggleFolder(name); }}
+                className={`
+                  p-0.5 rounded-sm hover:bg-mentat-secondary/30 
+                  transition-colors duration-200
+                `}
+              >
+                {isExpanded ? (
+                  <ChevronDown className="w-3.5 h-3.5 text-mentat-primary/60" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5 text-mentat-primary/60" />
+                )}
+              </button>
+            )}
+            {isFolder ? (
+              <Folder className={`w-4 h-4 ${isCurrent ? 'text-mentat-highlight' : 'text-mentat-primary/60'}`} />
+            ) : (
+              <File className="w-4 h-4 text-mentat-primary/60" />
+            )}
+          </div>
+          
+          <span 
+            className={`
+              text-sm transition-all duration-200
+              ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary/80'} 
+              group-hover:text-mentat-primary
+            `}
+          >
             {name}
           </span>
-        </button>
+        </div>
 
-        {isFolder && isExpanded && (
-          <div className={`transition-all duration-200 ${isExpanded ? 'animate-accordion-down' : 'animate-accordion-up'}`}>
+        {isFolder && (
+          <div 
+            className={`
+              ml-4 transition-all duration-200 overflow-hidden
+              ${isExpanded ? 'animate-accordion-down' : 'animate-accordion-up h-0'}
+            `}
+          >
             {(() => {
               const content = mockFiles[name];
               if (!content) return null;
@@ -114,7 +140,7 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
   return (
     <div className="w-64 bg-mentat-secondary/20 border-l border-mentat-border p-4 overflow-y-auto">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-mentat-highlight/80 text-sm">File System</h3>
+        <h3 className="text-mentat-highlight/80 text-sm font-medium">File System</h3>
       </div>
 
       <div className="space-y-0.5">
