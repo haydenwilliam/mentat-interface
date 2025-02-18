@@ -187,36 +187,38 @@ const Terminal = () => {
         </div>
 
         <div className="px-4 py-2 border-t border-mentat-border/30 bg-mentat-secondary/5">
-          <div className="flex justify-end mb-2">
-            <button 
-              onClick={toggleMode}
-              className="flex items-center gap-2 px-2 py-1 rounded-full border border-mentat-border/30 bg-mentat-secondary/20 hover:bg-mentat-secondary/30 transition-all duration-200"
-            >
-              <div 
-                className={`flex items-center gap-2 relative ${
-                  isInTerminalMode ? 'text-mentat-primary' : 'text-mentat-highlight'
+          <div className="flex items-center gap-2 -mb-1">
+            <div className="inline-flex rounded-t-lg overflow-hidden border-t border-l border-r border-mentat-border/30">
+              <button 
+                onClick={() => setIsInTerminalMode(false)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+                  !isInTerminalMode 
+                    ? 'bg-mentat-secondary/20 text-mentat-highlight' 
+                    : 'text-mentat-primary/60 hover:text-mentat-primary/80'
                 }`}
               >
-                <span className={`flex items-center gap-1 text-xs font-medium w-16 justify-center transition-opacity duration-200 ${
-                  !isInTerminalMode ? 'opacity-100' : 'opacity-40'
-                }`}>
-                  <Bot className="w-3 h-3" />
-                  Chat
-                </span>
-                <div className="w-px h-3 bg-mentat-border/30" />
-                <span className={`flex items-center gap-1 text-xs font-medium w-16 justify-center transition-opacity duration-200 ${
-                  isInTerminalMode ? 'opacity-100' : 'opacity-40'
-                }`}>
-                  <TerminalIcon className="w-3 h-3" />
-                  Terminal
-                </span>
-              </div>
-            </button>
+                <Bot className="w-3.5 h-3.5" />
+                Chat
+              </button>
+              <button 
+                onClick={() => setIsInTerminalMode(true)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+                  isInTerminalMode 
+                    ? 'bg-mentat-secondary/20 text-mentat-highlight' 
+                    : 'text-mentat-primary/60 hover:text-mentat-primary/80'
+                }`}
+              >
+                <TerminalIcon className="w-3.5 h-3.5" />
+                Terminal
+              </button>
+            </div>
+            {/* Space for future features (file upload, context management, etc.) */}
+            <div className="flex-1" />
           </div>
 
           <form 
             onSubmit={handleSubmit} 
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 pt-2"
           >
             {isInTerminalMode ? (
               <div className="text-xs text-mentat-primary/50 font-mono">
