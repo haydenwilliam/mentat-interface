@@ -1,4 +1,3 @@
-
 import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
@@ -147,8 +146,8 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
 
   return (
     <div className="w-64 bg-mentat-secondary/10 border-l border-mentat-border">
-      <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 p-4 border-b border-mentat-border">
-        <h3 className="text-mentat-highlight text-sm font-medium flex items-center gap-2">
+      <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 px-3 py-2.5 border-b border-mentat-border">
+        <h3 className="text-mentat-highlight text-sm font-medium flex items-center justify-center gap-2">
           <FolderTree className="w-4 h-4" /> File System
         </h3>
       </div>
