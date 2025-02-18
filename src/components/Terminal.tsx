@@ -1,12 +1,10 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
-
-interface Message {
-  type: 'command' | 'response' | 'system' | 'chat';
-  content: string;
-  sender?: 'user' | 'assistant';
-}
+import { Folder } from "lucide-react";
+import { Message } from "../types/terminal";
+import { ChatMessage } from "./terminal/ChatMessage";
+import { CommandMessage } from "./terminal/CommandMessage";
+import { InputBar } from "./terminal/InputBar";
 
 const Terminal = () => {
   const [input, setInput] = useState("");
@@ -106,11 +104,6 @@ const Terminal = () => {
     }
   };
 
-  const toggleMode = () => {
-    setIsInTerminalMode(!isInTerminalMode);
-    setInput("");
-  };
-
   return (
     <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-secondary/10 rounded-lg flex flex-col">
       <div className="flex items-center justify-between w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border-b border-mentat-border/30">
@@ -127,58 +120,19 @@ const Terminal = () => {
         >
           {messages.map((msg, i) => {
             if (msg.type === 'chat') {
-              return (
-                <div 
-                  key={i} 
-                  className={`flex items-start gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
-                >
-                  <div 
-                    className={`
-                      p-3 rounded-lg max-w-[80%] backdrop-blur-sm
-                      ${msg.sender === 'user' 
-                        ? 'bg-mentat-primary/10 text-mentat-primary ml-auto border border-mentat-primary/20' 
-                        : 'bg-mentat-secondary/10 border border-mentat-highlight/20 text-mentat-highlight/90'}
-                    `}
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-                      <span className="text-xs opacity-70">
-                        {msg.sender === 'user' ? 'You' : 'Thufir'}
-                      </span>
-                    </div>
-                    <p className="text-sm">{msg.content}</p>
-                  </div>
-                </div>
-              );
+              return <ChatMessage key={i} message={msg} />;
             }
             
             if (msg.type === 'command') {
               const response = messages[i + 1];
               return (
-                <div key={i} className="bg-mentat-secondary/10 rounded-lg border border-mentat-border/30 overflow-hidden">
-                  <div className="flex items-center justify-between px-3 py-1 border-b border-mentat-border/30 bg-mentat-secondary/20">
-                    <div className="flex items-center gap-2">
-                      <TerminalIcon className="w-3 h-3 text-mentat-highlight/80" />
-                      <span className="text-xs text-mentat-highlight/80">Terminal</span>
-                    </div>
-                    <span className="text-xs text-mentat-primary/50">{currentDirectory}</span>
-                  </div>
-                  <div className="p-3 border-b border-mentat-border/30">
-                    <div className="font-mono text-sm text-mentat-primary">
-                      <span className="opacity-70">{username}@mentat:</span> 
-                      <span className="text-mentat-highlight">{currentDirectory}</span>
-                      <span className="text-mentat-primary">$ </span>
-                      {msg.content}
-                    </div>
-                  </div>
-                  {response && response.type === 'response' && (
-                    <div className="p-3 font-mono text-sm text-mentat-highlight/90">
-                      {response.content.split('\n').map((line, j) => (
-                        <div key={j}>{line}</div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <CommandMessage 
+                  key={i} 
+                  message={msg} 
+                  response={response} 
+                  currentDirectory={currentDirectory}
+                  username={username}
+                />
               );
             }
             
@@ -186,60 +140,15 @@ const Terminal = () => {
           })}
         </div>
 
-        <div className="px-4 py-2 border-t border-mentat-border/30 bg-mentat-secondary/5">
-          <div className="flex items-center gap-2 -mb-1">
-            <div className="inline-flex rounded-t-lg overflow-hidden border-t border-l border-r border-mentat-border/30">
-              <button 
-                onClick={() => setIsInTerminalMode(false)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
-                  !isInTerminalMode 
-                    ? 'bg-mentat-secondary/20 text-mentat-highlight' 
-                    : 'text-mentat-primary/60 hover:text-mentat-primary/80'
-                }`}
-              >
-                <Bot className="w-3.5 h-3.5" />
-                Chat
-              </button>
-              <button 
-                onClick={() => setIsInTerminalMode(true)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
-                  isInTerminalMode 
-                    ? 'bg-mentat-secondary/20 text-mentat-highlight' 
-                    : 'text-mentat-primary/60 hover:text-mentat-primary/80'
-                }`}
-              >
-                <TerminalIcon className="w-3.5 h-3.5" />
-                Terminal
-              </button>
-            </div>
-            {/* Space for future features (file upload, context management, etc.) */}
-            <div className="flex-1" />
-          </div>
-
-          <form 
-            onSubmit={handleSubmit} 
-            className="flex items-center gap-2 pt-2"
-          >
-            {isInTerminalMode ? (
-              <div className="text-xs text-mentat-primary/50 font-mono">
-                <span className="opacity-70">{username}@mentat:</span>
-                <span className="text-mentat-highlight">{currentDirectory}</span>
-                <span className="text-mentat-primary">$ </span>
-              </div>
-            ) : (
-              <span className="text-mentat-primary/50">&gt;</span>
-            )}
-            <input 
-              type="text" 
-              value={input} 
-              onChange={e => setInput(e.target.value)} 
-              className="flex-1 bg-transparent border-none outline-none terminal-text" 
-              placeholder={isInTerminalMode ? "Enter command..." : "Chat with Thufir..."} 
-              spellCheck="false" 
-              autoComplete="off" 
-            />
-          </form>
-        </div>
+        <InputBar 
+          isInTerminalMode={isInTerminalMode}
+          setIsInTerminalMode={setIsInTerminalMode}
+          input={input}
+          setInput={setInput}
+          handleSubmit={handleSubmit}
+          currentDirectory={currentDirectory}
+          username={username}
+        />
       </div>
     </div>
   );
