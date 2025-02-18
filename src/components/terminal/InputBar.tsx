@@ -22,7 +22,7 @@ export const InputBar = ({
 }: InputBarProps) => {
   return (
     <div className="p-4 border-t border-mentat-border/30 bg-mentat-secondary/10">
-      <div className="space-y-3">
+      <div className="space-y-2">
         {/* Mode Toggle */}
         <div className="flex justify-start space-x-4">
           <button 
@@ -34,7 +34,7 @@ export const InputBar = ({
             }`}
           >
             <Bot className="w-4 h-4" />
-            Chat Mode
+            Chat
           </button>
           <button 
             onClick={() => setIsInTerminalMode(true)}
@@ -45,7 +45,7 @@ export const InputBar = ({
             }`}
           >
             <TerminalIcon className="w-4 h-4" />
-            Terminal Mode
+            Terminal
           </button>
         </div>
 
