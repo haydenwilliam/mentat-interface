@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
@@ -104,16 +103,35 @@ const Terminal = () => {
     }
   };
 
+  const toggleMode = () => {
+    setIsInTerminalMode(!isInTerminalMode);
+    setInput(isInTerminalMode ? "" : "/");
+  };
+
   return (
     <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-secondary/10 rounded-lg flex flex-col">
-      <div className="flex items-center w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border-b border-mentat-border/30">
+      <div className="flex items-center justify-between w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border-b border-mentat-border/30">
         <div className="flex items-center gap-2 text-mentat-primary">
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
+        <button 
+          onClick={toggleMode}
+          className={`p-1.5 rounded-md transition-colors duration-200 ${
+            isInTerminalMode 
+              ? 'bg-mentat-primary/10 text-mentat-primary hover:bg-mentat-primary/20' 
+              : 'bg-mentat-highlight/10 text-mentat-highlight hover:bg-mentat-highlight/20'
+          }`}
+        >
+          {isInTerminalMode ? (
+            <TerminalIcon className="w-4 h-4" />
+          ) : (
+            <Bot className="w-4 h-4" />
+          )}
+        </button>
       </div>
       
-      <div className="flex-1 flex flex-col min-h-0"> {/* Added min-h-0 to allow proper flexbox behavior */}
+      <div className="flex-1 flex flex-col min-h-0">
         <div 
           ref={terminalRef} 
           className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-mentat-border/50 scrollbar-track-transparent terminal-text space-y-2 p-2"
@@ -197,7 +215,7 @@ const Terminal = () => {
             value={input} 
             onChange={e => setInput(e.target.value)} 
             className="flex-1 bg-transparent border-none outline-none terminal-text" 
-            placeholder="Chat directly or use / for commands..." 
+            placeholder={isInTerminalMode ? "Enter command..." : "Chat with Thufir..."} 
             spellCheck="false" 
             autoComplete="off" 
           />
