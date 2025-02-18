@@ -23,12 +23,12 @@ export const InputBar = ({
   return (
     <div className="px-4 py-2 border-t border-mentat-border/30 bg-mentat-secondary/5">
       <div className="flex items-center gap-2 -mb-1">
-        <div className="inline-flex rounded-t border border-mentat-border/30 bg-mentat-secondary/20 p-0.5">
+        <div className="inline-flex rounded-t-lg overflow-hidden border-t border-l border-r border-mentat-border/30">
           <button 
             onClick={() => setIsInTerminalMode(false)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
               !isInTerminalMode 
-                ? 'bg-mentat-background text-mentat-highlight shadow-sm border border-mentat-border/30' 
+                ? 'bg-mentat-secondary/20 text-mentat-highlight' 
                 : 'text-mentat-primary/60 hover:text-mentat-primary/80'
             }`}
           >
@@ -37,9 +37,9 @@ export const InputBar = ({
           </button>
           <button 
             onClick={() => setIsInTerminalMode(true)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
               isInTerminalMode 
-                ? 'bg-mentat-background text-mentat-highlight shadow-sm border border-mentat-border/30' 
+                ? 'bg-mentat-secondary/20 text-mentat-highlight' 
                 : 'text-mentat-primary/60 hover:text-mentat-primary/80'
             }`}
           >
