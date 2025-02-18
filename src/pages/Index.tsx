@@ -38,10 +38,6 @@ const Index = () => {
         {/* Right Sidebar - File Explorer */}
         <FileExplorer />
       </div>
-
-      <div className="fixed top-0 left-0 w-full h-1 overflow-hidden pointer-events-none">
-        <div className="w-full h-full bg-mentat-primary/10 animate-scan-line" />
-      </div>
     </div>;
 };
 
