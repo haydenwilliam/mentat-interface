@@ -33,7 +33,7 @@ const Index = () => {
         <Sidebar onMonitorToggle={() => setShowMonitor(!showMonitor)} />
 
         {/* Main Content */}
-        <main className="flex-1 px-6 py-4 overflow-hidden flex flex-col">
+        <main className="flex-1 pl-6 pr-8 py-4 overflow-hidden flex flex-col">
           <Collapsible open={showMonitor}>
             <CollapsibleContent className="mb-4">
               <SystemMonitor />
