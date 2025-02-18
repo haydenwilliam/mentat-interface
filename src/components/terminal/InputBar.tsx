@@ -1,5 +1,5 @@
 
-import { Bot, Terminal as TerminalIcon, File as FileIcon } from "lucide-react";
+import { Bot, Terminal as TerminalIcon, BrainCircuit } from "lucide-react";
 
 interface InputBarProps {
   isInTerminalMode: boolean;
@@ -24,36 +24,39 @@ export const InputBar = ({
     <div className="p-4 border-t border-mentat-border/30 bg-mentat-secondary/10 px-[10px]">
       <div className="space-y-3 px-3">
         {/* Mode Toggle */}
-        <div className="flex justify-start space-x-4 px-0 py-0 mx-[7px]">
-          <button
-            onClick={() => setIsInTerminalMode(false)}
-            className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
-              !isInTerminalMode
-                ? 'border-mentat-highlight text-mentat-highlight'
-                : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'
-            }`}
-          >
-            <Bot className="w-4 h-4" />
-            Chat
-          </button>
-          <button
-            onClick={() => setIsInTerminalMode(true)}
-            className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
-              isInTerminalMode
-                ? 'border-mentat-highlight text-mentat-highlight'
-                : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'
-            }`}
-          >
-            <TerminalIcon className="w-4 h-4" />
-            Terminal
-          </button>
+        <div className="flex justify-between px-0 py-0 mx-[7px]">
+          <div className="flex space-x-4">
+            <button
+              onClick={() => setIsInTerminalMode(false)}
+              className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
+                !isInTerminalMode
+                  ? 'border-mentat-highlight text-mentat-highlight'
+                  : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'
+              }`}
+            >
+              <Bot className="w-4 h-4" />
+              Chat
+            </button>
+            <button
+              onClick={() => setIsInTerminalMode(true)}
+              className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
+                isInTerminalMode
+                  ? 'border-mentat-highlight text-mentat-highlight'
+                  : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'
+              }`}
+            >
+              <TerminalIcon className="w-4 h-4" />
+              Terminal
+            </button>
+          </div>
+          
           <button
             onClick={() => console.log('Context Management clicked')}
             className="text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 
               border-transparent text-mentat-primary/40 hover:text-mentat-primary/60"
           >
-            <FileIcon className="w-4 h-4" />
-            Context
+            <BrainCircuit className="w-4 h-4" />
+            Context Manager
           </button>
         </div>
 
