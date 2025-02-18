@@ -1,4 +1,5 @@
-import { Folder, File, ChevronRight, ChevronDown } from "lucide-react";
+
+import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
 interface FileSystemStructure {
@@ -38,6 +39,12 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
     }
   };
 
+  const handleAddToContext = (e: React.MouseEvent, path: string) => {
+    e.stopPropagation();
+    // Dummy functionality for now
+    console.log('Adding to context:', path);
+  };
+
   const isCurrentDirectory = (path: string) => {
     return currentDirectory.includes(path);
   };
@@ -52,12 +59,11 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
       <div key={fullPath} className="relative">
         <div
           className={`
-            relative flex items-center px-2 py-1.5 rounded-md
-            transition-all duration-200 ease-in-out
+            relative flex items-center justify-between px-2 py-1.5 rounded-md
+            transition-all duration-200 ease-in-out group
             ${isSelected ? 'bg-mentat-primary/10 shadow-[0_0_10px_rgba(0,229,255,0.1)]' : 
               'hover:bg-mentat-secondary/30'}
             ${isCurrent ? 'border-l-2 border-mentat-highlight' : ''}
-            ml-[${level * 16}px]
           `}
           onClick={() => handleItemClick(fullPath, isFolder)}
           style={{ marginLeft: `${level * 16}px` }}
@@ -81,17 +87,27 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
             ) : (
               <File className="w-4 h-4 text-mentat-primary/80" />
             )}
+            <span 
+              className={`
+                text-sm transition-all duration-200
+                ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary/90'} 
+                ${isSelected ? 'text-mentat-highlight' : ''}
+              `}
+            >
+              {name}
+            </span>
           </div>
           
-          <span 
-            className={`
-              text-sm ml-1 transition-all duration-200
-              ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary/90'} 
-              ${isSelected ? 'text-mentat-highlight' : ''}
-            `}
-          >
-            {name}
-          </span>
+          {!isFolder && (
+            <button
+              onClick={(e) => handleAddToContext(e, fullPath)}
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                p-1 rounded-md hover:bg-mentat-secondary/50"
+              title="Add to context"
+            >
+              <PlusCircle className="w-4 h-4 text-mentat-primary/60 hover:text-mentat-highlight" />
+            </button>
+          )}
         </div>
 
         {isFolder && (
@@ -102,7 +118,6 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
               relative
             `}
           >
-            {/* Vertical line for nested items */}
             <div 
               className="absolute left-[7px] top-0 w-px bg-mentat-border/30 h-full"
               style={{ left: `${level * 16 + 11}px` }}
@@ -134,7 +149,7 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
     <div className="w-64 bg-mentat-secondary/10 border-l border-mentat-border">
       <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 p-4 border-b border-mentat-border">
         <h3 className="text-mentat-highlight text-sm font-medium flex items-center gap-2">
-          <Folder className="w-4 h-4" /> File System
+          <FolderTree className="w-4 h-4" /> File System
         </h3>
       </div>
 
