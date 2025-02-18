@@ -1,4 +1,3 @@
-
 import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 
@@ -52,14 +51,14 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
     return currentDirectory.includes(path);
   };
 
-  const filterItems = (items: FileSystemStructure): FileSystemStructure => {
-    const filtered: FileSystemStructure = {};
+  const filterItems = (items: FileSystemStructure) => {
+    const filtered: { [key: string]: string[] | { [key: string]: string[] } } = {};
     
     Object.entries(items).forEach(([key, value]) => {
       if (key.toLowerCase().includes(searchQuery.toLowerCase())) {
         filtered[key] = value;
       } else if (typeof value === 'object' && !Array.isArray(value)) {
-        const filteredSubItems = filterItems(value as { [key: string]: string[] });
+        const filteredSubItems = filterItems(value as FileSystemStructure);
         if (Object.keys(filteredSubItems).length > 0) {
           filtered[key] = filteredSubItems;
         }

@@ -33,7 +33,7 @@ const Index = () => {
         <Sidebar onMonitorToggle={() => setShowMonitor(!showMonitor)} />
 
         {/* Main Content */}
-        <main className="flex-1 p-4 overflow-hidden flex flex-col">
+        <main className="flex-1 px-6 py-4 overflow-hidden flex flex-col">
           <Collapsible open={showMonitor}>
             <CollapsibleContent className="mb-4">
               <SystemMonitor />
@@ -44,13 +44,12 @@ const Index = () => {
         </main>
 
         {/* Right Sidebar - File Explorer with Toggle */}
-        <Collapsible open={showFileExplorer} className="relative">
+        <div className="relative flex">
           <CollapsibleTrigger
             onClick={() => setShowFileExplorer(!showFileExplorer)}
             className="absolute left-0 top-4 -translate-x-full z-20 p-1.5 bg-mentat-secondary/20 
               border-l border-t border-b border-mentat-border rounded-l-md 
-              hover:bg-mentat-secondary/30 transition-colors duration-200 
-              px-[6px] py-[6px] mx-0 my-[9px]"
+              hover:bg-mentat-secondary/30 transition-colors duration-200"
           >
             {showFileExplorer ? (
               <ChevronRight className="w-4 h-4 text-mentat-primary/80" />
@@ -58,10 +57,13 @@ const Index = () => {
               <ChevronLeft className="w-4 h-4 text-mentat-primary/80" />
             )}
           </CollapsibleTrigger>
-          <CollapsibleContent className="h-screen">
-            <FileExplorer onAddToContext={handleAddToContext} />
-          </CollapsibleContent>
-        </Collapsible>
+          
+          <Collapsible open={showFileExplorer}>
+            <CollapsibleContent className="h-screen">
+              <FileExplorer onAddToContext={handleAddToContext} />
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
       </div>
     </div>
   );
