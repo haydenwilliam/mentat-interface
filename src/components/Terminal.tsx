@@ -118,30 +118,6 @@ const Terminal = () => {
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
-        <button 
-          onClick={toggleMode}
-          className="flex items-center gap-2 px-2 py-1 rounded-full border border-mentat-border/30 bg-mentat-secondary/20 hover:bg-mentat-secondary/30 transition-all duration-200"
-        >
-          <div 
-            className={`flex items-center gap-2 relative ${
-              isInTerminalMode ? 'text-mentat-primary' : 'text-mentat-highlight'
-            }`}
-          >
-            <span className={`flex items-center gap-1 text-xs font-medium transition-opacity duration-200 ${
-              isInTerminalMode ? 'opacity-100' : 'opacity-40'
-            }`}>
-              <TerminalIcon className="w-3 h-3" />
-              Terminal
-            </span>
-            <div className="w-px h-3 bg-mentat-border/30" />
-            <span className={`flex items-center gap-1 text-xs font-medium transition-opacity duration-200 ${
-              !isInTerminalMode ? 'opacity-100' : 'opacity-40'
-            }`}>
-              <Bot className="w-3 h-3" />
-              Chat
-            </span>
-          </div>
-        </button>
       </div>
       
       <div className="flex-1 flex flex-col min-h-0">
@@ -210,29 +186,58 @@ const Terminal = () => {
           })}
         </div>
 
-        <form 
-          onSubmit={handleSubmit} 
-          className="flex items-center gap-2 px-4 py-3 border-t border-mentat-border/30 bg-mentat-secondary/5 backdrop-blur-sm"
-        >
-          {isInTerminalMode ? (
-            <div className="text-xs text-mentat-primary/50 font-mono">
-              <span className="opacity-70">{username}@mentat:</span>
-              <span className="text-mentat-highlight">{currentDirectory}</span>
-              <span className="text-mentat-primary">$ </span>
-            </div>
-          ) : (
-            <span className="text-mentat-primary/50">&gt;</span>
-          )}
-          <input 
-            type="text" 
-            value={input} 
-            onChange={e => setInput(e.target.value)} 
-            className="flex-1 bg-transparent border-none outline-none terminal-text" 
-            placeholder={isInTerminalMode ? "Enter command..." : "Chat with Thufir..."} 
-            spellCheck="false" 
-            autoComplete="off" 
-          />
-        </form>
+        <div className="px-4 py-2 border-t border-mentat-border/30 bg-mentat-secondary/5">
+          <div className="flex justify-end mb-2">
+            <button 
+              onClick={toggleMode}
+              className="flex items-center gap-2 px-2 py-1 rounded-full border border-mentat-border/30 bg-mentat-secondary/20 hover:bg-mentat-secondary/30 transition-all duration-200"
+            >
+              <div 
+                className={`flex items-center gap-2 relative ${
+                  isInTerminalMode ? 'text-mentat-primary' : 'text-mentat-highlight'
+                }`}
+              >
+                <span className={`flex items-center gap-1 text-xs font-medium w-16 justify-center transition-opacity duration-200 ${
+                  !isInTerminalMode ? 'opacity-100' : 'opacity-40'
+                }`}>
+                  <Bot className="w-3 h-3" />
+                  Chat
+                </span>
+                <div className="w-px h-3 bg-mentat-border/30" />
+                <span className={`flex items-center gap-1 text-xs font-medium w-16 justify-center transition-opacity duration-200 ${
+                  isInTerminalMode ? 'opacity-100' : 'opacity-40'
+                }`}>
+                  <TerminalIcon className="w-3 h-3" />
+                  Terminal
+                </span>
+              </div>
+            </button>
+          </div>
+
+          <form 
+            onSubmit={handleSubmit} 
+            className="flex items-center gap-2"
+          >
+            {isInTerminalMode ? (
+              <div className="text-xs text-mentat-primary/50 font-mono">
+                <span className="opacity-70">{username}@mentat:</span>
+                <span className="text-mentat-highlight">{currentDirectory}</span>
+                <span className="text-mentat-primary">$ </span>
+              </div>
+            ) : (
+              <span className="text-mentat-primary/50">&gt;</span>
+            )}
+            <input 
+              type="text" 
+              value={input} 
+              onChange={e => setInput(e.target.value)} 
+              className="flex-1 bg-transparent border-none outline-none terminal-text" 
+              placeholder={isInTerminalMode ? "Enter command..." : "Chat with Thufir..."} 
+              spellCheck="false" 
+              autoComplete="off" 
+            />
+          </form>
+        </div>
       </div>
     </div>
   );
