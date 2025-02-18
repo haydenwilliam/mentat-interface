@@ -1,5 +1,4 @@
-
-import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle } from "lucide-react";
+import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 
 interface FileSystemStructure {
@@ -23,6 +22,7 @@ interface FileExplorerProps {
 const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorerProps) => {
   const [expanded, setExpanded] = useState<string[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleFolder = (folder: string) => {
     setExpanded(prev => 
@@ -41,12 +41,35 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
 
   const handleAddToContext = (e: React.MouseEvent, path: string) => {
     e.stopPropagation();
-    // Dummy functionality for now
     console.log('Adding to context:', path);
   };
 
   const isCurrentDirectory = (path: string) => {
     return currentDirectory.includes(path);
+  };
+
+  const filterItems = (items: FileSystemStructure) => {
+    const filtered: FileSystemStructure = {};
+    
+    Object.entries(items).forEach(([key, value]) => {
+      if (key.toLowerCase().includes(searchQuery.toLowerCase())) {
+        filtered[key] = value;
+      } else if (typeof value === 'object' && !Array.isArray(value)) {
+        const filteredSubItems = filterItems(value);
+        if (Object.keys(filteredSubItems).length > 0) {
+          filtered[key] = filteredSubItems;
+        }
+      } else if (Array.isArray(value)) {
+        const filteredFiles = value.filter(file => 
+          file.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        if (filteredFiles.length > 0) {
+          filtered[key] = filteredFiles;
+        }
+      }
+    });
+
+    return filtered;
   };
 
   const renderItem = (name: string, isFolder: boolean, parentPath = '', level = 0) => {
@@ -145,16 +168,30 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
     );
   };
 
+  const filteredFiles = filterItems(mockFiles);
+
   return (
     <div className="h-full w-64 bg-mentat-secondary/10 border-l border-mentat-border flex flex-col">
       <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 px-3 py-2.5 border-b border-mentat-border">
-        <h3 className="text-mentat-highlight text-sm font-medium flex items-center justify-center gap-2">
+        <h3 className="text-mentat-highlight text-sm font-medium flex items-center justify-center gap-2 mb-2">
           <FolderTree className="w-4 h-4" /> File Explorer
         </h3>
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search files..."
+            className="w-full bg-mentat-secondary/20 border border-mentat-border/30 rounded-md 
+              px-8 py-1.5 text-sm text-mentat-primary placeholder:text-mentat-primary/40
+              focus:outline-none focus:ring-1 focus:ring-mentat-highlight/50"
+          />
+          <Search className="w-4 h-4 text-mentat-primary/40 absolute left-2 top-1/2 -translate-y-1/2" />
+        </div>
       </div>
 
       <div className="flex-1 p-2 space-y-1 overflow-y-auto">
-        {Object.entries(mockFiles).map(([folder]) => renderItem(folder, true))}
+        {Object.entries(filteredFiles).map(([folder]) => renderItem(folder, true))}
       </div>
     </div>
   );
