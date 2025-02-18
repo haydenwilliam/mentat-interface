@@ -51,57 +51,44 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
 
     return (
       <div key={fullPath} className="relative">
-        {/* Indentation guides */}
-        {level > 0 && Array.from({ length: level }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-px bg-mentat-border/20"
-            style={{
-              left: `${(i + 1) * 16 - 8}px`,
-              top: 0,
-              bottom: 0,
-            }}
-          />
-        ))}
-        
         <div
           className={`
-            relative flex items-center gap-2 rounded-sm transition-all duration-200 
-            ml-${level * 4} pl-2 pr-4 py-1
-            ${isSelected ? 'bg-mentat-secondary/40' : 'hover:bg-mentat-secondary/20'}
-            ${isCurrent ? 'text-mentat-highlight' : 'text-mentat-primary/80'}
-            group cursor-pointer
+            relative flex items-center px-2 py-1.5 rounded-md
+            transition-all duration-200 ease-in-out
+            ${isSelected ? 'bg-mentat-primary/10 shadow-[0_0_10px_rgba(0,229,255,0.1)]' : 
+              'hover:bg-mentat-secondary/30'}
+            ${isCurrent ? 'border-l-2 border-mentat-highlight' : ''}
+            ml-[${level * 16}px]
           `}
           onClick={() => handleItemClick(fullPath, isFolder)}
+          style={{ marginLeft: `${level * 16}px` }}
         >
-          <div className="flex items-center gap-1.5 min-w-[24px]">
+          <div className="flex items-center gap-2 min-w-[24px]">
             {isFolder && (
               <button
                 onClick={(e) => { e.stopPropagation(); toggleFolder(name); }}
-                className={`
-                  p-0.5 rounded-sm hover:bg-mentat-secondary/30 
-                  transition-colors duration-200
-                `}
+                className="p-1 rounded-md hover:bg-mentat-secondary/50 
+                  transition-colors duration-200"
               >
                 {isExpanded ? (
-                  <ChevronDown className="w-3.5 h-3.5 text-mentat-primary/60" />
+                  <ChevronDown className="w-4 h-4 text-mentat-primary" />
                 ) : (
-                  <ChevronRight className="w-3.5 h-3.5 text-mentat-primary/60" />
+                  <ChevronRight className="w-4 h-4 text-mentat-primary" />
                 )}
               </button>
             )}
             {isFolder ? (
-              <Folder className={`w-4 h-4 ${isCurrent ? 'text-mentat-highlight' : 'text-mentat-primary/60'}`} />
+              <Folder className={`w-4 h-4 ${isCurrent ? 'text-mentat-highlight animate-pulse' : 'text-mentat-primary'}`} />
             ) : (
-              <File className="w-4 h-4 text-mentat-primary/60" />
+              <File className="w-4 h-4 text-mentat-primary/80" />
             )}
           </div>
           
           <span 
             className={`
-              text-sm transition-all duration-200
-              ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary/80'} 
-              group-hover:text-mentat-primary
+              text-sm ml-1 transition-all duration-200
+              ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary/90'} 
+              ${isSelected ? 'text-mentat-highlight' : ''}
             `}
           >
             {name}
@@ -111,10 +98,17 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
         {isFolder && (
           <div 
             className={`
-              ml-4 transition-all duration-200 overflow-hidden
-              ${isExpanded ? 'animate-accordion-down' : 'animate-accordion-up h-0'}
+              overflow-hidden transition-all duration-200 ease-in-out
+              ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}
+              relative
             `}
           >
+            {/* Vertical line for nested items */}
+            <div 
+              className="absolute left-[7px] top-0 w-px bg-mentat-border/30 h-full"
+              style={{ left: `${level * 16 + 11}px` }}
+            />
+            
             {(() => {
               const content = mockFiles[name];
               if (!content) return null;
@@ -138,12 +132,14 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
   };
 
   return (
-    <div className="w-64 bg-mentat-secondary/20 border-l border-mentat-border p-4 overflow-y-auto">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-mentat-highlight/80 text-sm font-medium">File System</h3>
+    <div className="w-64 bg-mentat-secondary/10 border-l border-mentat-border">
+      <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 p-4 border-b border-mentat-border">
+        <h3 className="text-mentat-highlight text-sm font-medium flex items-center gap-2">
+          <Folder className="w-4 h-4" /> File System
+        </h3>
       </div>
 
-      <div className="space-y-0.5">
+      <div className="p-2 space-y-1">
         {Object.entries(mockFiles).map(([folder]) => renderItem(folder, true))}
       </div>
     </div>
