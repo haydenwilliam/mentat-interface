@@ -1,4 +1,3 @@
-
 import { Folder, File, ChevronRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
@@ -20,8 +19,8 @@ interface FileExplorerProps {
   onDirectorySelect?: (path: string) => void;
 }
 
-const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirectorySelect }: FileExplorerProps) => {
-  const [expanded, setExpanded] = useState<string[]>(['projects']);
+const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorerProps) => {
+  const [expanded, setExpanded] = useState<string[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const toggleFolder = (folder: string) => {
