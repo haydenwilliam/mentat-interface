@@ -51,14 +51,14 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
     return currentDirectory.includes(path);
   };
 
-  const filterItems = (items: FileSystemStructure) => {
+  const filterItems = (items: FileSystemStructure): FileSystemStructure => {
     const filtered: { [key: string]: string[] | { [key: string]: string[] } } = {};
     
     Object.entries(items).forEach(([key, value]) => {
       if (key.toLowerCase().includes(searchQuery.toLowerCase())) {
         filtered[key] = value;
       } else if (typeof value === 'object' && !Array.isArray(value)) {
-        const filteredSubItems = filterItems(value as FileSystemStructure);
+        const filteredSubItems = filterItems(value);
         if (Object.keys(filteredSubItems).length > 0) {
           filtered[key] = filteredSubItems;
         }
@@ -72,7 +72,7 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
       }
     });
 
-    return filtered;
+    return filtered as FileSystemStructure;
   };
 
   const renderItem = (name: string, isFolder: boolean, parentPath = '', level = 0) => {
