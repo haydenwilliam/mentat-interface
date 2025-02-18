@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Terminal as TerminalIcon, Bot, User, Folder } from "lucide-react";
 
@@ -46,15 +47,13 @@ const Terminal = () => {
   }, []);
 
   const handleInput = (input: string) => {
-    if (input.startsWith('/')) {
-      setIsInTerminalMode(true);
-      const fullCmd = input.slice(1).trim();
+    if (isInTerminalMode) {
+      const fullCmd = input.trim();
       const [cmd, ...args] = fullCmd.split(" ");
       const cmdKey = cmd.toLowerCase();
 
       if (cmdKey === "clear") {
         setMessages([]);
-        setIsInTerminalMode(false);
         return;
       }
 
@@ -64,19 +63,23 @@ const Terminal = () => {
       if (typeof command === "function") {
         response = command(args.join(" "));
       } else {
-        response = command || "Unknown command. Type /help for available commands.";
+        response = command || "Unknown command. Type help for available commands.";
       }
 
       setMessages(prev => [...prev, {
         type: 'command',
-        content: input.slice(1),
+        content: input,
         sender: 'user'
       }, {
         type: 'response',
         content: response
       }]);
     } else {
-      setIsInTerminalMode(false);
+      if (input.startsWith('/')) {
+        setIsInTerminalMode(true);
+        handleInput(input.slice(1));
+        return;
+      }
       setMessages(prev => [...prev, {
         type: 'chat',
         content: input,
@@ -105,7 +108,7 @@ const Terminal = () => {
 
   const toggleMode = () => {
     setIsInTerminalMode(!isInTerminalMode);
-    setInput(isInTerminalMode ? "" : "/");
+    setInput("");
   };
 
   return (
@@ -117,17 +120,27 @@ const Terminal = () => {
         </div>
         <button 
           onClick={toggleMode}
-          className={`p-1.5 rounded-md transition-colors duration-200 ${
-            isInTerminalMode 
-              ? 'bg-mentat-primary/10 text-mentat-primary hover:bg-mentat-primary/20' 
-              : 'bg-mentat-highlight/10 text-mentat-highlight hover:bg-mentat-highlight/20'
-          }`}
+          className="flex items-center gap-2 px-2 py-1 rounded-full border border-mentat-border/30 bg-mentat-secondary/20 hover:bg-mentat-secondary/30 transition-all duration-200"
         >
-          {isInTerminalMode ? (
-            <TerminalIcon className="w-4 h-4" />
-          ) : (
-            <Bot className="w-4 h-4" />
-          )}
+          <div 
+            className={`flex items-center gap-2 relative ${
+              isInTerminalMode ? 'text-mentat-primary' : 'text-mentat-highlight'
+            }`}
+          >
+            <span className={`flex items-center gap-1 text-xs font-medium transition-opacity duration-200 ${
+              isInTerminalMode ? 'opacity-100' : 'opacity-40'
+            }`}>
+              <TerminalIcon className="w-3 h-3" />
+              Terminal
+            </span>
+            <div className="w-px h-3 bg-mentat-border/30" />
+            <span className={`flex items-center gap-1 text-xs font-medium transition-opacity duration-200 ${
+              !isInTerminalMode ? 'opacity-100' : 'opacity-40'
+            }`}>
+              <Bot className="w-3 h-3" />
+              Chat
+            </span>
+          </div>
         </button>
       </div>
       
