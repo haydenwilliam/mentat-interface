@@ -22,7 +22,7 @@ export const InputBar = ({
 }: InputBarProps) => {
   return (
     <div className="p-4 border-t border-mentat-border/30 bg-mentat-secondary/10">
-      <div className="space-y-2">
+      <div className="space-y-3 px-3">
         {/* Mode Toggle */}
         <div className="flex justify-start space-x-4">
           <button 
