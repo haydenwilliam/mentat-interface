@@ -2,7 +2,11 @@
 import { Folder, File, ChevronRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const mockFiles = {
+interface FileSystemStructure {
+  [key: string]: string[] | { [key: string]: string[] };
+}
+
+const mockFiles: FileSystemStructure = {
   projects: {
     'project-alpha': ['config.json', 'main.py', 'data.db'],
     'project-beta': ['settings.yml', 'index.js'],
@@ -47,7 +51,6 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
 
     return (
       <div key={fullPath} className="relative">
-        {/* Indentation line */}
         {level > 0 && (
           <div 
             className="absolute left-3 top-0 bottom-0 w-px bg-mentat-border/20"
@@ -86,15 +89,22 @@ const FileExplorer = ({ currentDirectory = '/projects/project-alpha', onDirector
 
         {isFolder && isExpanded && (
           <div className={`transition-all duration-200 ${isExpanded ? 'animate-accordion-down' : 'animate-accordion-up'}`}>
-            {Array.isArray(mockFiles[name])
-              ? mockFiles[name].map(file => renderItem(file, false, fullPath, level + 1))
-              : Object.entries(mockFiles[name]).map(([subFolder, files]) => (
+            {(() => {
+              const content = mockFiles[name];
+              if (!content) return null;
+              
+              if (Array.isArray(content)) {
+                return content.map(file => renderItem(file, false, fullPath, level + 1));
+              } else {
+                return Object.entries(content).map(([subFolder, files]) => (
                   <div key={subFolder}>
                     {renderItem(subFolder, true, fullPath, level + 1)}
                     {expanded.includes(subFolder) &&
                       files.map(file => renderItem(file, false, `${fullPath}/${subFolder}`, level + 2))}
                   </div>
-                ))}
+                ));
+              }
+            })()}
           </div>
         )}
       </div>
