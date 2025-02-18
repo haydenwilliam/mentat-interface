@@ -1,3 +1,4 @@
+
 import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 
@@ -17,9 +18,10 @@ const mockFiles: FileSystemStructure = {
 interface FileExplorerProps {
   currentDirectory?: string;
   onDirectorySelect?: (path: string) => void;
+  onAddToContext?: (path: string) => void;
 }
 
-const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorerProps) => {
+const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext }: FileExplorerProps) => {
   const [expanded, setExpanded] = useState<string[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,21 +43,23 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect }: FileExplorer
 
   const handleAddToContext = (e: React.MouseEvent, path: string) => {
     e.stopPropagation();
-    console.log('Adding to context:', path);
+    if (onAddToContext) {
+      onAddToContext(path);
+    }
   };
 
   const isCurrentDirectory = (path: string) => {
     return currentDirectory.includes(path);
   };
 
-  const filterItems = (items: FileSystemStructure) => {
+  const filterItems = (items: FileSystemStructure): FileSystemStructure => {
     const filtered: FileSystemStructure = {};
     
     Object.entries(items).forEach(([key, value]) => {
       if (key.toLowerCase().includes(searchQuery.toLowerCase())) {
         filtered[key] = value;
       } else if (typeof value === 'object' && !Array.isArray(value)) {
-        const filteredSubItems = filterItems(value);
+        const filteredSubItems = filterItems(value as { [key: string]: string[] });
         if (Object.keys(filteredSubItems).length > 0) {
           filtered[key] = filteredSubItems;
         }
