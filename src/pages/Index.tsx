@@ -19,6 +19,17 @@ const Index = () => {
     setIsLoaded(true);
   }, []);
 
+  const handleMonitorToggle = () => {
+    setShowMonitor(prev => !prev);
+  };
+
+  const handleViewChange = (view: 'terminal' | 'projects') => {
+    setActiveView(view);
+    if (showMonitor) {
+      setShowMonitor(false);
+    }
+  };
+
   const handleAddToContext = (path: string) => {
     setSelectedFiles(prev => {
       if (prev.includes(path)) {
@@ -28,32 +39,39 @@ const Index = () => {
     });
   };
 
-  return <div className={`min-h-screen transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+  // Only show file explorer when in terminal view and monitor is not shown
+  const shouldShowFileExplorer = activeView === 'terminal' && !showMonitor;
+
+  return (
+    <div className={`min-h-screen transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex h-screen">
-        {/* Left Sidebar */}
         <Sidebar 
-          onMonitorToggle={() => setShowMonitor(!showMonitor)}
-          onViewChange={setActiveView}
+          onMonitorToggle={handleMonitorToggle}
+          onViewChange={handleViewChange}
           activeView={activeView}
         />
 
-        {/* Main Content */}
         <main className="flex-1 pl-6 pr-8 py-4 overflow-hidden flex flex-col">
-          <Collapsible open={showMonitor}>
-            <CollapsibleContent className="mb-4">
-              <SystemMonitor />
-            </CollapsibleContent>
-          </Collapsible>
-
-          {activeView === 'terminal' ? <Terminal /> : <ProjectsView />}
+          {showMonitor ? (
+            <SystemMonitor />
+          ) : (
+            <>
+              {activeView === 'terminal' ? <Terminal /> : <ProjectsView />}
+            </>
+          )}
         </main>
 
-        {/* Right Sidebar - File Explorer with Toggle */}
-        {activeView === 'terminal' && (
+        {shouldShowFileExplorer && (
           <Collapsible open={showFileExplorer} className="relative">
             <div className="relative flex">
-              <CollapsibleTrigger onClick={() => setShowFileExplorer(!showFileExplorer)} className="absolute left-0 top-4 -translate-x-full z-20 p-1.5 bg-mentat-secondary/20 border-l border-t border-b border-mentat-border rounded-l-md hover:bg-mentat-secondary/30 transition-colors duration-200 py-[4px]">
-                {showFileExplorer ? <ChevronRight className="w-4 h-4 text-mentat-primary/80" /> : <ChevronLeft className="w-4 h-4 text-mentat-primary/80" />}
+              <CollapsibleTrigger 
+                onClick={() => setShowFileExplorer(!showFileExplorer)} 
+                className="absolute left-0 top-4 -translate-x-full z-20 p-1.5 bg-mentat-secondary/20 border-l border-t border-b border-mentat-border rounded-l-md hover:bg-mentat-secondary/30 transition-colors duration-200 py-[4px]"
+              >
+                {showFileExplorer ? 
+                  <ChevronRight className="w-4 h-4 text-mentat-primary/80" /> : 
+                  <ChevronLeft className="w-4 h-4 text-mentat-primary/80" />
+                }
               </CollapsibleTrigger>
               
               <CollapsibleContent className="h-screen">
@@ -63,8 +81,8 @@ const Index = () => {
           </Collapsible>
         )}
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default Index;
-

@@ -1,7 +1,7 @@
 
 import { Cpu, Activity, Database, Network, HardDrive, Timer } from "lucide-react";
 import { useState, useEffect } from "react";
-import { AreaChart, Area, ResponsiveContainer, Tooltip } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
 interface DeployedProject {
   id: string;
@@ -90,77 +90,74 @@ const SystemMonitor = () => {
   };
 
   return (
-    <div className="h-full grid grid-cols-3 gap-4 p-4 backdrop-blur bg-mentat-background/50">
+    <div className="h-full flex flex-col gap-6 p-6 bg-mentat-background/80 rounded-lg border border-mentat-border/20">
       {/* System Metrics Panel */}
-      <div className="col-span-1 space-y-4">
-        <h2 className="text-mentat-primary text-sm font-bold tracking-wider uppercase mb-4">System Metrics</h2>
-        <div className="grid grid-cols-1 gap-4">
-          <MonitorCard
-            icon={<Cpu className="w-4 h-4" />}
-            title="CPU Usage"
-            value={`${cpuUsage.toFixed(1)}%`}
-            chart={
-              <ResponsiveContainer width="100%" height={40}>
-                <AreaChart data={cpuHistory}>
-                  <Area 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke="#00E5FF" 
-                    fill="rgba(0, 229, 255, 0.1)"
-                    strokeWidth={1}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      background: 'rgba(0, 29, 33, 0.9)',
-                      border: '1px solid rgba(0, 229, 255, 0.2)',
-                      borderRadius: '4px'
-                    }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            }
-            className={getStatusColor(cpuUsage)}
-          />
-          <MonitorCard
-            icon={<Database className="w-4 h-4" />}
-            title="Memory"
-            value={`${memoryUsage.toFixed(1)}%`}
-            className={getStatusColor(memoryUsage)}
-          />
-          <MonitorCard
-            icon={<Network className="w-4 h-4" />}
-            title="Network"
-            value={`${networkActivity.toFixed(1)} MB/s`}
-            className={getStatusColor(networkActivity)}
-          />
-          <MonitorCard
-            icon={<Activity className="w-4 h-4" />}
-            title="GPU"
-            value={`${gpuUsage.toFixed(1)}%`}
-            className={getStatusColor(gpuUsage)}
-          />
-          <MonitorCard
-            icon={<HardDrive className="w-4 h-4" />}
-            title="Disk Usage"
-            value={`${diskUsage.toFixed(1)}%`}
-            className={getStatusColor(diskUsage)}
-          />
-        </div>
+      <div className="grid grid-cols-5 gap-4">
+        <MonitorCard
+          icon={<Cpu className="w-4 h-4" />}
+          title="CPU Usage"
+          value={`${cpuUsage.toFixed(1)}%`}
+          chart={
+            <ResponsiveContainer width="100%" height={40}>
+              <AreaChart data={cpuHistory}>
+                <Area 
+                  type="monotone" 
+                  dataKey="value" 
+                  stroke="rgb(34, 197, 94)" 
+                  fill="rgba(34, 197, 94, 0.1)"
+                  strokeWidth={1}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    border: 'none',
+                    borderRadius: '4px'
+                  }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          }
+          className={getStatusColor(cpuUsage)}
+        />
+        <MonitorCard
+          icon={<Database className="w-4 h-4" />}
+          title="Memory"
+          value={`${memoryUsage.toFixed(1)}%`}
+          className={getStatusColor(memoryUsage)}
+        />
+        <MonitorCard
+          icon={<Network className="w-4 h-4" />}
+          title="Network"
+          value={`${networkActivity.toFixed(1)} MB/s`}
+          className={getStatusColor(networkActivity)}
+        />
+        <MonitorCard
+          icon={<Activity className="w-4 h-4" />}
+          title="GPU"
+          value={`${gpuUsage.toFixed(1)}%`}
+          className={getStatusColor(gpuUsage)}
+        />
+        <MonitorCard
+          icon={<HardDrive className="w-4 h-4" />}
+          title="Disk Usage"
+          value={`${diskUsage.toFixed(1)}%`}
+          className={getStatusColor(diskUsage)}
+        />
       </div>
 
       {/* Deployed Projects Panel */}
-      <div className="col-span-2 border-l border-mentat-border/20 pl-4">
-        <h2 className="text-mentat-primary text-sm font-bold tracking-wider uppercase mb-4">Active Projects</h2>
-        <div className="grid grid-cols-1 gap-4">
+      <div className="flex-1">
+        <h2 className="text-mentat-primary text-sm font-semibold mb-4">Active Projects</h2>
+        <div className="space-y-4">
           {deployedProjects.map(project => (
-            <div key={project.id} className="border border-mentat-border/20 rounded-lg p-4 bg-mentat-secondary/5">
+            <div key={project.id} className="p-4 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${
                     project.status === 'running' ? 'bg-green-400' :
                     project.status === 'paused' ? 'bg-yellow-400' : 'bg-red-400'
                   }`} />
-                  <span className="text-mentat-highlight font-medium">{project.name}</span>
+                  <span className="text-mentat-primary font-medium">{project.name}</span>
                   <span className="text-xs text-mentat-primary/60 px-2 py-0.5 rounded-full border border-mentat-border/20">
                     {project.type}
                   </span>
@@ -180,9 +177,9 @@ const SystemMonitor = () => {
                       <span className="text-mentat-primary/60">{key.toUpperCase()}</span>
                       <span className={getStatusColor(value)}>{value.toFixed(1)}%</span>
                     </div>
-                    <div className="h-1 bg-mentat-secondary/10 rounded">
+                    <div className="h-1.5 bg-mentat-secondary/10 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full rounded transition-all duration-300 ${getStatusColor(value)}`}
+                        className={`h-full rounded-full transition-all duration-300 ${getStatusColor(value)}`}
                         style={{ width: `${value}%` }}
                       />
                     </div>
@@ -195,9 +192,9 @@ const SystemMonitor = () => {
                   <span className="text-mentat-primary/60">Progress</span>
                   <span className="text-mentat-primary">{project.progress.toFixed(1)}%</span>
                 </div>
-                <div className="h-1 bg-mentat-secondary/10 rounded">
+                <div className="h-1.5 bg-mentat-secondary/10 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-mentat-primary rounded transition-all duration-300"
+                    className="h-full bg-green-500 rounded-full transition-all duration-300"
                     style={{ width: `${project.progress}%` }}
                   />
                 </div>
@@ -207,7 +204,7 @@ const SystemMonitor = () => {
         </div>
       </div>
 
-      <div className="col-span-3 flex items-center justify-between text-xs text-mentat-primary/60 border-t border-mentat-border/20 pt-2">
+      <div className="flex items-center justify-between text-xs text-mentat-primary/60 border-t border-mentat-border/20 pt-4">
         <div className="flex items-center gap-1">
           <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
           <span>All Systems Operational</span>
@@ -231,7 +228,7 @@ const MonitorCard = ({
   chart?: React.ReactNode;
   className?: string;
 }) => (
-  <div className="border border-mentat-border/20 rounded-lg p-3 bg-mentat-secondary/5">
+  <div className="p-4 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
     <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-2">
         <div className="text-mentat-primary/80">
@@ -242,7 +239,7 @@ const MonitorCard = ({
     </div>
     <div className={`text-xl font-semibold ${className}`}>{value}</div>
     {chart && (
-      <div className="mt-2 opacity-80">
+      <div className="mt-2">
         {chart}
       </div>
     )}
@@ -250,4 +247,3 @@ const MonitorCard = ({
 );
 
 export default SystemMonitor;
-
