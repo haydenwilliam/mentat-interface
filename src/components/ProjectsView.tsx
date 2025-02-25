@@ -36,59 +36,66 @@ const demoProjects: Project[] = [
 
 const ProjectsView = () => {
   return (
-    <div className="flex-1 overflow-auto p-6">
-      <h2 className="text-2xl font-semibold text-mentat-highlight mb-6">My Projects</h2>
-      <div className="grid gap-6">
-        {demoProjects.map((project) => (
-          <div
-            key={project.id}
-            className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-6 hover:bg-mentat-secondary/20 transition-colors"
+    <div className="flex-1 overflow-auto p-6 bg-mentat-background">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-semibold text-mentat-highlight">My Projects</h2>
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2 hover:text-mentat-highlight border-mentat-highlight"
           >
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="text-xl font-medium text-mentat-primary">{project.name}</h3>
-                <span className="inline-block px-2 py-1 text-xs rounded-full bg-mentat-secondary/30 text-mentat-highlight mt-2">
-                  {project.type}
-                </span>
-                <p className="mt-3 text-mentat-primary/80">{project.description}</p>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-2 hover:text-mentat-highlight"
-                >
-                  <Play className="w-4 h-4" />
-                  Build
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-2 hover:text-mentat-highlight"
-                >
-                  <Upload className="w-4 h-4" />
-                  Deploy
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-2 hover:text-mentat-highlight"
-                >
-                  <Share className="w-4 h-4" />
-                  Share
-                </Button>
+            <Play className="w-4 h-4" />
+            New Project
+          </Button>
+        </div>
+        
+        <div className="grid gap-6">
+          {demoProjects.map((project) => (
+            <div
+              key={project.id}
+              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-6 hover:bg-mentat-secondary/20 transition-colors hover:border-mentat-highlight glow-border"
+            >
+              <div className="flex items-start justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-xl font-medium text-mentat-primary">{project.name}</h3>
+                    <span className="inline-block px-2 py-1 text-xs rounded-full bg-mentat-secondary/30 text-mentat-highlight">
+                      {project.type}
+                    </span>
+                  </div>
+                  <p className="text-mentat-primary/80">{project.description}</p>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      project.status === 'completed' ? 'bg-green-500' :
+                      project.status === 'in-progress' ? 'bg-yellow-500' :
+                      'bg-blue-500'
+                    }`} />
+                    <span className="text-sm text-mentat-primary/60 capitalize">{project.status}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2 hover:text-mentat-highlight"
+                  >
+                    <Play className="w-4 h-4" />
+                    Open
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2 hover:text-mentat-highlight"
+                  >
+                    <Share className="w-4 h-4" />
+                    Share
+                  </Button>
+                </div>
               </div>
             </div>
-            <div className="mt-4 flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${
-                project.status === 'completed' ? 'bg-green-500' :
-                project.status === 'in-progress' ? 'bg-yellow-500' :
-                'bg-blue-500'
-              }`} />
-              <span className="text-sm text-mentat-primary/60 capitalize">{project.status}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 
 import React from "react";
-import { Folder, Share, Upload, Play, Settings, Users, Activity } from "lucide-react";
+import { Folder, Users, Activity, Settings } from "lucide-react";
 import MenuItem from "./menu-item";
 import MenuGroup from "./menu-group";
-import MenuSection from "./menu-section";
 
 interface SidebarProps {
   onMonitorToggle: () => void;
@@ -26,11 +25,6 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
               >
                 Projects
               </MenuItem>
-              <MenuSection>
-                <MenuItem icon={<Play />} variant="sub">View</MenuItem>
-                <MenuItem icon={<Upload />} variant="sub">Deploy</MenuItem>
-                <MenuItem icon={<Share />} variant="sub">Share</MenuItem>
-              </MenuSection>
             </MenuGroup>
 
             {/* Agents */}
