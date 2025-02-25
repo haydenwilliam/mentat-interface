@@ -51,6 +51,24 @@ export const useSystemMonitor = () => {
       resources: { cpu: 70, memory: 85, gpu: 95 },
       estimatedCompletion: new Date(Date.now() + 60 * 60000),
       progress: 25
+    },
+    {
+      id: "5",
+      name: "Model Optimization",
+      type: "workflow",
+      status: "running",
+      resources: { cpu: 65, memory: 75, gpu: 85 },
+      estimatedCompletion: new Date(Date.now() + 90 * 60000),
+      progress: 45
+    },
+    {
+      id: "6",
+      name: "Data Validation",
+      type: "agent",
+      status: "running",
+      resources: { cpu: 35, memory: 50, gpu: 20 },
+      estimatedCompletion: new Date(Date.now() + 15 * 60000),
+      progress: 90
     }
   ]);
 
@@ -128,3 +146,4 @@ export const useSystemMonitor = () => {
     }
   };
 };
+

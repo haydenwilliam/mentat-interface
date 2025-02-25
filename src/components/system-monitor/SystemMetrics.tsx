@@ -18,29 +18,6 @@ interface SystemMetricsProps {
   getStatusColor: (value: number) => string;
 }
 
-const createChart = (data: { time: number; value: number; }[]) => (
-  <ResponsiveContainer width="100%" height={25}>
-    <AreaChart data={data}>
-      <Area 
-        type="monotone" 
-        dataKey="value" 
-        stroke="rgb(34, 197, 94)" 
-        fill="rgba(34, 197, 94, 0.1)"
-        strokeWidth={1}
-      />
-      <Tooltip 
-        contentStyle={{ 
-          background: 'rgba(0, 0, 0, 0.8)',
-          border: 'none',
-          borderRadius: '4px'
-        }}
-        formatter={(value: number) => [`${value.toFixed(1)}%`]}
-        labelFormatter={() => ''}
-      />
-    </AreaChart>
-  </ResponsiveContainer>
-);
-
 export const SystemMetrics = ({
   cpuUsage,
   memoryUsage,
@@ -94,5 +71,28 @@ export const SystemMetrics = ({
       />
     </div>
   </div>
+);
+
+const createChart = (data: { time: number; value: number; }[]) => (
+  <ResponsiveContainer width="100%" height={25}>
+    <AreaChart data={data}>
+      <Area 
+        type="monotone" 
+        dataKey="value" 
+        stroke="rgb(34, 197, 94)" 
+        fill="rgba(34, 197, 94, 0.1)"
+        strokeWidth={1}
+      />
+      <Tooltip 
+        contentStyle={{ 
+          background: 'rgba(0, 0, 0, 0.8)',
+          border: 'none',
+          borderRadius: '4px'
+        }}
+        formatter={(value: number) => [`${value.toFixed(1)}%`]}
+        labelFormatter={() => ''}
+      />
+    </AreaChart>
+  </ResponsiveContainer>
 );
 
