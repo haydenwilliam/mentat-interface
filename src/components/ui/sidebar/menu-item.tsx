@@ -27,7 +27,7 @@ const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(
         {icon && React.cloneElement(icon as React.ReactElement, {
           className: cn("flex-shrink-0", variant === "default" ? "w-5 h-5" : "w-4 h-4")
         })}
-        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{children}</span>
+        <span className="text-sm opacity-100 whitespace-nowrap">{children}</span>
       </Comp>
     );
   }
@@ -36,4 +36,3 @@ const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(
 MenuItem.displayName = "MenuItem";
 
 export default MenuItem;
-
