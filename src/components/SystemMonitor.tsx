@@ -170,14 +170,22 @@ const SystemMonitor = () => {
                 )}
               </div>
               
+              {/* Updated Resource Usage Display */}
               <div className="grid grid-cols-3 gap-4 mb-3">
                 {Object.entries(project.resources).map(([key, value]) => (
-                  <div key={key} className="space-y-1">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-mentat-primary/60">{key.toUpperCase()}</span>
-                      <span className={getStatusColor(value)}>{value.toFixed(1)}%</span>
+                  <div key={key} className="p-2 rounded bg-mentat-secondary/10">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        {key === 'cpu' && <Cpu className="w-3 h-3 text-mentat-primary/60" />}
+                        {key === 'memory' && <Database className="w-3 h-3 text-mentat-primary/60" />}
+                        {key === 'gpu' && <Activity className="w-3 h-3 text-mentat-primary/60" />}
+                        <span className="text-xs font-medium text-mentat-primary/80">{key.toUpperCase()}</span>
+                      </div>
+                      <span className={`text-xs font-medium ${getStatusColor(value)}`}>
+                        {value.toFixed(1)}%
+                      </span>
                     </div>
-                    <div className="h-1.5 bg-mentat-secondary/10 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-mentat-secondary/20 rounded-full overflow-hidden">
                       <div 
                         className={`h-full rounded-full transition-all duration-300 ${getStatusColor(value)}`}
                         style={{ width: `${value}%` }}
