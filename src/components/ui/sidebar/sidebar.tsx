@@ -13,7 +13,7 @@ interface SidebarProps {
 const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
   ({ onMonitorToggle, onViewChange, activeView = 'terminal' }, ref) => {
     return (
-      <div ref={ref} className="w-48 hover:w-52 transition-all duration-300 bg-mentat-secondary/20 border-r border-mentat-border flex flex-col">
+      <div ref={ref} className="w-36 hover:w-52 transition-all duration-300 bg-mentat-secondary/20 border-r border-mentat-border flex flex-col">
         <div className="p-2">
           <div className="space-y-4">
             {/* Terminal Section */}
