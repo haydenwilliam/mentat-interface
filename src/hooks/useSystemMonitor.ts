@@ -33,6 +33,24 @@ export const useSystemMonitor = () => {
       resources: { cpu: 85, memory: 70, gpu: 90 },
       estimatedCompletion: new Date(Date.now() + 120 * 60000),
       progress: 30
+    },
+    {
+      id: "3",
+      name: "Analysis Pipeline",
+      type: "workflow",
+      status: "running",
+      resources: { cpu: 55, memory: 40, gpu: 75 },
+      estimatedCompletion: new Date(Date.now() + 45 * 60000),
+      progress: 80
+    },
+    {
+      id: "4",
+      name: "Inference Service",
+      type: "agent",
+      status: "running",
+      resources: { cpu: 70, memory: 85, gpu: 95 },
+      estimatedCompletion: new Date(Date.now() + 60 * 60000),
+      progress: 25
     }
   ]);
 
