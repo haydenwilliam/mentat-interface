@@ -1,8 +1,10 @@
+
 import { useEffect, useState } from "react";
 import SystemMonitor from "@/components/SystemMonitor";
 import Terminal from "@/components/Terminal";
 import Sidebar from "@/components/ui/sidebar/sidebar";
 import FileExplorer from "@/components/FileExplorer";
+import ProjectsView from "@/components/ProjectsView";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -11,6 +13,7 @@ const Index = () => {
   const [showMonitor, setShowMonitor] = useState(false);
   const [showFileExplorer, setShowFileExplorer] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+  const [activeView, setActiveView] = useState<'terminal' | 'projects'>('terminal');
 
   useEffect(() => {
     setIsLoaded(true);
@@ -28,7 +31,11 @@ const Index = () => {
   return <div className={`min-h-screen transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex h-screen">
         {/* Left Sidebar */}
-        <Sidebar onMonitorToggle={() => setShowMonitor(!showMonitor)} />
+        <Sidebar 
+          onMonitorToggle={() => setShowMonitor(!showMonitor)}
+          onViewChange={setActiveView}
+          activeView={activeView}
+        />
 
         {/* Main Content */}
         <main className="flex-1 pl-6 pr-8 py-4 overflow-hidden flex flex-col">
@@ -38,7 +45,7 @@ const Index = () => {
             </CollapsibleContent>
           </Collapsible>
 
-          <Terminal />
+          {activeView === 'terminal' ? <Terminal /> : <ProjectsView />}
         </main>
 
         {/* Right Sidebar - File Explorer with Toggle */}

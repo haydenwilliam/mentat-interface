@@ -7,17 +7,25 @@ import MenuSection from "./menu-section";
 
 interface SidebarProps {
   onMonitorToggle: () => void;
+  onViewChange?: (view: 'terminal' | 'projects') => void;
+  activeView?: 'terminal' | 'projects';
 }
 
 const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
-  ({ onMonitorToggle }, ref) => {
+  ({ onMonitorToggle, onViewChange, activeView = 'terminal' }, ref) => {
     return (
       <div ref={ref} className="w-16 hover:w-48 transition-all duration-300 bg-mentat-secondary/20 border-r border-mentat-border flex flex-col">
         <div className="p-2">
           <div className="space-y-4">
             {/* Projects Section */}
             <MenuGroup>
-              <MenuItem icon={<Folder />}>Projects</MenuItem>
+              <MenuItem 
+                icon={<Folder />}
+                onClick={() => onViewChange?.('projects')}
+                className={activeView === 'projects' ? 'bg-mentat-secondary/40' : ''}
+              >
+                Projects
+              </MenuItem>
               <MenuSection>
                 <MenuItem icon={<Play />} variant="sub">View</MenuItem>
                 <MenuItem icon={<Upload />} variant="sub">Deploy</MenuItem>
@@ -43,4 +51,3 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
 Sidebar.displayName = "Sidebar";
 
 export default Sidebar;
-
