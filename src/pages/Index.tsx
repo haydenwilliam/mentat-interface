@@ -49,19 +49,22 @@ const Index = () => {
         </main>
 
         {/* Right Sidebar - File Explorer with Toggle */}
-        <Collapsible open={showFileExplorer} className="relative">
-          <div className="relative flex">
-            <CollapsibleTrigger onClick={() => setShowFileExplorer(!showFileExplorer)} className="absolute left-0 top-4 -translate-x-full z-20 p-1.5 bg-mentat-secondary/20 border-l border-t border-b border-mentat-border rounded-l-md hover:bg-mentat-secondary/30 transition-colors duration-200 py-[4px]">
-              {showFileExplorer ? <ChevronRight className="w-4 h-4 text-mentat-primary/80" /> : <ChevronLeft className="w-4 h-4 text-mentat-primary/80" />}
-            </CollapsibleTrigger>
-            
-            <CollapsibleContent className="h-screen">
-              <FileExplorer onAddToContext={handleAddToContext} />
-            </CollapsibleContent>
-          </div>
-        </Collapsible>
+        {activeView === 'terminal' && (
+          <Collapsible open={showFileExplorer} className="relative">
+            <div className="relative flex">
+              <CollapsibleTrigger onClick={() => setShowFileExplorer(!showFileExplorer)} className="absolute left-0 top-4 -translate-x-full z-20 p-1.5 bg-mentat-secondary/20 border-l border-t border-b border-mentat-border rounded-l-md hover:bg-mentat-secondary/30 transition-colors duration-200 py-[4px]">
+                {showFileExplorer ? <ChevronRight className="w-4 h-4 text-mentat-primary/80" /> : <ChevronLeft className="w-4 h-4 text-mentat-primary/80" />}
+              </CollapsibleTrigger>
+              
+              <CollapsibleContent className="h-screen">
+                <FileExplorer onAddToContext={handleAddToContext} />
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
+        )}
       </div>
     </div>;
 };
 
 export default Index;
+
