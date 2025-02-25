@@ -66,7 +66,7 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
           filtered[key] = filteredSubItems;
         }
       } else if (Array.isArray(value)) {
-        const filteredFiles = value.filter(file => 
+        const filteredFiles = value.filter((file: string) => 
           file.toLowerCase().includes(searchQuery.toLowerCase())
         );
         if (filteredFiles.length > 0) {
@@ -204,3 +204,4 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
 };
 
 export default FileExplorer;
+
