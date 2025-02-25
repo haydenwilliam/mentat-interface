@@ -30,20 +30,20 @@ export const ProjectCard = ({ project, getStatusColor, formatTime }: ProjectCard
     <div className="grid grid-cols-3 gap-2 mb-2">
       {Object.entries(project.resources).map(([key, value]) => (
         <div key={key} className="p-1.5 rounded bg-mentat-secondary/10">
-          <div className="flex flex-col items-center mb-1">
-            <div className="flex items-center justify-center mb-1">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-1">
               {key === 'cpu' && <Cpu className="w-3 h-3 text-mentat-primary/60" />}
               {key === 'memory' && <Database className="w-3 h-3 text-mentat-primary/60" />}
               {key === 'gpu' && <Activity className="w-3 h-3 text-mentat-primary/60" />}
+              <span className="text-[10px] uppercase text-mentat-primary/60 font-medium">
+                {key}
+              </span>
             </div>
-            <span className="text-[10px] uppercase text-mentat-primary/60 font-medium">
-              {key}
-            </span>
             <span className={`text-xs font-medium ${getStatusColor(value)}`}>
               {value.toFixed(0)}%
             </span>
           </div>
-          <div className="h-1 bg-mentat-secondary/20 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-mentat-secondary/20 rounded-full overflow-hidden">
             <div 
               className={`h-full rounded-full transition-all duration-300 ${getStatusColor(value)}`}
               style={{ width: `${value}%` }}
