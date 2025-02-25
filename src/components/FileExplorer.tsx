@@ -1,4 +1,3 @@
-
 import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 
@@ -204,4 +203,3 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
 };
 
 export default FileExplorer;
-
