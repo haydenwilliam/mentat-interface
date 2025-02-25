@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Folder, Users, Activity, Settings, Terminal } from "lucide-react";
+import { Folder, Activity, Settings, Terminal } from "lucide-react";
 import MenuItem from "./menu-item";
 import MenuGroup from "./menu-group";
 
@@ -37,9 +37,6 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
                 Projects
               </MenuItem>
             </MenuGroup>
-
-            {/* Agents */}
-            <MenuItem icon={<Users />}>Agents</MenuItem>
 
             {/* System Monitor */}
             <MenuItem icon={<Activity />} onClick={onMonitorToggle}>Monitor</MenuItem>
