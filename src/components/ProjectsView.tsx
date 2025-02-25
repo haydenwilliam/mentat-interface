@@ -23,7 +23,7 @@ const demoProjects: Project[] = [
     type: "agent",
     status: "in-progress",
     progress: 65,
-    eta: new Date(2024, 5, 15) // June 15, 2024
+    eta: new Date(Date.now() + 7 * 60 * 1000) // 7 minutes from now
   },
   {
     id: "2",
@@ -38,7 +38,7 @@ const demoProjects: Project[] = [
     description: "Advanced data analysis and visualization tools integrated with Microsoft Excel",
     type: "software",
     status: "completed",
-    completedAt: new Date(2024, 3, 1), // April 1, 2024
+    completedAt: new Date(2025, 1, 15), // Feb 15, 2025
     outcome: "success"
   }
 ];
