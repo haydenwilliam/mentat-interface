@@ -1,6 +1,7 @@
 
-import { Play, Upload, Share } from "lucide-react";
+import { Cog, Play, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { formatDistanceToNow } from "date-fns";
 
 interface Project {
   id: string;
@@ -8,33 +9,85 @@ interface Project {
   description: string;
   type: "software" | "agent" | "game";
   status: "ready" | "in-progress" | "completed";
+  progress?: number;
+  eta?: Date;
+  completedAt?: Date;
+  outcome?: "success" | "failure" | "partial";
 }
 
 const demoProjects: Project[] = [
   {
     id: "1",
-    name: "Smart Assistant Agent",
-    description: "An AI-powered assistant capable of natural language processing and task automation",
+    name: "Email Assistant",
+    description: "An AI-powered email assistant that helps manage and respond to your emails efficiently",
     type: "agent",
-    status: "completed"
+    status: "in-progress",
+    progress: 65,
+    eta: new Date(2024, 3, 30) // April 30, 2024
   },
   {
     id: "2",
-    name: "Virtual Reality Game",
-    description: "An immersive VR experience built with Unity and custom shaders",
+    name: "Adventure Quest",
+    description: "A classic RPG with immersive storytelling and strategic combat",
     type: "game",
-    status: "ready"
+    status: "completed",
+    completedAt: new Date(2024, 2, 15), // March 15, 2024
+    outcome: "success"
   },
   {
     id: "3",
-    name: "Code Analysis Tool",
-    description: "Automated code review and analysis software using machine learning",
+    name: "Data Analytics Tool for Excel",
+    description: "Advanced data analysis and visualization tools integrated with Microsoft Excel",
     type: "software",
-    status: "in-progress"
+    status: "ready"
   }
 ];
 
 const ProjectsView = () => {
+  const getStatusDisplay = (project: Project) => {
+    switch (project.status) {
+      case "in-progress":
+        return (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-yellow-500" />
+            <div className="flex flex-col">
+              <span className="text-sm text-mentat-primary/60">
+                In Progress ({project.progress}%)
+              </span>
+              {project.eta && (
+                <span className="text-xs text-mentat-primary/40">
+                  ETA: {formatDistanceToNow(project.eta, { addSuffix: true })}
+                </span>
+              )}
+            </div>
+          </div>
+        );
+      case "completed":
+        return (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-500" />
+            <div className="flex flex-col">
+              <span className="text-sm text-mentat-primary/60 capitalize">
+                {project.outcome || "Completed"}
+              </span>
+              {project.completedAt && (
+                <span className="text-xs text-mentat-primary/40">
+                  {formatDistanceToNow(project.completedAt, { addSuffix: true })}
+                </span>
+              )}
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="text-sm text-mentat-primary/60 capitalize">{project.status}</span>
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="flex-1 overflow-auto p-6 bg-mentat-background">
       <div className="max-w-5xl mx-auto">
@@ -43,7 +96,7 @@ const ProjectsView = () => {
           <Button
             variant="outline"
             size="sm"
-            className="flex items-center gap-2 hover:text-mentat-highlight border-mentat-highlight"
+            className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20 border-mentat-highlight"
           >
             <Play className="w-4 h-4" />
             New Project
@@ -54,7 +107,10 @@ const ProjectsView = () => {
           {demoProjects.map((project) => (
             <div
               key={project.id}
-              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-6 hover:bg-mentat-secondary/20 transition-colors hover:border-mentat-highlight glow-border"
+              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-6 hover:bg-mentat-secondary/20 transition-colors hover:border-mentat-highlight"
+              style={{
+                boxShadow: '0 0 10px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1)'
+              }}
             >
               <div className="flex items-start justify-between">
                 <div className="space-y-3">
@@ -65,28 +121,29 @@ const ProjectsView = () => {
                     </span>
                   </div>
                   <p className="text-mentat-primary/80">{project.description}</p>
-                  <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${
-                      project.status === 'completed' ? 'bg-green-500' :
-                      project.status === 'in-progress' ? 'bg-yellow-500' :
-                      'bg-blue-500'
-                    }`} />
-                    <span className="text-sm text-mentat-primary/60 capitalize">{project.status}</span>
-                  </div>
+                  {getStatusDisplay(project)}
                 </div>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-2 hover:text-mentat-highlight"
+                    className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20"
                   >
-                    <Play className="w-4 h-4" />
-                    Open
+                    <Cog className="w-4 h-4" />
+                    Build
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-2 hover:text-mentat-highlight"
+                    className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20"
+                  >
+                    <Play className="w-4 h-4" />
+                    Deploy
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20"
                   >
                     <Share className="w-4 h-4" />
                     Share
