@@ -22,9 +22,9 @@ const SystemMonitor = () => {
         getStatusColor={utils.getStatusColor}
       />
 
-      <div className="flex-1">
-        <h2 className="text-mentat-primary text-sm font-semibold mb-4">Active Projects</h2>
-        <div className="space-y-4">
+      <div className="flex-1 min-h-0"> {/* Add min-h-0 to allow flex child to shrink */}
+        <h2 className="text-lg font-semibold mb-4 text-mentat-primary">Active Projects</h2>
+        <div className="space-y-4 h-[calc(100%-2rem)] overflow-y-auto pr-2"> {/* Fixed height calculation and added padding for scrollbar */}
           {deployedProjects.map(project => (
             <ProjectCard
               key={project.id}
@@ -48,3 +48,4 @@ const SystemMonitor = () => {
 };
 
 export default SystemMonitor;
+
