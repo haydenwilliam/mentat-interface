@@ -107,20 +107,22 @@ const ProjectsView = () => {
           {demoProjects.map((project) => (
             <div
               key={project.id}
-              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-4 hover:bg-mentat-secondary/20 transition-colors"
+              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-4 hover:bg-mentat-secondary/20 transition-colors min-h-[160px] w-full"
             >
-              <div className="flex items-start justify-between">
-                <div className="space-y-2">
+              <div className="flex items-start justify-between h-full">
+                <div className="space-y-2 flex flex-col min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base font-medium text-mentat-primary">{project.name}</h3>
-                    <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/30 text-mentat-highlight">
+                    <h3 className="text-base font-medium text-mentat-primary truncate">{project.name}</h3>
+                    <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/30 text-mentat-highlight whitespace-nowrap">
                       {project.type}
                     </span>
                   </div>
-                  <p className="text-sm text-mentat-primary/80">{project.description}</p>
-                  {getStatusDisplay(project)}
+                  <p className="text-sm text-mentat-primary/80 line-clamp-2">{project.description}</p>
+                  <div className="mt-auto">
+                    {getStatusDisplay(project)}
+                  </div>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 ml-4 shrink-0">
                   <Button
                     variant="outline"
                     size="sm"
