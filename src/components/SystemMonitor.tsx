@@ -1,21 +1,8 @@
 
-import { Cpu, Activity, Database, Network, HardDrive, Timer } from "lucide-react";
 import { useState, useEffect } from "react";
-import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
-
-interface DeployedProject {
-  id: string;
-  name: string;
-  type: 'agent' | 'workflow';
-  status: 'running' | 'paused' | 'error';
-  resources: {
-    cpu: number;
-    memory: number;
-    gpu: number;
-  };
-  estimatedCompletion?: Date;
-  progress: number;
-}
+import { SystemMetrics } from "./system-monitor/SystemMetrics";
+import { ProjectCard } from "./system-monitor/ProjectCard";
+import { DeployedProject } from "./system-monitor/types";
 
 const SystemMonitor = () => {
   const [cpuUsage, setCpuUsage] = useState(0);
@@ -91,123 +78,26 @@ const SystemMonitor = () => {
 
   return (
     <div className="h-full flex flex-col gap-6 p-6 bg-mentat-background/80 rounded-lg border border-mentat-border/20">
-      {/* System Metrics Panel */}
-      <div className="grid grid-cols-5 gap-4">
-        <MonitorCard
-          icon={<Cpu className="w-4 h-4" />}
-          title="CPU Usage"
-          value={`${cpuUsage.toFixed(1)}%`}
-          chart={
-            <ResponsiveContainer width="100%" height={40}>
-              <AreaChart data={cpuHistory}>
-                <Area 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="rgb(34, 197, 94)" 
-                  fill="rgba(34, 197, 94, 0.1)"
-                  strokeWidth={1}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    background: 'rgba(0, 0, 0, 0.8)',
-                    border: 'none',
-                    borderRadius: '4px'
-                  }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          }
-          className={getStatusColor(cpuUsage)}
-        />
-        <MonitorCard
-          icon={<Database className="w-4 h-4" />}
-          title="Memory"
-          value={`${memoryUsage.toFixed(1)}%`}
-          className={getStatusColor(memoryUsage)}
-        />
-        <MonitorCard
-          icon={<Network className="w-4 h-4" />}
-          title="Network"
-          value={`${networkActivity.toFixed(1)} MB/s`}
-          className={getStatusColor(networkActivity)}
-        />
-        <MonitorCard
-          icon={<Activity className="w-4 h-4" />}
-          title="GPU"
-          value={`${gpuUsage.toFixed(1)}%`}
-          className={getStatusColor(gpuUsage)}
-        />
-        <MonitorCard
-          icon={<HardDrive className="w-4 h-4" />}
-          title="Disk Usage"
-          value={`${diskUsage.toFixed(1)}%`}
-          className={getStatusColor(diskUsage)}
-        />
-      </div>
+      <SystemMetrics
+        cpuUsage={cpuUsage}
+        memoryUsage={memoryUsage}
+        networkActivity={networkActivity}
+        gpuUsage={gpuUsage}
+        diskUsage={diskUsage}
+        cpuHistory={cpuHistory}
+        getStatusColor={getStatusColor}
+      />
 
-      {/* Deployed Projects Panel */}
       <div className="flex-1">
         <h2 className="text-mentat-primary text-sm font-semibold mb-4">Active Projects</h2>
         <div className="space-y-4">
           {deployedProjects.map(project => (
-            <div key={project.id} className="p-4 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full ${
-                    project.status === 'running' ? 'bg-green-400' :
-                    project.status === 'paused' ? 'bg-yellow-400' : 'bg-red-400'
-                  }`} />
-                  <span className="text-mentat-primary font-medium">{project.name}</span>
-                  <span className="text-xs text-mentat-primary/60 px-2 py-0.5 rounded-full border border-mentat-border/20">
-                    {project.type}
-                  </span>
-                </div>
-                {project.estimatedCompletion && (
-                  <div className="flex items-center gap-1 text-xs text-mentat-primary/60">
-                    <Timer className="w-3 h-3" />
-                    {formatTime(project.estimatedCompletion)}
-                  </div>
-                )}
-              </div>
-              
-              {/* Updated Resource Usage Display */}
-              <div className="grid grid-cols-3 gap-4 mb-3">
-                {Object.entries(project.resources).map(([key, value]) => (
-                  <div key={key} className="p-2 rounded bg-mentat-secondary/10">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-1.5">
-                        {key === 'cpu' && <Cpu className="w-3 h-3 text-mentat-primary/60" />}
-                        {key === 'memory' && <Database className="w-3 h-3 text-mentat-primary/60" />}
-                        {key === 'gpu' && <Activity className="w-3 h-3 text-mentat-primary/60" />}
-                        <span className="text-xs font-medium text-mentat-primary/80">{key.toUpperCase()}</span>
-                      </div>
-                      <span className={`text-xs font-medium ${getStatusColor(value)}`}>
-                        {value.toFixed(1)}%
-                      </span>
-                    </div>
-                    <div className="h-1.5 bg-mentat-secondary/20 rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full rounded-full transition-all duration-300 ${getStatusColor(value)}`}
-                        style={{ width: `${value}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between text-xs mb-1">
-                  <span className="text-mentat-primary/60">Progress</span>
-                  <span className="text-mentat-primary">{project.progress.toFixed(1)}%</span>
-                </div>
-                <div className="h-1.5 bg-mentat-secondary/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-green-500 rounded-full transition-all duration-300"
-                    style={{ width: `${project.progress}%` }}
-                  />
-                </div>
-              </div>
-            </div>
+            <ProjectCard
+              key={project.id}
+              project={project}
+              getStatusColor={getStatusColor}
+              formatTime={formatTime}
+            />
           ))}
         </div>
       </div>
@@ -223,35 +113,5 @@ const SystemMonitor = () => {
   );
 };
 
-const MonitorCard = ({ 
-  icon, 
-  title, 
-  value,
-  chart,
-  className = ''
-}: { 
-  icon: React.ReactNode; 
-  title: string; 
-  value: string;
-  chart?: React.ReactNode;
-  className?: string;
-}) => (
-  <div className="p-4 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
-    <div className="flex items-center justify-between mb-2">
-      <div className="flex items-center gap-2">
-        <div className="text-mentat-primary/80">
-          {icon}
-        </div>
-        <span className="text-mentat-highlight/80 text-xs font-medium">{title}</span>
-      </div>
-    </div>
-    <div className={`text-xl font-semibold ${className}`}>{value}</div>
-    {chart && (
-      <div className="mt-2">
-        {chart}
-      </div>
-    )}
-  </div>
-);
-
 export default SystemMonitor;
+
