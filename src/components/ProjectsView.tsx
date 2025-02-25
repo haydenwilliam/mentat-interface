@@ -1,5 +1,4 @@
-
-import { Cog, Play, Share } from "lucide-react";
+import { Cog, Plus, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 
@@ -98,7 +97,7 @@ const ProjectsView = () => {
             size="sm"
             className="flex items-center gap-1.5 hover:text-mentat-highlight bg-mentat-secondary/20 border-mentat-highlight"
           >
-            <Play className="w-3.5 h-3.5" />
+            <Plus className="w-3.5 h-3.5" />
             New Project
           </Button>
         </div>
