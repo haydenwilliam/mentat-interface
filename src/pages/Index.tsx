@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import SystemMonitor from "@/components/SystemMonitor";
 import Terminal from "@/components/Terminal";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/ui/sidebar/sidebar";
 import FileExplorer from "@/components/FileExplorer";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showMonitor, setShowMonitor] = useState(false);
   const [showFileExplorer, setShowFileExplorer] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
   const handleAddToContext = (path: string) => {
     setSelectedFiles(prev => {
       if (prev.includes(path)) {
@@ -21,6 +24,7 @@ const Index = () => {
       return [...prev, path];
     });
   };
+
   return <div className={`min-h-screen transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex h-screen">
         {/* Left Sidebar */}
@@ -52,4 +56,5 @@ const Index = () => {
       </div>
     </div>;
 };
+
 export default Index;

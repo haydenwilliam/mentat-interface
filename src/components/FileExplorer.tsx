@@ -1,7 +1,8 @@
+
 import { Folder, File, ChevronRight, ChevronDown, FolderTree, PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 
-type FileSystemValue = string[] | { [key: string]: string[] };
+type FileSystemValue = string[] | { [key: string]: FileSystemValue };
 
 interface FileSystemStructure {
   [key: string]: FileSystemValue;
