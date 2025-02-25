@@ -19,7 +19,7 @@ interface SystemMetricsProps {
 }
 
 const createChart = (data: { time: number; value: number; }[]) => (
-  <ResponsiveContainer width="100%" height={40}>
+  <ResponsiveContainer width="100%" height={25}>
     <AreaChart data={data}>
       <Area 
         type="monotone" 
@@ -55,8 +55,8 @@ export const SystemMetrics = ({
   getStatusColor,
 }: SystemMetricsProps) => (
   <div>
-    <h2 className="text-mentat-primary text-lg font-semibold mb-4">System Health</h2>
-    <div className="grid grid-cols-5 gap-4">
+    <h2 className="text-lg font-semibold mb-3 text-mentat-primary">System Health</h2>
+    <div className="grid grid-cols-5 gap-3">
       <MonitorCard
         icon={<Cpu className="w-4 h-4" />}
         title="CPU Usage"
@@ -95,3 +95,4 @@ export const SystemMetrics = ({
     </div>
   </div>
 );
+
