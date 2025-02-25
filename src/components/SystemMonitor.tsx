@@ -15,6 +15,10 @@ const SystemMonitor = () => {
         gpuUsage={metrics.gpuUsage}
         diskUsage={metrics.diskUsage}
         cpuHistory={metrics.cpuHistory}
+        memoryHistory={metrics.memoryHistory}
+        networkHistory={metrics.networkHistory}
+        gpuHistory={metrics.gpuHistory}
+        diskHistory={metrics.diskHistory}
         getStatusColor={utils.getStatusColor}
       />
 

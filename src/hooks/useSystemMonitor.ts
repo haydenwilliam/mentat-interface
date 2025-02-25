@@ -8,7 +8,13 @@ export const useSystemMonitor = () => {
   const [networkActivity, setNetworkActivity] = useState(0);
   const [gpuUsage, setGpuUsage] = useState(0);
   const [diskUsage, setDiskUsage] = useState(0);
+  
   const [cpuHistory, setCpuHistory] = useState<{ time: number; value: number; }[]>([]);
+  const [memoryHistory, setMemoryHistory] = useState<{ time: number; value: number; }[]>([]);
+  const [networkHistory, setNetworkHistory] = useState<{ time: number; value: number; }[]>([]);
+  const [gpuHistory, setGpuHistory] = useState<{ time: number; value: number; }[]>([]);
+  const [diskHistory, setDiskHistory] = useState<{ time: number; value: number; }[]>([]);
+  
   const [deployedProjects, setDeployedProjects] = useState<DeployedProject[]>([
     {
       id: "1",
@@ -33,16 +39,26 @@ export const useSystemMonitor = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const newCpuUsage = Math.random() * 100;
-      setCpuUsage(newCpuUsage);
-      setMemoryUsage(Math.random() * 100);
-      setNetworkActivity(Math.random() * 100);
-      setGpuUsage(Math.random() * 100);
-      setDiskUsage(Math.random() * 100);
+      const newMemoryUsage = Math.random() * 100;
+      const newNetworkActivity = Math.random() * 100;
+      const newGpuUsage = Math.random() * 100;
+      const newDiskUsage = Math.random() * 100;
       
-      setCpuHistory(prev => [
-        ...prev.slice(-20),
-        { time: Date.now(), value: newCpuUsage }
-      ]);
+      setCpuUsage(newCpuUsage);
+      setMemoryUsage(newMemoryUsage);
+      setNetworkActivity(newNetworkActivity);
+      setGpuUsage(newGpuUsage);
+      setDiskUsage(newDiskUsage);
+      
+      const now = Date.now();
+      const updateHistory = (prev: { time: number; value: number; }[], newValue: number) => 
+        [...prev.slice(-20), { time: now, value: newValue }];
+      
+      setCpuHistory(prev => updateHistory(prev, newCpuUsage));
+      setMemoryHistory(prev => updateHistory(prev, newMemoryUsage));
+      setNetworkHistory(prev => updateHistory(prev, newNetworkActivity));
+      setGpuHistory(prev => updateHistory(prev, newGpuUsage));
+      setDiskHistory(prev => updateHistory(prev, newDiskUsage));
 
       setDeployedProjects(prev => 
         prev.map(project => ({
@@ -81,7 +97,11 @@ export const useSystemMonitor = () => {
       networkActivity,
       gpuUsage,
       diskUsage,
-      cpuHistory
+      cpuHistory,
+      memoryHistory,
+      networkHistory,
+      gpuHistory,
+      diskHistory
     },
     deployedProjects,
     utils: {
