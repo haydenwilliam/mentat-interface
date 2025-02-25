@@ -17,7 +17,7 @@ export const MonitorCard = ({
   chart,
   className = ''
 }: MonitorCardProps) => (
-  <div className="p-2.5 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
+  <div className="h-[104px] p-2.5 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
     <div className="flex items-center justify-between mb-1">
       <div className="flex items-center gap-1.5">
         <div className="text-mentat-primary/80">
@@ -34,4 +34,3 @@ export const MonitorCard = ({
     )}
   </div>
 );
-

@@ -22,9 +22,9 @@ const SystemMonitor = () => {
         getStatusColor={utils.getStatusColor}
       />
 
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 overflow-hidden">
         <h2 className="text-lg font-semibold mb-3 text-mentat-primary">Active Projects</h2>
-        <div className="grid grid-cols-2 gap-3 h-[calc(100%-2rem)]">
+        <div className="grid grid-cols-2 gap-3 h-[calc(100%-2rem)] overflow-y-auto pr-1">
           {deployedProjects.map(project => (
             <ProjectCard
               key={project.id}
@@ -48,4 +48,3 @@ const SystemMonitor = () => {
 };
 
 export default SystemMonitor;
-
