@@ -10,41 +10,37 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, getStatusColor, formatTime }: ProjectCardProps) => (
-  <div className="p-4 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
-    <div className="flex items-center justify-between mb-3">
-      <div className="flex items-center gap-2">
-        <div className={`w-2 h-2 rounded-full ${
+  <div className="p-3 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
+    <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center gap-2 min-w-0">
+        <div className={`w-2 h-2 shrink-0 rounded-full ${
           project.status === 'running' ? 'bg-green-400' :
           project.status === 'paused' ? 'bg-yellow-400' : 'bg-red-400'
         }`} />
-        <span className="text-mentat-primary font-medium">{project.name}</span>
-        <span className="text-xs text-mentat-primary/60 px-2 py-0.5 rounded-full border border-mentat-border/20">
-          {project.type}
-        </span>
+        <span className="text-mentat-primary font-medium text-sm truncate">{project.name}</span>
       </div>
       {project.estimatedCompletion && (
-        <div className="flex items-center gap-1 text-xs text-mentat-primary/60">
+        <div className="flex items-center gap-1 text-xs text-mentat-primary/60 shrink-0">
           <Timer className="w-3 h-3" />
           {formatTime(project.estimatedCompletion)}
         </div>
       )}
     </div>
     
-    <div className="grid grid-cols-3 gap-4 mb-3">
+    <div className="grid grid-cols-3 gap-2 mb-2">
       {Object.entries(project.resources).map(([key, value]) => (
-        <div key={key} className="p-2 rounded bg-mentat-secondary/10">
-          <div className="flex items-center justify-between mb-1.5">
-            <div className="flex items-center gap-1.5">
+        <div key={key} className="p-1.5 rounded bg-mentat-secondary/10">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-1">
               {key === 'cpu' && <Cpu className="w-3 h-3 text-mentat-primary/60" />}
               {key === 'memory' && <Database className="w-3 h-3 text-mentat-primary/60" />}
               {key === 'gpu' && <Activity className="w-3 h-3 text-mentat-primary/60" />}
-              <span className="text-xs font-medium text-mentat-primary/80">{key.toUpperCase()}</span>
             </div>
             <span className={`text-xs font-medium ${getStatusColor(value)}`}>
-              {value.toFixed(1)}%
+              {value.toFixed(0)}%
             </span>
           </div>
-          <div className="h-1.5 bg-mentat-secondary/20 rounded-full overflow-hidden">
+          <div className="h-1 bg-mentat-secondary/20 rounded-full overflow-hidden">
             <div 
               className={`h-full rounded-full transition-all duration-300 ${getStatusColor(value)}`}
               style={{ width: `${value}%` }}
@@ -55,11 +51,11 @@ export const ProjectCard = ({ project, getStatusColor, formatTime }: ProjectCard
     </div>
 
     <div className="space-y-1">
-      <div className="flex justify-between text-xs mb-1">
+      <div className="flex justify-between text-xs mb-0.5">
         <span className="text-mentat-primary/60">Progress</span>
-        <span className="text-mentat-primary">{project.progress.toFixed(1)}%</span>
+        <span className="text-mentat-primary">{project.progress.toFixed(0)}%</span>
       </div>
-      <div className="h-1.5 bg-mentat-secondary/10 rounded-full overflow-hidden">
+      <div className="h-1 bg-mentat-secondary/10 rounded-full overflow-hidden">
         <div 
           className="h-full bg-green-500 rounded-full transition-all duration-300"
           style={{ width: `${project.progress}%` }}

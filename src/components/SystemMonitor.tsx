@@ -22,17 +22,19 @@ const SystemMonitor = () => {
         getStatusColor={utils.getStatusColor}
       />
 
-      <div className="flex-1 min-h-0"> {/* Add min-h-0 to allow flex child to shrink */}
+      <div className="flex-1 min-h-0">
         <h2 className="text-lg font-semibold mb-4 text-mentat-primary">Active Projects</h2>
-        <div className="space-y-4 h-[calc(100%-2rem)] overflow-y-auto pr-2"> {/* Fixed height calculation and added padding for scrollbar */}
-          {deployedProjects.map(project => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              getStatusColor={utils.getStatusColor}
-              formatTime={utils.formatTime}
-            />
-          ))}
+        <div className="h-[calc(100%-2rem)] overflow-y-auto pr-2">
+          <div className="grid grid-cols-2 gap-4">
+            {deployedProjects.map(project => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                getStatusColor={utils.getStatusColor}
+                formatTime={utils.formatTime}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
