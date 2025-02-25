@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Folder, Users, Activity, Settings } from "lucide-react";
+import { Folder, Users, Activity, Settings, Terminal } from "lucide-react";
 import MenuItem from "./menu-item";
 import MenuGroup from "./menu-group";
 
@@ -16,6 +16,17 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
       <div ref={ref} className="w-16 hover:w-48 transition-all duration-300 bg-mentat-secondary/20 border-r border-mentat-border flex flex-col">
         <div className="p-2">
           <div className="space-y-4">
+            {/* Terminal Section */}
+            <MenuGroup>
+              <MenuItem 
+                icon={<Terminal />}
+                onClick={() => onViewChange?.('terminal')}
+                className={activeView === 'terminal' ? 'bg-mentat-secondary/40' : ''}
+              >
+                Terminal
+              </MenuItem>
+            </MenuGroup>
+
             {/* Projects Section */}
             <MenuGroup>
               <MenuItem 
