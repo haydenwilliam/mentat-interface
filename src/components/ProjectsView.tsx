@@ -23,23 +23,23 @@ const demoProjects: Project[] = [
     type: "agent",
     status: "in-progress",
     progress: 65,
-    eta: new Date(2024, 3, 30) // April 30, 2024
+    eta: new Date(2024, 5, 15) // June 15, 2024
   },
   {
     id: "2",
     name: "Adventure Quest",
     description: "A classic RPG with immersive storytelling and strategic combat",
     type: "game",
-    status: "completed",
-    completedAt: new Date(2024, 2, 15), // March 15, 2024
-    outcome: "success"
+    status: "ready"
   },
   {
     id: "3",
     name: "Data Analytics Tool for Excel",
     description: "Advanced data analysis and visualization tools integrated with Microsoft Excel",
     type: "software",
-    status: "ready"
+    status: "completed",
+    completedAt: new Date(2024, 3, 1), // April 1, 2024
+    outcome: "success"
   }
 ];
 
@@ -107,10 +107,7 @@ const ProjectsView = () => {
           {demoProjects.map((project) => (
             <div
               key={project.id}
-              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-6 hover:bg-mentat-secondary/20 transition-colors hover:border-mentat-highlight"
-              style={{
-                boxShadow: '0 0 10px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1)'
-              }}
+              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-6 hover:bg-mentat-secondary/20 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div className="space-y-3">
@@ -123,29 +120,29 @@ const ProjectsView = () => {
                   <p className="text-mentat-primary/80">{project.description}</p>
                   {getStatusDisplay(project)}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20"
+                    className="flex items-center gap-1.5 bg-mentat-secondary/30 hover:bg-mentat-secondary/40 border-mentat-border"
                   >
-                    <Cog className="w-4 h-4" />
+                    <Cog className="w-3.5 h-3.5" />
                     Build
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20"
+                    className="flex items-center gap-1.5 bg-mentat-secondary/30 hover:bg-mentat-secondary/40 border-mentat-border"
                   >
-                    <Play className="w-4 h-4" />
+                    <Play className="w-3.5 h-3.5" />
                     Deploy
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-2 hover:text-mentat-highlight bg-mentat-secondary/20"
+                    className="flex items-center gap-1.5 bg-mentat-secondary/30 hover:bg-mentat-secondary/40 border-mentat-border"
                   >
-                    <Share className="w-4 h-4" />
+                    <Share className="w-3.5 h-3.5" />
                     Share
                   </Button>
                 </div>
@@ -159,3 +156,4 @@ const ProjectsView = () => {
 };
 
 export default ProjectsView;
+
