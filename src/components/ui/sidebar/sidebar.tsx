@@ -5,13 +5,12 @@ import MenuItem from "./menu-item";
 import MenuGroup from "./menu-group";
 
 interface SidebarProps {
-  onMonitorToggle: () => void;
-  onViewChange?: (view: 'terminal' | 'projects') => void;
-  activeView?: 'terminal' | 'projects';
+  onViewChange?: (view: 'terminal' | 'projects' | 'monitor') => void;
+  activeView?: 'terminal' | 'projects' | 'monitor';
 }
 
 const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
-  ({ onMonitorToggle, onViewChange, activeView = 'terminal' }, ref) => {
+  ({ onViewChange, activeView = 'terminal' }, ref) => {
     return (
       <div ref={ref} className="w-14 hover:w-36 transition-all duration-300 bg-mentat-secondary/20 border-r border-mentat-border flex flex-col">
         <div className="p-2">
@@ -39,7 +38,15 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
             </MenuGroup>
 
             {/* System Monitor */}
-            <MenuItem icon={<Activity />} onClick={onMonitorToggle}>Monitor</MenuItem>
+            <MenuGroup>
+              <MenuItem 
+                icon={<Activity />}
+                onClick={() => onViewChange?.('monitor')}
+                className={activeView === 'monitor' ? 'bg-mentat-secondary/40' : ''}
+              >
+                Monitor
+              </MenuItem>
+            </MenuGroup>
 
             {/* Settings */}
             <MenuItem icon={<Settings />}>Settings</MenuItem>

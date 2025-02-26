@@ -10,24 +10,16 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showMonitor, setShowMonitor] = useState(false);
   const [showFileExplorer, setShowFileExplorer] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
-  const [activeView, setActiveView] = useState<'terminal' | 'projects'>('terminal');
+  const [activeView, setActiveView] = useState<'terminal' | 'projects' | 'monitor'>('terminal');
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
-  const handleMonitorToggle = () => {
-    setShowMonitor(prev => !prev);
-  };
-
-  const handleViewChange = (view: 'terminal' | 'projects') => {
+  const handleViewChange = (view: 'terminal' | 'projects' | 'monitor') => {
     setActiveView(view);
-    if (showMonitor) {
-      setShowMonitor(false);
-    }
   };
 
   const handleAddToContext = (path: string) => {
@@ -39,26 +31,21 @@ const Index = () => {
     });
   };
 
-  // Only show file explorer when in terminal view and monitor is not shown
-  const shouldShowFileExplorer = activeView === 'terminal' && !showMonitor;
+  // Only show file explorer when in terminal view
+  const shouldShowFileExplorer = activeView === 'terminal';
 
   return (
     <div className={`min-h-screen transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex h-screen">
         <Sidebar 
-          onMonitorToggle={handleMonitorToggle}
           onViewChange={handleViewChange}
           activeView={activeView}
         />
 
         <main className="flex-1 pl-6 pr-8 py-4 overflow-hidden flex flex-col">
-          {showMonitor ? (
-            <SystemMonitor />
-          ) : (
-            <>
-              {activeView === 'terminal' ? <Terminal /> : <ProjectsView />}
-            </>
-          )}
+          {activeView === 'terminal' && <Terminal />}
+          {activeView === 'projects' && <ProjectsView />}
+          {activeView === 'monitor' && <SystemMonitor />}
         </main>
 
         {shouldShowFileExplorer && (
