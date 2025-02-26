@@ -10,8 +10,8 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, getStatusColor, formatTime }: ProjectCardProps) => (
-  <div className="h-[104px] p-2.5 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
-    <div className="flex items-center justify-between mb-1">
+  <div className="h-[120px] p-2.5 rounded-lg border border-mentat-border/20 bg-mentat-secondary/5">
+    <div className="flex items-center justify-between mb-2">
       <div className="flex items-center gap-1.5 min-w-0">
         <div className={`w-1.5 h-1.5 shrink-0 rounded-full ${
           project.status === 'running' ? 'bg-green-400' :
@@ -27,7 +27,7 @@ export const ProjectCard = ({ project, getStatusColor, formatTime }: ProjectCard
       )}
     </div>
     
-    <div className="grid grid-cols-3 gap-1.5 mb-1">
+    <div className="grid grid-cols-3 gap-1.5 mb-2">
       {Object.entries(project.resources).map(([key, value]) => (
         <div key={key} className="p-1 rounded bg-mentat-secondary/10">
           <div className="flex items-center justify-between mb-0.5">
@@ -67,4 +67,3 @@ export const ProjectCard = ({ project, getStatusColor, formatTime }: ProjectCard
     </div>
   </div>
 );
-
