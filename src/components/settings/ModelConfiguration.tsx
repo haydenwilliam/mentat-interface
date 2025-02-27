@@ -1,54 +1,50 @@
 
 import React, { useState } from "react";
-import { ChevronRight, Edit2, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import ConfigurationModal from "./ConfigurationModal";
+import { Bot, Settings } from "lucide-react";
 
 const ModelConfiguration = () => {
   const [showConfigModal, setShowConfigModal] = useState(false);
 
-  // Mock current configuration
-  const currentConfig = {
-    name: "Default GPT-4",
-    model: "gpt-4-turbo",
-    provider: "openrouter",
-    temperature: 0.7,
-    contextLength: 8192,
-  };
-
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-display font-semibold text-mentat-primary">Model Configuration</h2>
-      
-      {/* Current Configuration Card */}
+      <div className="flex items-center gap-2 mb-2">
+        <Bot className="w-5 h-5 text-mentat-primary" />
+        <h2 className="text-xl font-display font-semibold text-mentat-primary">Model Configuration</h2>
+      </div>
+
       <Card className="p-6 bg-mentat-secondary/10 border-mentat-border">
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-lg font-semibold text-mentat-primary">{currentConfig.name}</h3>
-              <p className="text-sm text-mentat-primary/70">{currentConfig.model}</p>
+            <div className="space-y-1">
+              <h3 className="font-semibold text-mentat-primary">Current Configuration</h3>
+              <p className="text-sm text-mentat-primary/70">GPT-4 Turbo (Default)</p>
             </div>
-            <Button variant="outline" onClick={() => setShowConfigModal(true)}>
-              Change Configuration
+            <Button
+              onClick={() => setShowConfigModal(true)}
+              className="bg-mentat-secondary hover:bg-mentat-secondary/80 text-mentat-primary"
+              variant="outline"
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              Manage Configurations
             </Button>
           </div>
-          
-          {/* Parameters */}
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-mentat-primary/70">Temperature</p>
-              <p className="text-mentat-primary">{currentConfig.temperature}</p>
+              <p className="text-mentat-primary">0.7</p>
             </div>
             <div>
               <p className="text-sm text-mentat-primary/70">Context Length</p>
-              <p className="text-mentat-primary">{currentConfig.contextLength}</p>
+              <p className="text-mentat-primary">8192 tokens</p>
             </div>
           </div>
         </div>
       </Card>
 
-      {/* Configuration Modal */}
       <ConfigurationModal
         open={showConfigModal}
         onOpenChange={setShowConfigModal}
