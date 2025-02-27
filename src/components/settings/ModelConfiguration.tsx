@@ -5,7 +5,7 @@ import { Card } from "../ui/card";
 import { Slider } from "../ui/slider";
 import { Input } from "../ui/input";
 import ConfigurationModal from "./ConfigurationModal";
-import { Bot, Settings, ChevronDown, ChevronUp } from "lucide-react";
+import { Bot, Settings, ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 import { Label } from "../ui/label";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import {
@@ -76,14 +76,17 @@ const ModelConfiguration = () => {
                 <TooltipProvider delayDuration={0}>
                   <div className="space-y-2 w-1/2">
                     <div className="flex items-center justify-between">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
-                          <p>Maximum number of tokens in the model's response</p>
-                        </TooltipContent>
-                      </Tooltip>
+                      <div className="flex items-center gap-1">
+                        <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle className="w-4 h-4 text-mentat-primary/50 hover:text-mentat-primary cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                            <p>Maximum number of tokens in the model's response</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
                       <div className="flex items-center gap-2">
                         <Input
                           type="text"
@@ -98,14 +101,17 @@ const ModelConfiguration = () => {
 
                   <div className="space-y-4 w-1/2">
                     <div className="flex justify-between items-center">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
-                          <p>Controls randomness in responses. Higher values make output more creative but less focused</p>
-                        </TooltipContent>
-                      </Tooltip>
+                      <div className="flex items-center gap-1">
+                        <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle className="w-4 h-4 text-mentat-primary/50 hover:text-mentat-primary cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                            <p>Controls randomness in responses. Higher values make output more creative but less focused</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
                       <span className="text-sm font-mono text-mentat-primary">{temperature}</span>
                     </div>
                     <Slider
@@ -120,14 +126,17 @@ const ModelConfiguration = () => {
 
                   <div className="space-y-4 w-1/2">
                     <div className="flex justify-between items-center">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
-                          <p>Controls diversity of word choices. Lower values make responses more focused and deterministic</p>
-                        </TooltipContent>
-                      </Tooltip>
+                      <div className="flex items-center gap-1">
+                        <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle className="w-4 h-4 text-mentat-primary/50 hover:text-mentat-primary cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                            <p>Controls diversity of word choices. Lower values make responses more focused and deterministic</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
                       <span className="text-sm font-mono text-mentat-primary">{topP}</span>
                     </div>
                     <Slider
