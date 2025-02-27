@@ -8,6 +8,12 @@ import ConfigurationModal from "./ConfigurationModal";
 import { Bot, Settings, ChevronDown, ChevronUp } from "lucide-react";
 import { Label } from "../ui/label";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 const ModelConfiguration = () => {
   const [showConfigModal, setShowConfigModal] = useState(false);
@@ -63,56 +69,79 @@ const ModelConfiguration = () => {
                   variant="ghost"
                   className="flex w-1/2 justify-between items-center text-mentat-primary hover:text-mentat-highlight hover:bg-mentat-secondary/20 px-0"
                 >
-                  <span className="font-display font-semibold text-mentat-primary">Advanced Settings</span>
+                  <span className="font-display text-lg font-semibold text-mentat-primary">Advanced Settings</span>
                   {isAdvancedOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </Button>
               </CollapsibleTrigger>
 
               <CollapsibleContent className="space-y-6">
-                <div className="space-y-2 w-1/2">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-sm font-display text-mentat-primary/70 w-24">Output Length</Label>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="text"
-                        value={outputLength}
-                        onChange={handleOutputLengthChange}
-                        className="w-20 text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
-                      />
-                      <span className="text-sm font-mono text-mentat-primary">tokens</span>
+                <TooltipProvider>
+                  <div className="space-y-2 w-1/2">
+                    <div className="flex items-center gap-4">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Label className="text-sm font-display text-mentat-primary/70 w-24">Output Length</Label>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                          <p>Maximum number of tokens in the model's response</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          type="text"
+                          value={outputLength}
+                          onChange={handleOutputLengthChange}
+                          className="w-20 text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
+                        />
+                        <span className="text-sm font-mono text-mentat-primary">tokens</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-4 w-1/2">
-                  <div className="flex justify-between items-center">
-                    <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
-                    <span className="text-sm font-mono text-mentat-primary">{temperature}</span>
+                  <div className="space-y-4 w-1/2">
+                    <div className="flex justify-between items-center">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                          <p>Controls randomness in responses. Higher values make output more creative but less focused</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <span className="text-sm font-mono text-mentat-primary">{temperature}</span>
+                    </div>
+                    <Slider
+                      value={[temperature]}
+                      onValueChange={(value) => setTemperature(value[0])}
+                      min={0}
+                      max={2}
+                      step={0.5}
+                      className="w-full"
+                    />
                   </div>
-                  <Slider
-                    value={[temperature]}
-                    onValueChange={(value) => setTemperature(value[0])}
-                    min={0}
-                    max={2}
-                    step={0.1}
-                    className="w-full"
-                  />
-                </div>
 
-                <div className="space-y-4 w-1/2">
-                  <div className="flex justify-between items-center">
-                    <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
-                    <span className="text-sm font-mono text-mentat-primary">{topP}</span>
+                  <div className="space-y-4 w-1/2">
+                    <div className="flex justify-between items-center">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                          <p>Controls diversity of word choices. Lower values make responses more focused and deterministic</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <span className="text-sm font-mono text-mentat-primary">{topP}</span>
+                    </div>
+                    <Slider
+                      value={[topP]}
+                      onValueChange={(value) => setTopP(value[0])}
+                      min={0}
+                      max={1}
+                      step={0.5}
+                      className="w-full"
+                    />
                   </div>
-                  <Slider
-                    value={[topP]}
-                    onValueChange={(value) => setTopP(value[0])}
-                    min={0}
-                    max={1}
-                    step={0.1}
-                    className="w-full"
-                  />
-                </div>
+                </TooltipProvider>
               </CollapsibleContent>
             </Collapsible>
           </div>
@@ -128,3 +157,4 @@ const ModelConfiguration = () => {
 };
 
 export default ModelConfiguration;
+
