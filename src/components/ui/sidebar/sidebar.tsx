@@ -5,8 +5,8 @@ import MenuItem from "./menu-item";
 import MenuGroup from "./menu-group";
 
 interface SidebarProps {
-  onViewChange?: (view: 'terminal' | 'projects' | 'monitor') => void;
-  activeView?: 'terminal' | 'projects' | 'monitor';
+  onViewChange?: (view: 'terminal' | 'projects' | 'monitor' | 'settings') => void;
+  activeView?: 'terminal' | 'projects' | 'monitor' | 'settings';
 }
 
 const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
@@ -49,7 +49,13 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
             </MenuGroup>
 
             {/* Settings */}
-            <MenuItem icon={<Settings />}>Settings</MenuItem>
+            <MenuItem 
+              icon={<Settings />}
+              onClick={() => onViewChange?.('settings')}
+              className={activeView === 'settings' ? 'bg-mentat-secondary/40' : ''}
+            >
+              Settings
+            </MenuItem>
           </div>
         </div>
       </div>
