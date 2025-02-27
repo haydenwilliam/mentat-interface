@@ -2,20 +2,15 @@
 import React from "react";
 import ModelConfiguration from "./ModelConfiguration";
 import ThemeSettings from "./ThemeSettings";
-import { Settings2, Paintbrush } from "lucide-react";
+import { Paintbrush } from "lucide-react";
 
 const SettingsPage = () => {
   return (
     <div className="h-full p-4 bg-mentat-background/80 rounded-lg border border-mentat-border/20">
       <div className="max-w-4xl mx-auto space-y-8">
-        <div className="flex items-center gap-2">
-          <div className="p-2 rounded-md bg-mentat-secondary/40">
-            <Settings2 className="w-5 h-5 text-mentat-primary" />
-          </div>
-          <h1 className="text-2xl font-display font-bold text-mentat-primary">
-            Settings
-          </h1>
-        </div>
+        <h1 className="text-2xl font-display font-bold text-mentat-primary text-center">
+          Settings
+        </h1>
         
         {/* Model Configuration Section */}
         <section className="space-y-6">
@@ -23,8 +18,8 @@ const SettingsPage = () => {
         </section>
 
         {/* Theme & Accessibility Section */}
-        <section className="space-y-6">
-          <div className="flex items-center gap-2 mb-4">
+        <section className="space-y-6 pb-6">
+          <div className="flex items-center gap-2 mb-4 justify-center">
             <div className="p-2 rounded-md bg-mentat-secondary/40">
               <Paintbrush className="w-5 h-5 text-mentat-primary" />
             </div>
