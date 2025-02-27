@@ -153,44 +153,48 @@ const ProjectsView = () => {
             {demoProjects.map((project) => (
               <div
                 key={project.id}
-                className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors"
+                className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors h-[160px] flex flex-col"
               >
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-base font-medium text-mentat-primary">{project.name}</h3>
-                      <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/40 text-mentat-highlight">
-                        {project.type}
-                      </span>
+                <div className="flex flex-col flex-1 min-h-0">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="space-y-1 min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-base font-medium text-mentat-primary truncate">{project.name}</h3>
+                        <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/40 text-mentat-highlight shrink-0">
+                          {project.type}
+                        </span>
+                      </div>
+                      <p className="text-sm text-mentat-primary/80 line-clamp-2">{project.description}</p>
                     </div>
-                    <p className="text-sm text-mentat-primary/80">{project.description}</p>
-                    {getStatusDisplay(project)}
+                    <div className="flex gap-1 ml-4 shrink-0">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                      >
+                        <Cog className="w-3 h-3" />
+                        Build
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                      >
+                        <Play className="w-3 h-3" />
+                        Deploy
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                      >
+                        <Share className="w-3 h-3" />
+                        Share
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex gap-1">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                    >
-                      <Cog className="w-3 h-3" />
-                      Build
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                    >
-                      <Play className="w-3 h-3" />
-                      Deploy
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                    >
-                      <Share className="w-3 h-3" />
-                      Share
-                    </Button>
+                  <div className="mt-auto">
+                    {getStatusDisplay(project)}
                   </div>
                 </div>
               </div>
@@ -203,4 +207,3 @@ const ProjectsView = () => {
 };
 
 export default ProjectsView;
-
