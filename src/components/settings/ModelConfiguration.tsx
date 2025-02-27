@@ -23,9 +23,7 @@ const ModelConfiguration = () => {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
   const handleOutputLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Remove non-numeric characters
     const value = e.target.value.replace(/\D/g, '');
-    // Ensure the value is between 100 and 4000
     const numValue = Math.min(Math.max(Number(value) || 100, 100), 4000);
     setOutputLength(numValue.toString());
   };
@@ -69,20 +67,20 @@ const ModelConfiguration = () => {
                   variant="ghost"
                   className="flex w-1/2 justify-between items-center text-mentat-primary hover:text-mentat-highlight hover:bg-mentat-secondary/20 px-0"
                 >
-                  <span className="font-display text-lg font-semibold text-mentat-primary">Advanced Settings</span>
+                  <span className="font-display font-semibold text-mentat-primary">Advanced Settings</span>
                   {isAdvancedOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </Button>
               </CollapsibleTrigger>
 
               <CollapsibleContent className="space-y-6">
-                <TooltipProvider>
+                <TooltipProvider delayDuration={0}>
                   <div className="space-y-2 w-1/2">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-between">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Label className="text-sm font-display text-mentat-primary/70 w-24">Output Length</Label>
+                          <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                        <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
                           <p>Maximum number of tokens in the model's response</p>
                         </TooltipContent>
                       </Tooltip>
@@ -104,7 +102,7 @@ const ModelConfiguration = () => {
                         <TooltipTrigger asChild>
                           <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                        <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
                           <p>Controls randomness in responses. Higher values make output more creative but less focused</p>
                         </TooltipContent>
                       </Tooltip>
@@ -126,7 +124,7 @@ const ModelConfiguration = () => {
                         <TooltipTrigger asChild>
                           <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-mentat-secondary text-mentat-primary border-mentat-border">
+                        <TooltipContent side="right" className="bg-mentat-secondary text-mentat-primary border-mentat-border">
                           <p>Controls diversity of word choices. Lower values make responses more focused and deterministic</p>
                         </TooltipContent>
                       </Tooltip>
@@ -157,4 +155,3 @@ const ModelConfiguration = () => {
 };
 
 export default ModelConfiguration;
-
