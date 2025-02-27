@@ -11,7 +11,7 @@ const ModelConfiguration = () => {
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [temperature, setTemperature] = useState(0.7);
   const [outputLength, setOutputLength] = useState(1000);
-  const [contextLength, setContextLength] = useState(8192);
+  const [topP, setTopP] = useState(0.9);
 
   return (
     <div className="space-y-4">
@@ -42,9 +42,9 @@ const ModelConfiguration = () => {
           </div>
 
           <div className="space-y-6">
-            <div className="space-y-4">
+            <div className="space-y-4 w-1/2">
               <div className="flex justify-between items-center">
-                <Label className="text-sm font-mono text-mentat-primary/70">Temperature</Label>
+                <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
                 <span className="text-sm font-mono text-mentat-primary">{temperature}</span>
               </div>
               <Slider
@@ -57,9 +57,9 @@ const ModelConfiguration = () => {
               />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 w-1/2">
               <div className="flex justify-between items-center">
-                <Label className="text-sm font-mono text-mentat-primary/70">Output Length</Label>
+                <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
                 <span className="text-sm font-mono text-mentat-primary">{outputLength} tokens</span>
               </div>
               <Slider
@@ -72,17 +72,17 @@ const ModelConfiguration = () => {
               />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 w-1/2">
               <div className="flex justify-between items-center">
-                <Label className="text-sm font-mono text-mentat-primary/70">Context Length</Label>
-                <span className="text-sm font-mono text-mentat-primary">{contextLength} tokens</span>
+                <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
+                <span className="text-sm font-mono text-mentat-primary">{topP}</span>
               </div>
               <Slider
-                value={[contextLength]}
-                onValueChange={(value) => setContextLength(value[0])}
-                min={1000}
-                max={32000}
-                step={1000}
+                value={[topP]}
+                onValueChange={(value) => setTopP(value[0])}
+                min={0}
+                max={1}
+                step={0.1}
                 className="w-full"
               />
             </div>

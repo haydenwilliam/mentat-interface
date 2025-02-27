@@ -6,7 +6,7 @@ import { Paintbrush } from "lucide-react";
 
 const SettingsPage = () => {
   return (
-    <div className="h-full p-4 bg-mentat-background/80 rounded-lg border border-mentat-border/20">
+    <div className="h-full p-4 bg-mentat-background/80 rounded-lg border border-mentat-border/20 overflow-y-auto">
       <div className="max-w-4xl mx-auto space-y-8">
         <h1 className="text-2xl font-display font-bold text-mentat-primary text-center">
           Settings
