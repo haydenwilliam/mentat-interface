@@ -63,7 +63,7 @@ const ModelConfiguration = () => {
                   variant="ghost"
                   className="flex w-1/2 justify-between items-center text-mentat-primary hover:text-mentat-highlight hover:bg-mentat-secondary/20 px-0"
                 >
-                  <span className="font-display text-lg">Advanced Settings</span>
+                  <span className="font-display font-semibold text-mentat-primary">Advanced Settings</span>
                   {isAdvancedOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </Button>
               </CollapsibleTrigger>
