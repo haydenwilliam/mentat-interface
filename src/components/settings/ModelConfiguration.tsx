@@ -53,21 +53,6 @@ const ModelConfiguration = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="space-y-4 w-1/2">
-              <div className="flex justify-between items-center">
-                <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="text"
-                    value={outputLength}
-                    onChange={handleOutputLengthChange}
-                    className="w-24 text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
-                  />
-                  <span className="text-sm font-mono text-mentat-primary">tokens</span>
-                </div>
-              </div>
-            </div>
-
             <Collapsible
               open={isAdvancedOpen}
               onOpenChange={setIsAdvancedOpen}
@@ -76,14 +61,29 @@ const ModelConfiguration = () => {
               <CollapsibleTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-2 text-mentat-primary hover:text-mentat-highlight hover:bg-mentat-secondary/20"
+                  className="flex w-full justify-between items-center text-mentat-primary hover:text-mentat-highlight hover:bg-mentat-secondary/20 px-0"
                 >
+                  <span className="font-display text-lg">Advanced Settings</span>
                   {isAdvancedOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                  <span className="font-display text-sm">Advanced Settings</span>
                 </Button>
               </CollapsibleTrigger>
 
               <CollapsibleContent className="space-y-6">
+                <div className="space-y-4 w-1/2">
+                  <div className="flex justify-between items-center">
+                    <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        type="text"
+                        value={outputLength}
+                        onChange={handleOutputLengthChange}
+                        className="w-24 text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
+                      />
+                      <span className="text-sm font-mono text-mentat-primary">tokens</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="space-y-4 w-1/2">
                   <div className="flex justify-between items-center">
                     <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
