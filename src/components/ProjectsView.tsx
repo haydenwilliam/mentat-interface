@@ -1,3 +1,4 @@
+
 import { Cog, Plus, Play, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
@@ -22,7 +23,7 @@ const demoProjects: Project[] = [
     type: "agent",
     status: "in-progress",
     progress: 65,
-    eta: new Date(Date.now() + 7 * 60 * 1000) // 7 minutes from now
+    eta: new Date(Date.now() + 7 * 60 * 1000)
   },
   {
     id: "2",
@@ -37,8 +38,51 @@ const demoProjects: Project[] = [
     description: "Advanced data analysis and visualization tools integrated with Microsoft Excel",
     type: "software",
     status: "completed",
-    completedAt: new Date(2025, 1, 15), // Feb 15, 2025
+    completedAt: new Date(2025, 1, 15),
     outcome: "success"
+  },
+  {
+    id: "4",
+    name: "Smart Calendar",
+    description: "AI-powered calendar that optimizes your schedule and suggests meeting times",
+    type: "agent",
+    status: "in-progress",
+    progress: 30,
+    eta: new Date(Date.now() + 14 * 60 * 1000)
+  },
+  {
+    id: "5",
+    name: "Virtual Reality Game",
+    description: "Immersive VR experience with stunning graphics and innovative gameplay",
+    type: "game",
+    status: "in-progress",
+    progress: 85,
+    eta: new Date(Date.now() + 3 * 60 * 1000)
+  },
+  {
+    id: "6",
+    name: "Code Generator",
+    description: "Advanced code generation tool powered by machine learning",
+    type: "software",
+    status: "completed",
+    completedAt: new Date(2025, 2, 1),
+    outcome: "success"
+  },
+  {
+    id: "7",
+    name: "Document Parser",
+    description: "Intelligent document parsing and analysis system",
+    type: "agent",
+    status: "ready"
+  },
+  {
+    id: "8",
+    name: "Mobile Strategy Game",
+    description: "Turn-based strategy game optimized for mobile devices",
+    type: "game",
+    status: "in-progress",
+    progress: 45,
+    eta: new Date(Date.now() + 10 * 60 * 1000)
   }
 ];
 
@@ -88,66 +132,70 @@ const ProjectsView = () => {
   };
 
   return (
-    <div className="flex-1 overflow-auto p-4 bg-mentat-background">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-mentat-highlight">My Projects</h2>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center gap-1.5 hover:text-mentat-highlight bg-mentat-secondary/20 border-mentat-highlight"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            New Project
-          </Button>
+    <div className="flex-1 overflow-hidden p-4 bg-mentat-background">
+      <div className="h-full max-w-5xl mx-auto border border-mentat-border rounded-lg overflow-hidden flex flex-col">
+        <div className="sticky top-0 bg-mentat-background p-4 border-b border-mentat-border z-10">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-mentat-highlight">My Projects</h2>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1.5 hover:text-mentat-highlight bg-mentat-secondary/20 border-mentat-highlight"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              New Project
+            </Button>
+          </div>
         </div>
         
-        <div className="grid gap-4">
-          {demoProjects.map((project) => (
-            <div
-              key={project.id}
-              className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors"
-            >
-              <div className="flex items-start justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-base font-medium text-mentat-primary">{project.name}</h3>
-                    <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/40 text-mentat-highlight">
-                      {project.type}
-                    </span>
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="grid gap-4">
+            {demoProjects.map((project) => (
+              <div
+                key={project.id}
+                className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-medium text-mentat-primary">{project.name}</h3>
+                      <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/40 text-mentat-highlight">
+                        {project.type}
+                      </span>
+                    </div>
+                    <p className="text-sm text-mentat-primary/80">{project.description}</p>
+                    {getStatusDisplay(project)}
                   </div>
-                  <p className="text-sm text-mentat-primary/80">{project.description}</p>
-                  {getStatusDisplay(project)}
-                </div>
-                <div className="flex gap-1">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                  >
-                    <Cog className="w-3 h-3" />
-                    Build
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                  >
-                    <Play className="w-3 h-3" />
-                    Deploy
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                  >
-                    <Share className="w-3 h-3" />
-                    Share
-                  </Button>
+                  <div className="flex gap-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                    >
+                      <Cog className="w-3 h-3" />
+                      Build
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                    >
+                      <Play className="w-3 h-3" />
+                      Deploy
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                    >
+                      <Share className="w-3 h-3" />
+                      Share
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -155,3 +203,4 @@ const ProjectsView = () => {
 };
 
 export default ProjectsView;
+
