@@ -32,7 +32,6 @@ const Index = () => {
     });
   };
 
-  // Only show file explorer when in terminal view
   const shouldShowFileExplorer = activeView === 'terminal';
 
   return (
@@ -45,9 +44,7 @@ const Index = () => {
 
         <main className="flex-1 pl-6 pr-8 py-4 overflow-hidden flex flex-col">
           {activeView === 'terminal' && (
-            <div className="h-full bg-mentat-secondary/20 border border-mentat-border rounded-lg">
-              <Terminal />
-            </div>
+            <Terminal />
           )}
           {activeView === 'projects' && <ProjectsView />}
           {activeView === 'monitor' && <SystemMonitor />}

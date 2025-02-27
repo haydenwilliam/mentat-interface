@@ -105,7 +105,7 @@ const Terminal = () => {
   };
 
   return (
-    <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-secondary/10 rounded-lg flex flex-col">
+    <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-background rounded-lg flex flex-col">
       <div className="flex items-center justify-between w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border-b border-mentat-border/30">
         <div className="flex items-center gap-2 text-mentat-primary">
           <Folder className="w-4 h-4" />
@@ -155,3 +155,4 @@ const Terminal = () => {
 };
 
 export default Terminal;
+
