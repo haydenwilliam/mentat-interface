@@ -13,13 +13,13 @@ const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showFileExplorer, setShowFileExplorer] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
-  const [activeView, setActiveView] = useState<'terminal' | 'projects' | 'monitor'>('terminal');
+  const [activeView, setActiveView] = useState<'terminal' | 'projects' | 'monitor' | 'settings'>('terminal');
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
-  const handleViewChange = (view: 'terminal' | 'projects' | 'monitor') => {
+  const handleViewChange = (view: 'terminal' | 'projects' | 'monitor' | 'settings') => {
     setActiveView(view);
   };
 
@@ -47,6 +47,7 @@ const Index = () => {
           {activeView === 'terminal' && <Terminal />}
           {activeView === 'projects' && <ProjectsView />}
           {activeView === 'monitor' && <SystemMonitor />}
+          {activeView === 'settings' && <SettingsPage />}
         </main>
 
         {shouldShowFileExplorer && (
