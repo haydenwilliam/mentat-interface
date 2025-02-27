@@ -26,10 +26,12 @@ const ModelConfiguration = () => {
 
   return (
     <div className="space-y-3">
-      <h2 className="text-lg font-display font-semibold text-mentat-primary flex items-center gap-2">
-        <Bot className="w-4 h-4 text-mentat-primary" />
-        Model Configuration
-      </h2>
+      <div className="flex items-center gap-2">
+        <div className="p-2 rounded-md bg-mentat-secondary/40">
+          <Bot className="w-4 h-4 text-mentat-primary" />
+        </div>
+        <h2 className="text-lg font-display font-semibold text-mentat-primary">Model Configuration</h2>
+      </div>
 
       <Card className="bg-mentat-secondary/20 border-mentat-border">
         <div className="p-6 space-y-8">
@@ -67,7 +69,7 @@ const ModelConfiguration = () => {
               </CollapsibleTrigger>
 
               <CollapsibleContent className="space-y-6">
-                <div className="space-y-2">
+                <div className="space-y-2 w-1/2">
                   <div className="flex items-center gap-4">
                     <Label className="text-sm font-display text-mentat-primary/70 w-24">Output Length</Label>
                     <div className="flex items-center gap-2">
@@ -82,7 +84,7 @@ const ModelConfiguration = () => {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 w-1/2">
                   <div className="flex justify-between items-center">
                     <Label className="text-sm font-display text-mentat-primary/70">Temperature</Label>
                     <span className="text-sm font-mono text-mentat-primary">{temperature}</span>
@@ -97,7 +99,7 @@ const ModelConfiguration = () => {
                   />
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 w-1/2">
                   <div className="flex justify-between items-center">
                     <Label className="text-sm font-display text-mentat-primary/70">Top P</Label>
                     <span className="text-sm font-mono text-mentat-primary">{topP}</span>
@@ -126,4 +128,3 @@ const ModelConfiguration = () => {
 };
 
 export default ModelConfiguration;
-
