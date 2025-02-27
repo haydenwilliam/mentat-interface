@@ -13,12 +13,14 @@ const SettingsPage = () => {
       </h1>
       
       {/* Model Configuration Section */}
-      <section className="space-y-6">
+      <section className="relative space-y-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-mentat-primary/5 to-transparent opacity-50 pointer-events-none" />
         <ModelConfiguration />
       </section>
 
       {/* Theme & Accessibility Section */}
-      <section className="space-y-6">
+      <section className="relative space-y-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-mentat-primary/5 to-transparent opacity-50 pointer-events-none" />
         <div className="flex items-center gap-2 mb-2">
           <Paintbrush className="w-5 h-5 text-mentat-primary" />
           <h2 className="text-xl font-display font-semibold text-mentat-primary">Theme & Accessibility</h2>
