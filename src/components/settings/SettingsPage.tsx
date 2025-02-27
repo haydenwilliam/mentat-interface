@@ -2,7 +2,7 @@
 import React from "react";
 import ModelConfiguration from "./ModelConfiguration";
 import ThemeSettings from "./ThemeSettings";
-import { Settings2, PaintBrush } from "lucide-react";
+import { Settings2, Paintbrush } from "lucide-react";
 
 const SettingsPage = () => {
   return (
@@ -20,7 +20,7 @@ const SettingsPage = () => {
       {/* Theme & Accessibility Section */}
       <section className="space-y-6">
         <div className="flex items-center gap-2 mb-2">
-          <PaintBrush className="w-5 h-5 text-mentat-primary" />
+          <Paintbrush className="w-5 h-5 text-mentat-primary" />
           <h2 className="text-xl font-display font-semibold text-mentat-primary">Theme & Accessibility</h2>
         </div>
         <ThemeSettings />
