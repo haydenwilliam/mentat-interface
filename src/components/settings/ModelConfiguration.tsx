@@ -92,7 +92,7 @@ const ModelConfiguration = () => {
                           type="text"
                           value={outputLength}
                           onChange={handleOutputLengthChange}
-                          className="w-20 text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
+                          className="w-20 text-center font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
                         />
                         <span className="text-sm font-mono text-mentat-primary">tokens</span>
                       </div>
@@ -164,3 +164,4 @@ const ModelConfiguration = () => {
 };
 
 export default ModelConfiguration;
+
