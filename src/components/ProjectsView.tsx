@@ -1,7 +1,13 @@
 
-import { Cog, Plus, Play, Share } from "lucide-react";
+import { Cog, Plus, Play, Share, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Project {
   id: string;
@@ -153,7 +159,7 @@ const ProjectsView = () => {
             {demoProjects.map((project) => (
               <div
                 key={project.id}
-                className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors h-[160px] flex flex-col"
+                className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors h-[140px] flex flex-col"
               >
                 <div className="flex flex-col flex-1 min-h-0">
                   <div className="flex items-start justify-between mb-2">
@@ -166,32 +172,31 @@ const ProjectsView = () => {
                       </div>
                       <p className="text-sm text-mentat-primary/80 line-clamp-2">{project.description}</p>
                     </div>
-                    <div className="flex gap-1 ml-4 shrink-0">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                      >
-                        <Cog className="w-3 h-3" />
-                        Build
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                      >
-                        <Play className="w-3 h-3" />
-                        Deploy
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
-                      >
-                        <Share className="w-3 h-3" />
-                        Share
-                      </Button>
-                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-7 w-7 p-0 bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
+                        >
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-36 bg-mentat-background border-mentat-border">
+                        <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
+                          <Cog className="w-3.5 h-3.5" />
+                          <span>Build</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
+                          <Play className="w-3.5 h-3.5" />
+                          <span>Deploy</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
+                          <Share className="w-3.5 h-3.5" />
+                          <span>Share</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                   <div className="mt-auto">
                     {getStatusDisplay(project)}
@@ -207,3 +212,4 @@ const ProjectsView = () => {
 };
 
 export default ProjectsView;
+
