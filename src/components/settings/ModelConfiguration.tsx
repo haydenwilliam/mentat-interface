@@ -53,7 +53,7 @@ const ModelConfiguration = () => {
                 min={0}
                 max={2}
                 step={0.1}
-                className="[&_[role=slider]]:bg-mentat-highlight [&_[role=slider]]:border-mentat-highlight"
+                className="w-full"
               />
             </div>
 
@@ -68,7 +68,7 @@ const ModelConfiguration = () => {
                 min={100}
                 max={4000}
                 step={100}
-                className="[&_[role=slider]]:bg-mentat-highlight [&_[role=slider]]:border-mentat-highlight"
+                className="w-full"
               />
             </div>
 
@@ -83,7 +83,7 @@ const ModelConfiguration = () => {
                 min={1000}
                 max={32000}
                 step={1000}
-                className="[&_[role=slider]]:bg-mentat-highlight [&_[role=slider]]:border-mentat-highlight"
+                className="w-full"
               />
             </div>
           </div>
