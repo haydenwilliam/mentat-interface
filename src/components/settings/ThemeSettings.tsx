@@ -7,9 +7,8 @@ import { Moon, Zap } from "lucide-react";
 
 const ThemeSettings = () => {
   return (
-    <Card className="relative overflow-hidden bg-mentat-secondary/20 border-mentat-border">
-      <div className="absolute inset-0 bg-gradient-to-r from-mentat-primary/5 to-transparent pointer-events-none" />
-      <div className="relative space-y-8 p-6">
+    <Card className="bg-mentat-secondary/20 border-mentat-border">
+      <div className="space-y-8 p-6">
         <div className="flex items-center justify-between group">
           <div className="flex items-center gap-4">
             <div className="p-2.5 rounded-md bg-mentat-secondary/40 text-mentat-primary/70 group-hover:text-mentat-highlight transition-colors">
@@ -49,4 +48,3 @@ const ThemeSettings = () => {
 };
 
 export default ThemeSettings;
-
