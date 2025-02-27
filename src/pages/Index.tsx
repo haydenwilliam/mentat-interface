@@ -44,7 +44,11 @@ const Index = () => {
         />
 
         <main className="flex-1 pl-6 pr-8 py-4 overflow-hidden flex flex-col">
-          {activeView === 'terminal' && <Terminal />}
+          {activeView === 'terminal' && (
+            <div className="h-full bg-mentat-secondary/20 border border-mentat-border rounded-lg">
+              <Terminal />
+            </div>
+          )}
           {activeView === 'projects' && <ProjectsView />}
           {activeView === 'monitor' && <SystemMonitor />}
           {activeView === 'settings' && <SettingsPage />}
@@ -75,3 +79,4 @@ const Index = () => {
 };
 
 export default Index;
+

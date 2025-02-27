@@ -1,4 +1,3 @@
-
 import { Cog, Plus, Play, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
@@ -107,13 +106,13 @@ const ProjectsView = () => {
           {demoProjects.map((project) => (
             <div
               key={project.id}
-              className="border border-mentat-border bg-mentat-secondary/10 rounded-lg p-4 hover:bg-mentat-secondary/20 transition-colors"
+              className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <h3 className="text-base font-medium text-mentat-primary">{project.name}</h3>
-                    <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/30 text-mentat-highlight">
+                    <span className="inline-block px-1.5 py-0.5 text-[11px] rounded-full bg-mentat-secondary/40 text-mentat-highlight">
                       {project.type}
                     </span>
                   </div>
@@ -124,7 +123,7 @@ const ProjectsView = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/30 hover:bg-mentat-secondary/40 border-mentat-border"
+                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
                   >
                     <Cog className="w-3 h-3" />
                     Build
@@ -132,7 +131,7 @@ const ProjectsView = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/30 hover:bg-mentat-secondary/40 border-mentat-border"
+                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
                   >
                     <Play className="w-3 h-3" />
                     Deploy
@@ -140,7 +139,7 @@ const ProjectsView = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/30 hover:bg-mentat-secondary/40 border-mentat-border"
+                    className="flex items-center gap-1 px-2 py-1 h-7 text-xs bg-mentat-secondary/40 hover:bg-mentat-secondary/50 border-mentat-border"
                   >
                     <Share className="w-3 h-3" />
                     Share

@@ -7,7 +7,7 @@ const SystemMonitor = () => {
   const { metrics, deployedProjects, utils } = useSystemMonitor();
 
   return (
-    <div className="h-full flex flex-col gap-4 p-4 bg-mentat-background/80 rounded-lg border border-mentat-border/20">
+    <div className="h-full flex flex-col gap-4 p-4 bg-mentat-secondary/20 rounded-lg border border-mentat-border">
       <SystemMetrics
         cpuUsage={metrics.cpuUsage}
         memoryUsage={metrics.memoryUsage}
@@ -48,3 +48,4 @@ const SystemMonitor = () => {
 };
 
 export default SystemMonitor;
+
