@@ -25,11 +25,9 @@ const ModelConfiguration = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="p-2 rounded-md bg-mentat-secondary/40">
-          <Bot className="w-5 h-5 text-mentat-primary" />
-        </div>
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <Bot className="w-5 h-5 text-mentat-primary" />
         <h2 className="text-xl font-display font-semibold text-mentat-primary">Model Configuration</h2>
       </div>
 
@@ -69,17 +67,17 @@ const ModelConfiguration = () => {
               </CollapsibleTrigger>
 
               <CollapsibleContent className="space-y-6">
-                <div className="space-y-4 w-1/2">
-                  <div className="flex justify-between items-center">
-                    <Label className="text-sm font-display text-mentat-primary/70">Output Length</Label>
-                    <div className="flex items-center gap-2">
+                <div className="space-y-2 w-1/2">
+                  <div className="flex justify-between items-center gap-4">
+                    <Label className="text-sm font-display text-mentat-primary/70 whitespace-nowrap">Output Length</Label>
+                    <div className="flex items-center gap-2 min-w-[120px]">
                       <Input
                         type="text"
                         value={outputLength}
                         onChange={handleOutputLengthChange}
-                        className="w-24 text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
+                        className="w-full text-right font-mono bg-mentat-secondary/20 border-mentat-border text-mentat-primary"
                       />
-                      <span className="text-sm font-mono text-mentat-primary">tokens</span>
+                      <span className="text-sm font-mono text-mentat-primary whitespace-nowrap">tokens</span>
                     </div>
                   </div>
                 </div>
