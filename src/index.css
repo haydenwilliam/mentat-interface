@@ -1,4 +1,8 @@
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import './styles/themes.css';
+@import './styles/animations.css';
+@import './styles/components.css';
 
 @tailwind base;
 @tailwind components;
@@ -38,42 +42,6 @@
   }
 }
 
-/* Spice Blue - Dark Mode (Current Theme) */
-.theme-spice-blue.dark-mode {
-  --mentat-background: #001A1D;
-  --mentat-primary: #00E5FF;
-  --mentat-secondary: #003B42;
-  --mentat-highlight: #80F2FF;
-  --mentat-border: #004C57;
-}
-
-/* Spice Blue - Light Mode */
-.theme-spice-blue.light-mode {
-  --mentat-background: #F0FBFF;
-  --mentat-primary: #006F7A;
-  --mentat-secondary: #DCEDF0;
-  --mentat-highlight: #00BFDB;
-  --mentat-border: #B8D8DE;
-}
-
-/* Arrakis - Desert Theme - Dark Mode */
-.theme-arrakis.dark-mode {
-  --mentat-background: #1A1000;
-  --mentat-primary: #E5B800;
-  --mentat-secondary: #3B2B00;
-  --mentat-highlight: #FFD24D;
-  --mentat-border: #574200;
-}
-
-/* Arrakis - Desert Theme - Light Mode */
-.theme-arrakis.light-mode {
-  --mentat-background: #FFF9E6;
-  --mentat-primary: #7A5500;
-  --mentat-secondary: #F0E9D4;
-  --mentat-highlight: #DB9E00;
-  --mentat-border: #DEC98C;
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -87,97 +55,6 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
-  }
-
-  .retro-container {
-    @apply relative overflow-hidden border rounded-lg p-4;
-    border-color: var(--mentat-border);
-    background-color: color-mix(in srgb, var(--mentat-secondary) 10%, transparent);
-    background: linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--mentat-primary) 3%, transparent) 0%,
-      color-mix(in srgb, var(--mentat-primary) 1%, transparent) 100%
-    );
-    box-shadow: inset 0 0 20px color-mix(in srgb, var(--mentat-primary) 5%, transparent);
-  }
-
-  .retro-container::before {
-    content: '';
-    @apply absolute inset-0 pointer-events-none;
-    background: repeating-linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mentat-primary) 3%, transparent) 0px,
-      color-mix(in srgb, var(--mentat-primary) 3%, transparent) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-    animation: scan 10s linear infinite;
-  }
-
-  .glow-border {
-    @apply border;
-    border-color: color-mix(in srgb, var(--mentat-primary) 50%, transparent);
-    box-shadow: 0 0 10px color-mix(in srgb, var(--mentat-primary) 20%, transparent),
-                inset 0 0 10px color-mix(in srgb, var(--mentat-primary) 10%, transparent);
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-
-  .retro-text {
-    @apply font-mono;
-    color: var(--mentat-primary);
-    text-shadow: 0 0 8px color-mix(in srgb, var(--mentat-primary) 50%, transparent);
-    animation: text-glow 2s ease-in-out infinite;
-  }
-
-  .terminal-text {
-    @apply font-mono leading-relaxed;
-    color: var(--mentat-primary);
-  }
-
-  .neo-grid {
-    background-image: 
-      linear-gradient(color-mix(in srgb, var(--mentat-primary) 3%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in srgb, var(--mentat-primary) 3%, transparent) 1px, transparent 1px);
-    background-size: 30px 30px;
-    animation: grid-slide 20s linear infinite;
-  }
-}
-
-@keyframes scan {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(100%);
-  }
-}
-
-@keyframes grid-slide {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 20px 20px;
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 229, 255, 0.2),
-                inset 0 0 10px rgba(0, 229, 255, 0.1);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4),
-                inset 0 0 20px rgba(0, 229, 255, 0.2);
-  }
-}
-
-@keyframes text-glow {
-  0%, 100% {
-    text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
-  }
-  50% {
-    text-shadow: 0 0 16px rgba(0, 229, 255, 0.8);
   }
 }
 
@@ -199,36 +76,5 @@
   
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-mentat-primary/70;
-  }
-}
-
-/* Add holographic effect to monitor cards */
-.monitor-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.monitor-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--mentat-primary) 10%, transparent),
-    transparent
-  );
-  animation: holo-sweep 3s ease-in-out infinite;
-}
-
-@keyframes holo-sweep {
-  0% {
-    transform: translateX(-100%) skewX(-10deg);
-  }
-  100% {
-    transform: translateX(100%) skewX(-10deg);
   }
 }
