@@ -26,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         mentat: {
-          background: "#001A1D",
-          primary: "#00E5FF",
-          secondary: "#003B42",
-          highlight: "#80F2FF",
-          border: "#004C57",
+          background: "var(--mentat-background)",
+          primary: "var(--mentat-primary)",
+          secondary: "var(--mentat-secondary)",
+          highlight: "var(--mentat-highlight)",
+          border: "var(--mentat-border)",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
