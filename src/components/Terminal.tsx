@@ -39,7 +39,8 @@ const Terminal = () => {
     setShowBuildView,
     deployProject,
     shareProject,
-    configureProject
+    configureProject,
+    navigateToProjects: () => navigate('/projects')
   });
 
   useEffect(() => {
@@ -127,7 +128,6 @@ const Terminal = () => {
         showBuildView={showBuildView}
         setShowBuildView={setShowBuildView}
         isBuilding={isBuilding}
-        navigateToProjects={() => navigate('/projects')}
       />
       
       <div className="flex-1 flex flex-col min-h-0">

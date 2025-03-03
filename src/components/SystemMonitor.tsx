@@ -2,9 +2,11 @@
 import { SystemMetrics } from "./system-monitor/SystemMetrics";
 import { ProjectCard } from "./system-monitor/ProjectCard";
 import { useSystemMonitor } from "@/hooks/useSystemMonitor";
+import { useBuild } from "@/contexts/BuildContext";
 
 const SystemMonitor = () => {
-  const { metrics, deployedProjects, utils } = useSystemMonitor();
+  const { metrics, utils } = useSystemMonitor();
+  const { deployedProjects } = useBuild();
 
   return (
     <div className="h-full flex flex-col gap-4 p-4 rounded-lg border border-mentat-border">
@@ -25,14 +27,32 @@ const SystemMonitor = () => {
       <div className="flex-1 min-h-0 overflow-hidden">
         <h2 className="text-lg font-semibold mb-3 text-mentat-primary">Active Projects</h2>
         <div className="grid grid-cols-2 gap-3 h-[256px] overflow-y-auto pr-1">
-          {deployedProjects.map(project => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              getStatusColor={utils.getStatusColor}
-              formatTime={utils.formatTime}
-            />
-          ))}
+          {deployedProjects.length > 0 ? (
+            deployedProjects.map(project => (
+              <ProjectCard
+                key={project.id}
+                project={{
+                  id: project.id,
+                  name: project.name,
+                  type: project.type === "agent" ? "agent" : "workflow",
+                  status: "running",
+                  resources: {
+                    cpu: Math.floor(Math.random() * 100),
+                    memory: Math.floor(Math.random() * 100),
+                    gpu: Math.floor(Math.random() * 100)
+                  },
+                  estimatedCompletion: new Date(Date.now() + 30 * 60000),
+                  progress: project.progress || 75
+                }}
+                getStatusColor={utils.getStatusColor}
+                formatTime={utils.formatTime}
+              />
+            ))
+          ) : (
+            <div className="col-span-2 flex items-center justify-center h-full text-mentat-primary/60">
+              <p>No active projects. Deploy a project to see it here.</p>
+            </div>
+          )}
         </div>
       </div>
 

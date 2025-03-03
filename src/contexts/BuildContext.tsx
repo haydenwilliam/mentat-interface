@@ -8,6 +8,7 @@ interface BuildContextType {
   isBuilding: boolean;
   isDeploying: boolean;
   buildLogs: string[];
+  deployedProjects: Project[];
   setCurrentProject: (project: Project | null) => void;
   startBuild: (project: Project) => void;
   stopBuild: () => void;
@@ -24,6 +25,7 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isBuilding, setIsBuilding] = useState(false);
   const [isDeploying, setIsDeploying] = useState(false);
   const [buildLogs, setBuildLogs] = useState<string[]>([]);
+  const [deployedProjects, setDeployedProjects] = useState<Project[]>([]);
 
   const startBuild = (project: Project) => {
     setCurrentProject(project);
@@ -73,6 +75,9 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setIsDeploying(true);
     addBuildLog(`Deploying ${project.name}...`);
     
+    // Check if project is already deployed
+    const isAlreadyDeployed = deployedProjects.some(p => p.id === project.id);
+    
     // Simulate deployment process
     setTimeout(() => {
       addBuildLog("Initializing runtime environment...");
@@ -86,6 +91,12 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           setTimeout(() => {
             addBuildLog(`🚀 ${project.name} is now running!`);
             setIsDeploying(false);
+            
+            // Add to deployed projects if not already there
+            if (!isAlreadyDeployed) {
+              setDeployedProjects(prev => [...prev, {...project, status: "ready"}]);
+            }
+            
             toast.success(`${project.name} is now running!`);
           }, 1500);
         }, 1500);
@@ -128,6 +139,7 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         isBuilding,
         isDeploying,
         buildLogs, 
+        deployedProjects,
         setCurrentProject, 
         startBuild, 
         stopBuild,

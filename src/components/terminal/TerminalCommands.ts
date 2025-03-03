@@ -13,6 +13,7 @@ export interface CommandsConfig {
   deployProject: (project: Project) => void;
   shareProject: (project: Project) => void;
   configureProject: (project: Project) => void;
+  navigateToProjects: () => void;
 }
 
 export const createCommands = (config: CommandsConfig) => {
@@ -25,11 +26,12 @@ export const createCommands = (config: CommandsConfig) => {
     setShowBuildView,
     deployProject,
     shareProject,
-    configureProject
+    configureProject,
+    navigateToProjects
   } = config;
 
   return {
-    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information\n- project: List or select projects\n- build: Start LLM code generation for the current project\n- deploy: Run the code written during the build stage\n- share: Generate a share link for the current project\n- configure: Edit project settings\n- mkdir: Create a new directory for a project",
+    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information\n- project: List or select projects\n- projects: Navigate to projects view\n- build: Start LLM code generation for the current project\n- deploy: Run the code written during the build stage\n- share: Generate a share link for the current project\n- configure: Edit project settings\n- mkdir: Create a new directory for a project",
     clear: "Clearing terminal...",
     pwd: currentDirectory,
     ls: (args: string) => {
@@ -81,6 +83,10 @@ export const createCommands = (config: CommandsConfig) => {
       setCurrentDirectory(`/home/user/projects/${projectDirName}`);
       
       return `Selected project: ${selectedProject.name}\nDirectory changed to: /home/user/projects/${projectDirName}`;
+    },
+    projects: () => {
+      navigateToProjects();
+      return "Navigating to projects view...";
     },
     build: () => {
       if (!currentProject) {

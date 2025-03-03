@@ -3,6 +3,7 @@ import React from "react";
 import { Project } from "../projects/types";
 import { useBuild } from "@/contexts/BuildContext";
 import { Folder, Terminal, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface TerminalHeaderProps {
   currentDirectory: string;
@@ -10,7 +11,6 @@ interface TerminalHeaderProps {
   showBuildView: boolean;
   setShowBuildView: (show: boolean) => void;
   isBuilding: boolean;
-  navigateToProjects: () => void;
 }
 
 const TerminalHeader: React.FC<TerminalHeaderProps> = ({
@@ -18,10 +18,10 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   currentProject,
   showBuildView,
   setShowBuildView,
-  isBuilding,
-  navigateToProjects
+  isBuilding
 }) => {
   const { stopBuild } = useBuild();
+  const navigate = useNavigate();
 
   const handleToggleBuildView = () => {
     if (showBuildView && isBuilding) {
@@ -31,6 +31,10 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
     } else {
       setShowBuildView(!showBuildView);
     }
+  };
+
+  const navigateToProjects = () => {
+    navigate('/projects');
   };
 
   return (
