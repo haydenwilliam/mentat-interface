@@ -1,5 +1,6 @@
+
 import { useState, useEffect, useRef } from "react";
-import { Folder, Play, Bot, Upload, Share2 } from "lucide-react";
+import { Folder, Play, Bot, Upload, Share2, Settings } from "lucide-react";
 import { Message } from "../types/terminal";
 import { ChatMessage } from "./terminal/ChatMessage";
 import { CommandMessage } from "./terminal/CommandMessage";
@@ -7,6 +8,7 @@ import { InputBar } from "./terminal/InputBar";
 import BuildTerminal from "./terminal/BuildTerminal";
 import { useBuild } from "@/contexts/BuildContext";
 import { demoProjects } from "./projects/types";
+import { useNavigate } from "react-router-dom";
 
 const Terminal = () => {
   const [input, setInput] = useState("");
@@ -16,6 +18,7 @@ const Terminal = () => {
   const [showBuildView, setShowBuildView] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
   const username = "mentat";
+  const navigate = useNavigate();
   
   const { 
     currentProject, 
@@ -29,7 +32,7 @@ const Terminal = () => {
   } = useBuild();
 
   const commands = {
-    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information\n- project: List or select projects\n- build: Start, stop, or view build for the current project\n- deploy: Deploy the current project\n- share: Generate a share link for the current project",
+    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information\n- project: List or select projects\n- build: Start configuration mode for the current project\n- deploy: Compile and run the current project\n- share: Generate a share link for the current project\n- configure: Edit project settings",
     clear: "Clearing terminal...",
     pwd: currentDirectory,
     ls: "Documents  Downloads  Projects  README.md",
@@ -52,7 +55,7 @@ const Terminal = () => {
       
       const selectedProject = demoProjects[projectIndex];
       setCurrentProject(selectedProject);
-      setShowBuildView(true);
+      setShowBuildView(false);
       return `Selected project: ${selectedProject.name}`;
     },
     build: (args: string) => {
@@ -60,25 +63,9 @@ const Terminal = () => {
         return "No project selected. Use 'project <number>' to select a project first.";
       }
       
-      if (args === "start") {
-        if (isBuilding) {
-          return "Build already in progress.";
-        }
-        startBuild(currentProject);
-        setShowBuildView(true);
-        return `Starting build for ${currentProject.name}...`;
-      } else if (args === "stop") {
-        if (!isBuilding) {
-          return "No build in progress.";
-        }
-        stopBuild();
-        return "Build stopped.";
-      } else if (args === "view" || args === "") {
-        setShowBuildView(true);
-        return `Displaying build for ${currentProject.name}...`;
-      } else {
-        return "Usage: build [start|stop|view]";
-      }
+      startBuild(currentProject);
+      setShowBuildView(true);
+      return `Entering configuration mode for ${currentProject.name}...`;
     },
     deploy: () => {
       if (!currentProject) {
@@ -87,7 +74,7 @@ const Terminal = () => {
       
       deployProject(currentProject);
       setShowBuildView(true);
-      return `Starting deployment for ${currentProject.name}...`;
+      return `Deploying and running ${currentProject.name}...`;
     },
     share: () => {
       if (!currentProject) {
@@ -96,6 +83,13 @@ const Terminal = () => {
       
       shareProject(currentProject);
       return `Generating share link for ${currentProject.name}...`;
+    },
+    configure: () => {
+      if (!currentProject) {
+        return "No project selected. Use 'project <number>' to select a project first.";
+      }
+      
+      return `Configure project settings for ${currentProject.name}: (Not implemented yet)`;
     },
   };
 
@@ -176,8 +170,8 @@ const Terminal = () => {
     }
   };
 
-  const toggleBuildView = () => {
-    setShowBuildView(!showBuildView);
+  const navigateToProjects = () => {
+    navigate('/projects');
   };
 
   return (
@@ -190,12 +184,15 @@ const Terminal = () => {
         <div className="flex items-center gap-2">
           {currentProject && (
             <>
-              <div className="text-xs bg-mentat-secondary/40 px-2 py-0.5 rounded border border-mentat-border/30">
+              <div 
+                className="text-xs bg-mentat-secondary/40 px-2 py-0.5 rounded border border-mentat-border/30 cursor-pointer hover:bg-mentat-secondary/60 transition-colors"
+                onClick={navigateToProjects}
+              >
                 <span className="opacity-70">Project: </span>
                 <span className="text-mentat-highlight">{currentProject.name}</span>
               </div>
               <button 
-                onClick={toggleBuildView}
+                onClick={() => setShowBuildView(!showBuildView)}
                 className={`flex items-center gap-1.5 text-xs py-0.5 px-2 rounded border ${
                   showBuildView 
                     ? 'bg-mentat-highlight/10 text-mentat-highlight border-mentat-highlight/30' 
@@ -237,9 +234,9 @@ const Terminal = () => {
                       startBuild(currentProject);
                       setShowBuildView(true);
                     }}
-                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/30"
+                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-mentat-secondary/10 hover:bg-mentat-secondary/20 text-mentat-primary border border-mentat-border/30"
                   >
-                    <Play className="w-3 h-3" />
+                    <Settings className="w-3 h-3" />
                     Build
                   </button>
                   <button 
@@ -247,9 +244,9 @@ const Terminal = () => {
                       deployProject(currentProject);
                       setShowBuildView(true);
                     }}
-                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/30"
                   >
-                    <Upload className="w-3 h-3" />
+                    <Play className="w-3 h-3" />
                     Deploy
                   </button>
                   <button 
@@ -260,6 +257,12 @@ const Terminal = () => {
                   >
                     <Share2 className="w-3 h-3" />
                     Share
+                  </button>
+                  <button 
+                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                  >
+                    <Settings className="w-3 h-3" />
+                    Configure
                   </button>
                 </div>
               </div>

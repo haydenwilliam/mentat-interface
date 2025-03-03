@@ -1,5 +1,5 @@
 
-import { Cog, Play, Share, MoreVertical } from "lucide-react";
+import { Settings, Play, Share2, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,12 +17,29 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { startBuild, setCurrentProject } = useBuild();
+  const { startBuild, setCurrentProject, deployProject, shareProject } = useBuild();
   const navigate = useNavigate();
 
   const handleBuild = () => {
     setCurrentProject(project);
     startBuild(project);
+    navigate('/');
+  };
+
+  const handleDeploy = () => {
+    setCurrentProject(project);
+    deployProject(project);
+    navigate('/');
+  };
+
+  const handleShare = () => {
+    setCurrentProject(project);
+    shareProject(project);
+  };
+
+  const handleConfigure = () => {
+    setCurrentProject(project);
+    // Configure action would go here
     navigate('/');
   };
 
@@ -56,16 +73,29 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 className="flex items-center gap-2 text-mentat-primary"
                 onClick={handleBuild}
               >
-                <Play className="w-3.5 h-3.5" />
+                <Settings className="w-3.5 h-3.5" />
                 <span>Build</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
-                <Cog className="w-3.5 h-3.5" />
-                <span>Configure</span>
+              <DropdownMenuItem 
+                className="flex items-center gap-2 text-mentat-primary"
+                onClick={handleDeploy}
+              >
+                <Play className="w-3.5 h-3.5" />
+                <span>Deploy</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
-                <Share className="w-3.5 h-3.5" />
+              <DropdownMenuItem 
+                className="flex items-center gap-2 text-mentat-primary"
+                onClick={handleShare}
+              >
+                <Share2 className="w-3.5 h-3.5" />
                 <span>Share</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                className="flex items-center gap-2 text-mentat-primary"
+                onClick={handleConfigure}
+              >
+                <Settings className="w-3.5 h-3.5" />
+                <span>Configure</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

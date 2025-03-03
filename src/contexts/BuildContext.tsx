@@ -28,19 +28,19 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setCurrentProject(project);
     setIsBuilding(true);
     setBuildLogs([
-      `Starting build for ${project.name}...`,
-      `Initializing build environment...`,
-      `Checking dependencies...`
+      `Entering configuration mode for ${project.name}...`,
+      `Loading project assets...`,
+      `Preparing development environment...`
     ]);
     
     // Simulate build progress
     let step = 0;
     const buildSteps = [
-      "Installing dependencies...",
-      "Compiling code...",
-      "Running tests...",
-      "Optimizing assets...",
-      "Build completed successfully!"
+      "Loading project configuration...",
+      "Setting up development environment...",
+      "Analyzing project structure...",
+      "Initializing build tools...",
+      "Ready to help you build and iterate on your project!"
     ];
     
     const interval = setInterval(() => {
@@ -49,8 +49,7 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         step++;
       } else {
         clearInterval(interval);
-        setIsBuilding(false);
-        toast.success(`Build for ${project.name} completed!`);
+        toast.success(`${project.name} is ready for development!`);
       }
     }, 2000);
   };
@@ -58,30 +57,30 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const stopBuild = () => {
     if (isBuilding) {
       setIsBuilding(false);
-      addBuildLog("Build process terminated.");
-      toast.error("Build process terminated");
+      addBuildLog("Exiting configuration mode.");
+      toast.info("Configuration mode exited");
     }
   };
 
   const deployProject = (project: Project) => {
     setCurrentProject(project);
     setIsDeploying(true);
-    addBuildLog(`Starting deployment for ${project.name}...`);
+    addBuildLog(`Deploying ${project.name}...`);
     
     // Simulate deployment process
     setTimeout(() => {
-      addBuildLog("Preparing deployment package...");
+      addBuildLog("Compiling project...");
       
       setTimeout(() => {
-        addBuildLog("Uploading to deployment servers...");
+        addBuildLog("Optimizing assets...");
         
         setTimeout(() => {
-          addBuildLog("Configuring deployment environment...");
+          addBuildLog("Preparing runtime environment...");
           
           setTimeout(() => {
-            addBuildLog(`🚀 ${project.name} deployed successfully!`);
+            addBuildLog(`🚀 ${project.name} is now running!`);
             setIsDeploying(false);
-            toast.success(`${project.name} deployed successfully!`);
+            toast.success(`${project.name} is now running!`);
           }, 1500);
         }, 1500);
       }, 1500);
