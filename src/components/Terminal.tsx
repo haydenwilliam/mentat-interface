@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Folder, Play, Bot, Upload, Share2 } from "lucide-react";
 import { Message } from "../types/terminal";
@@ -22,6 +21,7 @@ const Terminal = () => {
     currentProject, 
     setCurrentProject, 
     startBuild, 
+    stopBuild,
     buildLogs, 
     isBuilding,
     deployProject,
@@ -303,4 +303,3 @@ const Terminal = () => {
 };
 
 export default Terminal;
-
