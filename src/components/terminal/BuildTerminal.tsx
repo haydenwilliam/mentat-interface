@@ -1,6 +1,6 @@
 
 import { useBuild } from "@/contexts/BuildContext";
-import { Play, Square, Terminal as TerminalIcon, Upload, Share2 } from "lucide-react";
+import { Play, Square, Terminal as TerminalIcon, Upload, Share2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const BuildTerminal = () => {
@@ -12,7 +12,8 @@ export const BuildTerminal = () => {
     startBuild, 
     stopBuild, 
     deployProject,
-    shareProject 
+    shareProject,
+    configureProject
   } = useBuild();
 
   if (!currentProject) {
@@ -41,6 +42,7 @@ export const BuildTerminal = () => {
               size="sm" 
               className="h-7 bg-red-500/10 hover:bg-red-500/20 text-red-400 border-red-500/30"
               onClick={stopBuild}
+              title="Pause LLM code generation"
             >
               <Square className="w-3.5 h-3.5 mr-1" />
               Stop Build
@@ -52,6 +54,7 @@ export const BuildTerminal = () => {
               className="h-7 bg-green-500/10 hover:bg-green-500/20 text-green-400 border-green-500/30"
               onClick={() => startBuild(currentProject)}
               disabled={isDeploying}
+              title="Start LLM code generation"
             >
               <Play className="w-3.5 h-3.5 mr-1" />
               Build
@@ -64,6 +67,7 @@ export const BuildTerminal = () => {
             className="h-7 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border-blue-500/30"
             onClick={() => deployProject(currentProject)}
             disabled={isBuilding || isDeploying}
+            title="Run the generated code"
           >
             <Upload className="w-3.5 h-3.5 mr-1" />
             Deploy
@@ -74,9 +78,21 @@ export const BuildTerminal = () => {
             size="sm" 
             className="h-7 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border-purple-500/30"
             onClick={() => shareProject(currentProject)}
+            title="Generate share link"
           >
             <Share2 className="w-3.5 h-3.5 mr-1" />
             Share
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-7 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+            onClick={() => configureProject(currentProject)}
+            title="Edit project settings"
+          >
+            <Edit className="w-3.5 h-3.5 mr-1" />
+            Configure
           </Button>
         </div>
       </div>
@@ -86,10 +102,11 @@ export const BuildTerminal = () => {
           <div key={index} className="mb-1">
             <span className="text-gray-400">[{new Date().toLocaleTimeString()}]</span>{" "}
             <span className={
-              log.includes("completed") || log.includes("successfully") ? "text-green-400" : 
+              log.includes("successfully") || log.includes("Ready for deployment") ? "text-green-400" : 
               log.includes("error") || log.includes("terminated") ? "text-red-400" : 
-              log.includes("deployment") || log.includes("deployed") ? "text-blue-400" :
+              log.includes("deployment") || log.includes("deployed") || log.includes("running") ? "text-blue-400" :
               log.includes("share") ? "text-purple-400" :
+              log.includes("config") ? "text-yellow-400" :
               "text-mentat-primary"
             }>{log}</span>
           </div>
@@ -97,7 +114,7 @@ export const BuildTerminal = () => {
         {isBuilding && (
           <div className="mt-2 flex items-center gap-2">
             <div className="animate-pulse w-2 h-2 rounded-full bg-green-500"></div>
-            <span className="text-green-400">Building in progress...</span>
+            <span className="text-green-400">LLM code generation in progress...</span>
           </div>
         )}
         {isDeploying && (

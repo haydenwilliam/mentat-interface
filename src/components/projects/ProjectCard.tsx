@@ -1,5 +1,5 @@
 
-import { Settings, Play, Share2, MoreVertical } from "lucide-react";
+import { Settings, Play, Share2, MoreVertical, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { startBuild, setCurrentProject, deployProject, shareProject } = useBuild();
+  const { startBuild, setCurrentProject, deployProject, shareProject, configureProject } = useBuild();
   const navigate = useNavigate();
 
   const handleBuild = () => {
@@ -39,8 +39,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
   const handleConfigure = () => {
     setCurrentProject(project);
-    // Configure action would go here
-    navigate('/');
+    configureProject(project);
+    // In a full implementation, this would open a configuration modal or page
   };
 
   return (
@@ -72,6 +72,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               <DropdownMenuItem 
                 className="flex items-center gap-2 text-mentat-primary"
                 onClick={handleBuild}
+                title="Start LLM code generation"
               >
                 <Settings className="w-3.5 h-3.5" />
                 <span>Build</span>
@@ -79,6 +80,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               <DropdownMenuItem 
                 className="flex items-center gap-2 text-mentat-primary"
                 onClick={handleDeploy}
+                title="Run the generated code"
               >
                 <Play className="w-3.5 h-3.5" />
                 <span>Deploy</span>
@@ -86,6 +88,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               <DropdownMenuItem 
                 className="flex items-center gap-2 text-mentat-primary"
                 onClick={handleShare}
+                title="Generate share link"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>Share</span>
@@ -93,8 +96,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               <DropdownMenuItem 
                 className="flex items-center gap-2 text-mentat-primary"
                 onClick={handleConfigure}
+                title="Edit project settings"
               >
-                <Settings className="w-3.5 h-3.5" />
+                <Edit className="w-3.5 h-3.5" />
                 <span>Configure</span>
               </DropdownMenuItem>
             </DropdownMenuContent>

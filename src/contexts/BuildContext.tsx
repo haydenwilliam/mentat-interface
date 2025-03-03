@@ -13,6 +13,7 @@ interface BuildContextType {
   stopBuild: () => void;
   deployProject: (project: Project) => void;
   shareProject: (project: Project) => void;
+  configureProject: (project: Project) => void;
   addBuildLog: (log: string) => void;
 }
 
@@ -28,28 +29,33 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setCurrentProject(project);
     setIsBuilding(true);
     setBuildLogs([
-      `Entering configuration mode for ${project.name}...`,
-      `Loading project assets...`,
-      `Preparing development environment...`
+      `Starting LLM code generation for ${project.name}...`,
+      `Creating project directory...`,
+      `Initializing development environment...`
     ]);
     
     // Simulate build progress
     let step = 0;
     const buildSteps = [
-      "Loading project configuration...",
-      "Setting up development environment...",
-      "Analyzing project structure...",
-      "Initializing build tools...",
-      "Ready to help you build and iterate on your project!"
+      "Analyzing project requirements...",
+      "Generating code structure...",
+      "Writing core functionalities...",
+      "Implementing user interface components...",
+      "Optimizing code for performance...",
+      "Project successfully built! Ready for deployment."
     ];
     
     const interval = setInterval(() => {
       if (step < buildSteps.length) {
         addBuildLog(buildSteps[step]);
         step++;
+        
+        // Notify when the build is complete
+        if (step === buildSteps.length) {
+          toast.success(`Project "${project.name}" is ready to deploy!`);
+        }
       } else {
         clearInterval(interval);
-        toast.success(`${project.name} is ready for development!`);
       }
     }, 2000);
   };
@@ -57,8 +63,8 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const stopBuild = () => {
     if (isBuilding) {
       setIsBuilding(false);
-      addBuildLog("Exiting configuration mode.");
-      toast.info("Configuration mode exited");
+      addBuildLog("LLM code generation paused. You can resume later.");
+      toast.info("Build process paused");
     }
   };
 
@@ -69,13 +75,13 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     // Simulate deployment process
     setTimeout(() => {
-      addBuildLog("Compiling project...");
+      addBuildLog("Initializing runtime environment...");
       
       setTimeout(() => {
-        addBuildLog("Optimizing assets...");
+        addBuildLog("Loading project files...");
         
         setTimeout(() => {
-          addBuildLog("Preparing runtime environment...");
+          addBuildLog("Starting application services...");
           
           setTimeout(() => {
             addBuildLog(`🚀 ${project.name} is now running!`);
@@ -102,6 +108,14 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addBuildLog("Failed to generate share link.");
       });
   };
+  
+  const configureProject = (project: Project) => {
+    // In a real implementation, this would open a configuration interface
+    addBuildLog(`Opening configuration for ${project.name}...`);
+    toast.info(`Project configuration opened for ${project.name}`);
+    
+    // You would typically navigate to a configuration page or open a modal here
+  };
 
   const addBuildLog = (log: string) => {
     setBuildLogs(prev => [...prev, log]);
@@ -119,6 +133,7 @@ export const BuildProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         stopBuild,
         deployProject,
         shareProject,
+        configureProject,
         addBuildLog 
       }}
     >

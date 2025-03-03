@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Message } from "../types/terminal";
 import { InputBar } from "./terminal/InputBar";
@@ -25,6 +26,7 @@ const Terminal = () => {
     stopBuild,
     deployProject,
     shareProject,
+    configureProject,
     isBuilding
   } = useBuild();
 
@@ -36,7 +38,8 @@ const Terminal = () => {
     startBuild,
     setShowBuildView,
     deployProject,
-    shareProject
+    shareProject,
+    configureProject
   });
 
   useEffect(() => {
@@ -116,10 +119,6 @@ const Terminal = () => {
     }
   };
 
-  const navigateToProjects = () => {
-    navigate('/projects');
-  };
-
   return (
     <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-background rounded-lg flex flex-col">
       <TerminalHeader
@@ -128,6 +127,7 @@ const Terminal = () => {
         showBuildView={showBuildView}
         setShowBuildView={setShowBuildView}
         isBuilding={isBuilding}
+        navigateToProjects={() => navigate('/projects')}
       />
       
       <div className="flex-1 flex flex-col min-h-0">

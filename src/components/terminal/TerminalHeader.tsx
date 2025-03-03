@@ -1,8 +1,8 @@
 
 import React from "react";
-import { Folder, Play } from "lucide-react";
 import { Project } from "../projects/types";
-import { useNavigate } from "react-router-dom";
+import { useBuild } from "@/contexts/BuildContext";
+import { Folder, Terminal, ChevronRight } from "lucide-react";
 
 interface TerminalHeaderProps {
   currentDirectory: string;
@@ -10,49 +10,63 @@ interface TerminalHeaderProps {
   showBuildView: boolean;
   setShowBuildView: (show: boolean) => void;
   isBuilding: boolean;
+  navigateToProjects: () => void;
 }
 
-const TerminalHeader = ({ 
-  currentDirectory, 
-  currentProject, 
-  showBuildView, 
+const TerminalHeader: React.FC<TerminalHeaderProps> = ({
+  currentDirectory,
+  currentProject,
+  showBuildView,
   setShowBuildView,
-  isBuilding
-}: TerminalHeaderProps) => {
-  const navigate = useNavigate();
+  isBuilding,
+  navigateToProjects
+}) => {
+  const { stopBuild } = useBuild();
 
-  const navigateToProjects = () => {
-    navigate('/projects');
+  const handleToggleBuildView = () => {
+    if (showBuildView && isBuilding) {
+      if (window.confirm("Exit build view? The build process will continue in the background.")) {
+        setShowBuildView(false);
+      }
+    } else {
+      setShowBuildView(!showBuildView);
+    }
   };
 
   return (
-    <div className="flex items-center justify-between w-full gap-2 px-3 py-1 bg-mentat-secondary/20 rounded-t-lg border-b border-mentat-border/30">
-      <div className="flex items-center gap-2 text-mentat-primary">
-        <Folder className="w-4 h-4" />
-        <span className="text-xs font-mono">{currentDirectory}</span>
+    <div className="flex items-center justify-between py-2 px-3 border-b border-mentat-border">
+      <div className="flex items-center space-x-2">
+        <div className="flex items-center">
+          <Folder className="w-4 h-4 text-mentat-primary/60" />
+          <ChevronRight className="w-3 h-3 text-mentat-primary/60" />
+          <span className="text-sm text-mentat-primary/80">
+            {currentDirectory}
+          </span>
+        </div>
       </div>
-      <div className="flex items-center gap-2">
+      
+      <div className="flex items-center gap-3">
         {currentProject && (
-          <>
-            <div 
-              className="text-xs bg-mentat-secondary/40 px-2 py-0.5 rounded border border-mentat-border/30 cursor-pointer hover:bg-mentat-secondary/60 transition-colors"
-              onClick={navigateToProjects}
-            >
-              <span className="opacity-70">Project: </span>
-              <span className="text-mentat-highlight">{currentProject.name}</span>
-            </div>
-            <button 
-              onClick={() => setShowBuildView(!showBuildView)}
-              className={`flex items-center gap-1.5 text-xs py-0.5 px-2 rounded border ${
-                showBuildView 
-                  ? 'bg-mentat-highlight/10 text-mentat-highlight border-mentat-highlight/30' 
-                  : 'bg-mentat-secondary/30 text-mentat-primary/70 border-mentat-border/30 hover:bg-mentat-secondary/50'
-              }`}
-            >
-              <Play className="w-3 h-3" />
-              {isBuilding ? "Building..." : "Build View"}
-            </button>
-          </>
+          <button 
+            onClick={navigateToProjects}
+            className="flex items-center gap-1 text-sm text-mentat-highlight hover:underline"
+          >
+            <Folder className="w-3.5 h-3.5" />
+            Projects
+          </button>
+        )}
+        
+        {currentProject && (
+          <button
+            onClick={handleToggleBuildView}
+            className={`text-xs px-2 py-0.5 rounded ${
+              showBuildView 
+                ? "bg-mentat-secondary/40 text-mentat-highlight" 
+                : "bg-mentat-secondary/20 text-mentat-primary/80 hover:bg-mentat-secondary/30"
+            }`}
+          >
+            <Terminal className="w-3.5 h-3.5" />
+          </button>
         )}
       </div>
     </div>
