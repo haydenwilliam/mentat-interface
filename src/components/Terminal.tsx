@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Folder, Play } from "lucide-react";
+import { Folder, Play, Bot, Upload, Share2 } from "lucide-react";
 import { Message } from "../types/terminal";
 import { ChatMessage } from "./terminal/ChatMessage";
 import { CommandMessage } from "./terminal/CommandMessage";
@@ -18,10 +18,18 @@ const Terminal = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const username = "mentat";
   
-  const { currentProject, startBuild, buildLogs, isBuilding } = useBuild();
+  const { 
+    currentProject, 
+    setCurrentProject, 
+    startBuild, 
+    buildLogs, 
+    isBuilding,
+    deployProject,
+    shareProject
+  } = useBuild();
 
   const commands = {
-    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information\n- project: List or select projects\n- build: Start, stop, or view build for the current project",
+    help: "Available commands:\n- pwd: Print working directory\n- ls: List directory contents\n- cd: Change directory\n- clear: Clear terminal\n- about: Show system information\n- project: List or select projects\n- build: Start, stop, or view build for the current project\n- deploy: Deploy the current project\n- share: Generate a share link for the current project",
     clear: "Clearing terminal...",
     pwd: currentDirectory,
     ls: "Documents  Downloads  Projects  README.md",
@@ -32,8 +40,6 @@ const Terminal = () => {
     },
     about: "MENTAT v1.0 - Advanced Computing Interface\nCopyright © 2024",
     project: (args: string) => {
-      const { setCurrentProject } = useBuild();
-      
       if (!args) {
         return "Available projects:\n" + demoProjects.map((p, i) => `${i + 1}. ${p.name} (${p.type})`).join("\n") 
           + "\n\nUsage: project <number> to select a project";
@@ -46,11 +52,10 @@ const Terminal = () => {
       
       const selectedProject = demoProjects[projectIndex];
       setCurrentProject(selectedProject);
+      setShowBuildView(true);
       return `Selected project: ${selectedProject.name}`;
     },
     build: (args: string) => {
-      const { currentProject, isBuilding, startBuild, stopBuild } = useBuild();
-      
       if (!currentProject) {
         return "No project selected. Use 'project <number>' to select a project first.";
       }
@@ -74,7 +79,24 @@ const Terminal = () => {
       } else {
         return "Usage: build [start|stop|view]";
       }
-    }
+    },
+    deploy: () => {
+      if (!currentProject) {
+        return "No project selected. Use 'project <number>' to select a project first.";
+      }
+      
+      deployProject(currentProject);
+      setShowBuildView(true);
+      return `Starting deployment for ${currentProject.name}...`;
+    },
+    share: () => {
+      if (!currentProject) {
+        return "No project selected. Use 'project <number>' to select a project first.";
+      }
+      
+      shareProject(currentProject);
+      return `Generating share link for ${currentProject.name}...`;
+    },
   };
 
   useEffect(() => {
@@ -165,19 +187,27 @@ const Terminal = () => {
           <Folder className="w-4 h-4" />
           <span className="text-xs font-mono">{currentDirectory}</span>
         </div>
-        {currentProject && (
-          <button 
-            onClick={toggleBuildView}
-            className={`flex items-center gap-1.5 text-xs py-0.5 px-2 rounded border ${
-              showBuildView 
-                ? 'bg-mentat-highlight/10 text-mentat-highlight border-mentat-highlight/30' 
-                : 'bg-mentat-secondary/30 text-mentat-primary/70 border-mentat-border/30 hover:bg-mentat-secondary/50'
-            }`}
-          >
-            <Play className="w-3 h-3" />
-            {isBuilding ? "Building..." : "Build View"}
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {currentProject && (
+            <>
+              <div className="text-xs bg-mentat-secondary/40 px-2 py-0.5 rounded border border-mentat-border/30">
+                <span className="opacity-70">Project: </span>
+                <span className="text-mentat-highlight">{currentProject.name}</span>
+              </div>
+              <button 
+                onClick={toggleBuildView}
+                className={`flex items-center gap-1.5 text-xs py-0.5 px-2 rounded border ${
+                  showBuildView 
+                    ? 'bg-mentat-highlight/10 text-mentat-highlight border-mentat-highlight/30' 
+                    : 'bg-mentat-secondary/30 text-mentat-primary/70 border-mentat-border/30 hover:bg-mentat-secondary/50'
+                }`}
+              >
+                <Play className="w-3 h-3" />
+                {isBuilding ? "Building..." : "Build View"}
+              </button>
+            </>
+          )}
+        </div>
       </div>
       
       <div className="flex-1 flex flex-col min-h-0">
@@ -188,6 +218,53 @@ const Terminal = () => {
             ref={terminalRef} 
             className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-mentat-border/50 scrollbar-track-transparent terminal-text space-y-2 p-2"
           >
+            {currentProject && !showBuildView && (
+              <div className="flex items-center justify-between gap-2 p-2 rounded bg-mentat-secondary/20 border border-mentat-border/30 mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-full bg-mentat-secondary/40 border border-mentat-border/30">
+                    {currentProject.type === "software" && <Folder className="w-3.5 h-3.5 text-mentat-highlight" />}
+                    {currentProject.type === "agent" && <Bot className="w-3.5 h-3.5 text-mentat-highlight" />}
+                    {currentProject.type === "game" && <Play className="w-3.5 h-3.5 text-mentat-highlight" />}
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-mentat-highlight">{currentProject.name}</div>
+                    <div className="text-xs opacity-70">{currentProject.type}</div>
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <button 
+                    onClick={() => {
+                      startBuild(currentProject);
+                      setShowBuildView(true);
+                    }}
+                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/30"
+                  >
+                    <Play className="w-3 h-3" />
+                    Build
+                  </button>
+                  <button 
+                    onClick={() => {
+                      deployProject(currentProject);
+                      setShowBuildView(true);
+                    }}
+                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                  >
+                    <Upload className="w-3 h-3" />
+                    Deploy
+                  </button>
+                  <button 
+                    onClick={() => {
+                      shareProject(currentProject);
+                    }}
+                    className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30"
+                  >
+                    <Share2 className="w-3 h-3" />
+                    Share
+                  </button>
+                </div>
+              </div>
+            )}
+
             {messages.map((msg, i) => {
               if (msg.type === 'chat') {
                 return <ChatMessage key={i} message={msg} />;
@@ -226,3 +303,4 @@ const Terminal = () => {
 };
 
 export default Terminal;
+
