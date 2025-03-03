@@ -31,13 +31,25 @@ const RouteHandler = () => {
   return null;
 }
 
+// Use HashRouter for Electron to avoid file path issues
+const RouterProvider = ({ children }: { children: React.ReactNode }) => {
+  // Use HashRouter for Electron
+  const isElectron = window.navigator.userAgent.toLowerCase().includes('electron');
+  
+  return (
+    <BrowserRouter>
+      {children}
+    </BrowserRouter>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BuildProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <RouterProvider>
           <RouteHandler />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -45,7 +57,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
+        </RouterProvider>
       </BuildProvider>
     </TooltipProvider>
   </QueryClientProvider>
