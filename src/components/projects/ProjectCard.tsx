@@ -9,12 +9,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import StatusDisplay from "./StatusDisplay";
 import { Project } from "./types";
+import { useBuild } from "@/contexts/BuildContext";
+import { useNavigate } from "react-router-dom";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  const { startBuild, setCurrentProject } = useBuild();
+  const navigate = useNavigate();
+
+  const handleBuild = () => {
+    setCurrentProject(project);
+    startBuild(project);
+    navigate('/');
+  };
+
   return (
     <div
       className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors h-[140px] flex flex-col"
@@ -41,13 +52,16 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-36 bg-mentat-background border-mentat-border">
-              <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
-                <Cog className="w-3.5 h-3.5" />
+              <DropdownMenuItem 
+                className="flex items-center gap-2 text-mentat-primary"
+                onClick={handleBuild}
+              >
+                <Play className="w-3.5 h-3.5" />
                 <span>Build</span>
               </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
-                <Play className="w-3.5 h-3.5" />
-                <span>Deploy</span>
+                <Cog className="w-3.5 h-3.5" />
+                <span>Configure</span>
               </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center gap-2 text-mentat-primary">
                 <Share className="w-3.5 h-3.5" />
