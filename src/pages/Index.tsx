@@ -31,6 +31,13 @@ const Index = () => {
     }
   }, [location]);
 
+  // Handle when projects view is selected by navigating to the dedicated page
+  useEffect(() => {
+    if (activeView === 'projects') {
+      navigate('/projects');
+    }
+  }, [activeView, navigate]);
+
   const handleViewChange = (view: 'terminal' | 'projects' | 'monitor' | 'settings') => {
     if (view === 'projects') {
       navigate('/projects');
@@ -64,7 +71,7 @@ const Index = () => {
           {activeView === 'terminal' && (
             <Terminal />
           )}
-          {activeView === 'projects' && navigate('/projects')}
+          {/* Don't render anything when projects is active - we navigate away instead */}
           {activeView === 'monitor' && <SystemMonitor />}
           {activeView === 'settings' && <SettingsPage />}
         </main>
