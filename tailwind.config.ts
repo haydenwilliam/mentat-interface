@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -106,4 +107,8 @@ export default {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  safelist: [
+    'hover:bg-mentat-primary/70',
+    'bg-mentat-primary/70'
+  ]
 } satisfies Config;
