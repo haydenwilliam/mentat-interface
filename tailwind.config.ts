@@ -26,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         mentat: {
-          background: "var(--mentat-background)",
-          primary: "var(--mentat-primary)",
-          secondary: "var(--mentat-secondary)",
-          highlight: "var(--mentat-highlight)",
-          border: "var(--mentat-border)",
+          background: "#001A1D",
+          primary: "#00E5FF",
+          secondary: "#003B42",
+          highlight: "#80F2FF",
+          border: "#004C57",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -107,7 +107,4 @@ export default {
     },
   },
   plugins: [require("tailwindcss-animate")],
-  safelist: [
-    'hover:bg-mentat-primary/70'
-  ]
 } satisfies Config;
