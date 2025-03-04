@@ -108,7 +108,6 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
   safelist: [
-    'hover:bg-mentat-primary/70',
-    'bg-mentat-primary/70'
+    'hover:bg-mentat-primary/70'
   ]
 } satisfies Config;
