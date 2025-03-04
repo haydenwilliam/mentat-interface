@@ -8,19 +8,37 @@ import ProjectsView from "@/components/ProjectsView";
 import SettingsPage from "@/components/settings/SettingsPage";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showFileExplorer, setShowFileExplorer] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
   const [activeView, setActiveView] = useState<'terminal' | 'projects' | 'monitor' | 'settings'>('terminal');
+  
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setIsLoaded(true);
-  }, []);
+    
+    // Check for view parameter in URL
+    const params = new URLSearchParams(location.search);
+    const viewParam = params.get('view') as 'terminal' | 'projects' | 'monitor' | 'settings' | null;
+    
+    if (viewParam && ['terminal', 'projects', 'monitor', 'settings'].includes(viewParam)) {
+      setActiveView(viewParam);
+    }
+  }, [location]);
 
   const handleViewChange = (view: 'terminal' | 'projects' | 'monitor' | 'settings') => {
-    setActiveView(view);
+    if (view === 'projects') {
+      navigate('/projects');
+    } else {
+      setActiveView(view);
+      // Update URL without navigation
+      navigate(`/?view=${view}`, { replace: true });
+    }
   };
 
   const handleAddToContext = (path: string) => {
@@ -46,7 +64,7 @@ const Index = () => {
           {activeView === 'terminal' && (
             <Terminal />
           )}
-          {activeView === 'projects' && <ProjectsView />}
+          {activeView === 'projects' && navigate('/projects')}
           {activeView === 'monitor' && <SystemMonitor />}
           {activeView === 'settings' && <SettingsPage />}
         </main>
@@ -76,4 +94,3 @@ const Index = () => {
 };
 
 export default Index;
-
