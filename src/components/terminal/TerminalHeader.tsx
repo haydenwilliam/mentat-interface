@@ -38,7 +38,7 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-between py-2 px-3 border-b-2 border-mentat-border/50 bg-mentat-mid-tone/10">
+    <div className="flex items-center justify-between py-2 px-3 border-b-2 border-mentat-border/50 bg-mentat-secondary/70 shadow-md">
       <div className="flex items-center space-x-2">
         <div className="flex items-center">
           <Folder className="w-4 h-4 text-mentat-primary/70" />
@@ -65,8 +65,8 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             onClick={handleToggleBuildView}
             className={`text-xs px-2 py-0.5 rounded ${
               showBuildView 
-                ? "bg-mentat-mid-tone/40 text-mentat-highlight border border-mentat-highlight/30" 
-                : "bg-mentat-secondary/30 text-mentat-primary/90 hover:bg-mentat-secondary/50 border border-mentat-border/30"
+                ? "bg-mentat-mid-tone/60 text-mentat-highlight border-2 border-mentat-highlight/30" 
+                : "bg-mentat-secondary/80 text-mentat-primary/90 hover:bg-mentat-mid-tone/40 border-2 border-mentat-border/40"
             }`}
           >
             <Terminal className="w-3.5 h-3.5" />

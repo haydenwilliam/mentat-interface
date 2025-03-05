@@ -11,8 +11,8 @@ interface CommandMessageProps {
 
 export const CommandMessage = ({ message, response, currentDirectory, username }: CommandMessageProps) => {
   return (
-    <div className="bg-mentat-secondary/30 rounded-lg border-2 border-mentat-border/50 overflow-hidden shadow-md">
-      <div className="flex items-center justify-between px-3 py-1 border-b-2 border-mentat-border/40 bg-mentat-mid-tone/20">
+    <div className="bg-mentat-secondary/50 rounded-lg border-2 border-mentat-border/50 overflow-hidden shadow-lg">
+      <div className="flex items-center justify-between px-3 py-1 border-b-2 border-mentat-border/40 bg-mentat-mid-tone/30">
         <div className="flex items-center gap-2">
           <TerminalIcon className="w-3 h-3 text-mentat-highlight" />
           <span className="text-xs text-mentat-highlight">Terminal</span>
@@ -28,7 +28,7 @@ export const CommandMessage = ({ message, response, currentDirectory, username }
         </div>
       </div>
       {response && response.type === 'response' && (
-        <div className="p-3 font-mono text-sm text-mentat-highlight/90 bg-mentat-secondary/20">
+        <div className="p-3 font-mono text-sm text-mentat-highlight/90 bg-mentat-mid-tone/20">
           {response.content.split('\n').map((line, j) => (
             <div key={j}>{line}</div>
           ))}

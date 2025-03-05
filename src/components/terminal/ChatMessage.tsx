@@ -13,10 +13,10 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
     >
       <div 
         className={`
-          p-3 rounded-lg max-w-[80%] backdrop-blur-sm border-2
+          p-3 rounded-lg max-w-[80%] backdrop-blur-sm border-2 shadow-lg
           ${message.sender === 'user' 
-            ? 'bg-mentat-mid-tone/20 text-mentat-primary ml-auto border-mentat-primary/30' 
-            : 'bg-mentat-secondary/40 border-mentat-highlight/30 text-mentat-highlight/90'}
+            ? 'bg-mentat-mid-tone/40 text-mentat-primary ml-auto border-mentat-primary/30' 
+            : 'bg-mentat-secondary/60 border-mentat-highlight/30 text-mentat-highlight/90'}
         `}
       >
         <div className="flex items-center gap-2 mb-1">

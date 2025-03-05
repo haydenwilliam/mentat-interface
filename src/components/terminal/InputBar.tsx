@@ -24,7 +24,7 @@ export const InputBar = ({
   const { currentProject } = useBuild();
   
   return (
-    <div className="p-4 border-t-2 border-mentat-border/40 bg-mentat-mid-tone/10 px-[10px]">
+    <div className="p-4 border-t-2 border-mentat-border/50 bg-mentat-secondary/70 shadow-inner px-[10px]">
       <div className="space-y-3 px-3">
         {/* Mode Toggle */}
         <div className="flex justify-between px-0 py-0 mx-[7px]">
@@ -64,7 +64,7 @@ export const InputBar = ({
         </div>
 
         {/* Input Area */}
-        <form onSubmit={handleSubmit} className="flex items-center gap-3 bg-mentat-secondary/40 rounded-lg p-3 border-2 border-mentat-border/40 shadow-inner">
+        <form onSubmit={handleSubmit} className="flex items-center gap-3 bg-mentat-mid-tone/50 rounded-lg p-3 border-2 border-mentat-border/40 shadow-inner">
           {isInTerminalMode ? (
             <div className="text-sm text-mentat-primary/80 font-mono whitespace-nowrap">
               <span className="opacity-80">{username}@mentat:</span>

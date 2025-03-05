@@ -39,8 +39,8 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
   const filteredFiles = filterItems(mockFiles, searchQuery);
 
   return (
-    <div className="h-full w-64 bg-mentat-secondary/20 border-l-2 border-mentat-border/40 flex flex-col">
-      <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-background/90 px-3 py-2.5 border-b-2 border-mentat-border/40">
+    <div className="h-full w-64 bg-mentat-secondary/70 border-l-2 border-mentat-border/40 flex flex-col shadow-lg">
+      <div className="sticky top-0 z-10 backdrop-blur-sm bg-mentat-mid-tone/30 px-3 py-2.5 border-b-2 border-mentat-border/40">
         <h3 className="text-mentat-highlight text-sm font-medium flex items-center justify-center gap-2 mb-2">
           <FolderTree className="w-4 h-4" /> File Explorer
         </h3>
@@ -50,7 +50,7 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search files..."
-            className="w-full bg-mentat-mid-tone/20 border-2 border-mentat-border/30 rounded-md 
+            className="w-full bg-mentat-secondary/80 border-2 border-mentat-border/50 rounded-md 
               px-8 py-1.5 text-sm text-mentat-primary placeholder:text-mentat-primary/50
               focus:outline-none focus:ring-1 focus:ring-mentat-highlight/50"
           />

@@ -12,7 +12,7 @@ interface SidebarProps {
 const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
   ({ onViewChange, activeView = 'terminal' }, ref) => {
     return (
-      <div ref={ref} className="w-14 hover:w-36 transition-all duration-300 bg-mentat-secondary/20 border-r border-mentat-border flex flex-col">
+      <div ref={ref} className="w-14 hover:w-36 transition-all duration-300 bg-mentat-secondary/70 border-r-2 border-mentat-border/40 flex flex-col shadow-lg">
         <div className="p-2">
           <div className="space-y-4">
             {/* Terminal Section */}
@@ -20,7 +20,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
               <MenuItem 
                 icon={<Terminal />}
                 onClick={() => onViewChange?.('terminal')}
-                className={activeView === 'terminal' ? 'bg-mentat-secondary/40' : ''}
+                className={activeView === 'terminal' ? 'bg-mentat-mid-tone/80' : ''}
               >
                 Terminal
               </MenuItem>
@@ -31,7 +31,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
               <MenuItem 
                 icon={<Folder />}
                 onClick={() => onViewChange?.('projects')}
-                className={activeView === 'projects' ? 'bg-mentat-secondary/40' : ''}
+                className={activeView === 'projects' ? 'bg-mentat-mid-tone/80' : ''}
               >
                 Projects
               </MenuItem>
@@ -42,7 +42,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
               <MenuItem 
                 icon={<Activity />}
                 onClick={() => onViewChange?.('monitor')}
-                className={activeView === 'monitor' ? 'bg-mentat-secondary/40' : ''}
+                className={activeView === 'monitor' ? 'bg-mentat-mid-tone/80' : ''}
               >
                 Monitor
               </MenuItem>
@@ -52,7 +52,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
             <MenuItem 
               icon={<Settings />}
               onClick={() => onViewChange?.('settings')}
-              className={activeView === 'settings' ? 'bg-mentat-secondary/40' : ''}
+              className={activeView === 'settings' ? 'bg-mentat-mid-tone/80' : ''}
             >
               Settings
             </MenuItem>
