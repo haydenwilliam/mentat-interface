@@ -4,7 +4,6 @@ import SystemMonitor from "@/components/SystemMonitor";
 import Terminal from "@/components/Terminal";
 import Sidebar from "@/components/ui/sidebar/sidebar";
 import FileExplorer from "@/components/FileExplorer";
-import ProjectsView from "@/components/ProjectsView";
 import SettingsPage from "@/components/settings/SettingsPage";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -64,7 +63,6 @@ const Index = () => {
           {activeView === 'terminal' && (
             <Terminal />
           )}
-          {activeView === 'projects' && navigate('/projects')}
           {activeView === 'monitor' && <SystemMonitor />}
           {activeView === 'settings' && <SettingsPage />}
         </main>
