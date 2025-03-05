@@ -26,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         mentat: {
-          background: "#001A1D",
-          primary: "#00E5FF",
-          secondary: "#003B42",
-          highlight: "#80F2FF",
-          border: "#004C57",
+          background: "var(--mentat-background)",
+          primary: "var(--mentat-primary)",
+          secondary: "var(--mentat-secondary)",
+          highlight: "var(--mentat-highlight)",
+          border: "var(--mentat-border)",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -72,10 +72,10 @@ export default {
         },
         "text-glow": {
           "0%, 100%": { 
-            textShadow: "0 0 4px rgba(0, 229, 255, 0.6)" 
+            textShadow: "0 0 4px rgba(var(--mentat-primary-rgb), 0.6)" 
           },
           "50%": { 
-            textShadow: "0 0 16px rgba(0, 229, 255, 0.8)" 
+            textShadow: "0 0 16px rgba(var(--mentat-primary-rgb), 0.8)" 
           },
         },
         "scan-line": {
@@ -84,12 +84,12 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { 
-            boxShadow: "0 0 5px rgba(0, 229, 255, 0.6)",
-            borderColor: "rgba(0, 229, 255, 0.6)",
+            boxShadow: "0 0 5px rgba(var(--mentat-primary-rgb), 0.6)",
+            borderColor: "rgba(var(--mentat-primary-rgb), 0.6)",
           },
           "50%": { 
-            boxShadow: "0 0 20px rgba(0, 229, 255, 0.8)",
-            borderColor: "rgba(0, 229, 255, 0.8)",
+            boxShadow: "0 0 20px rgba(var(--mentat-primary-rgb), 0.8)",
+            borderColor: "rgba(var(--mentat-primary-rgb), 0.8)",
           },
         },
       },
