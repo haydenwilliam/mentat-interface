@@ -1,0 +1,72 @@
+
+@layer base {
+  .retro-container {
+    @apply relative overflow-hidden border-2 border-mentat-border bg-mentat-secondary/50 rounded-lg p-4;
+    background: linear-gradient(
+      165deg,
+      rgba(var(--mentat-secondary-rgb), 0.7) 0%,
+      rgba(var(--mentat-mid-tone-rgb), 0.4) 100%
+    );
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(var(--mentat-primary-rgb), 0.1);
+  }
+
+  .retro-container::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(var(--mentat-primary-rgb), 0.03) 0px,
+      rgba(var(--mentat-primary-rgb), 0.03) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    animation: scan 10s linear infinite;
+  }
+
+  .glow-border {
+    @apply border-2 border-mentat-primary/60;
+    box-shadow: 0 0 10px rgba(var(--mentat-primary-rgb), 0.3),
+                inset 0 0 10px rgba(var(--mentat-primary-rgb), 0.2);
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .retro-text {
+    @apply font-mono text-mentat-primary;
+    text-shadow: 0 0 8px rgba(var(--mentat-primary-rgb), 0.5);
+    animation: text-glow 2s ease-in-out infinite;
+  }
+
+  .terminal-text {
+    @apply font-mono text-mentat-primary leading-relaxed;
+  }
+
+  .neo-grid {
+    background-image: 
+      linear-gradient(rgba(var(--mentat-primary-rgb), 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--mentat-primary-rgb), 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: grid-slide 20s linear infinite;
+  }
+
+  /* Add holographic effect to monitor cards */
+  .monitor-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .monitor-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(var(--mentat-primary-rgb), 0.1),
+      transparent
+    );
+    animation: holo-sweep 3s ease-in-out infinite;
+  }
+}

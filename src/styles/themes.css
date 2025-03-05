@@ -1,0 +1,94 @@
+
+@layer base {
+  :root {
+    /* Standard shadcn variables */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    /* Mentat theme variables - enhanced depth with proper layering */
+    --mentat-background: #001018; /* Darkest blue for background */
+    --mentat-secondary: #00283A; /* Mid-layer blue */
+    --mentat-mid-tone: #004366; /* Closer layer blue */
+    --mentat-border: #0077A6;   /* Brighter border color */
+    --mentat-primary: #00BBFF; /* Brightest blue for text/icons */
+    --mentat-highlight: #80DDFF; /* Accent highlight color */
+    
+    /* RGB versions for rgba usage */
+    --mentat-primary-rgb: 0, 187, 255;
+    --mentat-highlight-rgb: 128, 221, 255;
+    --mentat-mid-tone-rgb: 0, 67, 102;
+    --mentat-secondary-rgb: 0, 40, 58;
+    --mentat-background-rgb: 0, 16, 24;
+    --mentat-border-rgb: 0, 119, 166;
+  }
+
+  .light-theme {
+    /* Light theme colors */
+    --mentat-background: #F0F8FF; /* Light blue background */
+    --mentat-secondary: #D6EBFF; /* Lighter mid-layer blue */
+    --mentat-mid-tone: #B0D9FF; /* Mid-tone blue */
+    --mentat-border: #60A5FF;   /* Border color */
+    --mentat-primary: #0062CC; /* Darker blue for text on light background */
+    --mentat-highlight: #0047AB; /* Accent highlight color */
+    
+    /* RGB versions for rgba usage */
+    --mentat-primary-rgb: 0, 98, 204;
+    --mentat-highlight-rgb: 0, 71, 171;
+    --mentat-mid-tone-rgb: 176, 217, 255;
+    --mentat-secondary-rgb: 214, 235, 255;
+    --mentat-background-rgb: 240, 248, 255;
+    --mentat-border-rgb: 96, 165, 255;
+  }
+
+  .cyberpunk-theme {
+    /* Cyberpunk theme colors */
+    --mentat-background: #0D0221; /* Dark purple background */
+    --mentat-secondary: #190535; /* Mid-layer purple */
+    --mentat-mid-tone: #36096D; /* Closer layer purple */
+    --mentat-border: #5D12D2;   /* Border color */
+    --mentat-primary: #FA00FF; /* Neon pink for text/icons */
+    --mentat-highlight: #00FFFF; /* Cyan highlight */
+    
+    /* RGB versions for rgba usage */
+    --mentat-primary-rgb: 250, 0, 255;
+    --mentat-highlight-rgb: 0, 255, 255;
+    --mentat-mid-tone-rgb: 54, 9, 109;
+    --mentat-secondary-rgb: 25, 5, 53;
+    --mentat-background-rgb: 13, 2, 33;
+    --mentat-border-rgb: 93, 18, 210;
+  }
+
+  /* Reduced motion settings */
+  .reduce-motion * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
