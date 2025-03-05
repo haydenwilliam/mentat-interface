@@ -17,19 +17,26 @@
   
   body {
     @apply bg-mentat-background text-mentat-primary font-mono antialiased;
-    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #001B29 100%);
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Light theme background adjustment */
-  .light-theme body {
+  /* Spice Blue theme background styling */
+  .spice-blue-theme.dark-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #001B29 100%);
+  }
+
+  .spice-blue-theme.light-mode body {
     background-image: linear-gradient(170deg, var(--mentat-background) 0%, #B0D9FF 100%);
   }
 
-  /* Cyberpunk theme background adjustment */
-  .cyberpunk-theme body {
-    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #36096D 100%);
+  /* Harkonnen Monotone theme background styling */
+  .harkonnen-monotone-theme.dark-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #2A2A2A 100%);
+  }
+
+  .harkonnen-monotone-theme.light-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #E0E0E0 100%);
   }
 
   h1, h2, h3, h4, h5, h6 {

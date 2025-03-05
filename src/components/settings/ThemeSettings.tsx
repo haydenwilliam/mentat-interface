@@ -5,12 +5,33 @@ import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { Moon, Zap, Palette } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 const ThemeSettings = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [theme, setTheme] = useState("default"); // default, light, cyberpunk
+  const [currentTheme, setCurrentTheme] = useState("spiceBlue"); // spiceBlue, harkonnenMonotone
   const { toast } = useToast();
+
+  // Theme configurations with Dune-inspired names
+  const themes = {
+    spiceBlue: {
+      name: "Spice Blue",
+      description: "The original blue theme inspired by the spice melange",
+      class: "spice-blue-theme",
+    },
+    harkonnenMonotone: {
+      name: "Harkonnen Monotone", 
+      description: "Black and white theme inspired by House Harkonnen's stark aesthetics",
+      class: "harkonnen-monotone-theme",
+    }
+  };
 
   useEffect(() => {
     // Apply theme changes when component mounts or settings change
@@ -18,17 +39,24 @@ const ThemeSettings = () => {
     
     // Apply dark/light mode
     if (darkMode) {
-      body.classList.remove("light-theme");
+      body.classList.add("dark-mode");
+      body.classList.remove("light-mode");
     } else {
-      body.classList.add("light-theme");
+      body.classList.add("light-mode");
+      body.classList.remove("dark-mode");
     }
     
-    // Apply cyberpunk theme if selected
-    if (theme === "cyberpunk") {
-      body.classList.add("cyberpunk-theme");
-      body.classList.remove("light-theme");
-    } else {
-      body.classList.remove("cyberpunk-theme");
+    // Apply theme
+    Object.values(themes).forEach(theme => {
+      body.classList.remove(theme.class);
+    });
+    
+    if (currentTheme === "spiceBlue") {
+      // Original blue theme
+      body.classList.add(themes.spiceBlue.class);
+    } else if (currentTheme === "harkonnenMonotone") {
+      // Monochrome theme
+      body.classList.add(themes.harkonnenMonotone.class);
     }
     
     // Apply reduced motion
@@ -37,7 +65,7 @@ const ThemeSettings = () => {
     } else {
       body.classList.remove("reduce-motion");
     }
-  }, [darkMode, reducedMotion, theme]);
+  }, [darkMode, reducedMotion, currentTheme]);
 
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
@@ -57,15 +85,12 @@ const ThemeSettings = () => {
     });
   };
 
-  const handleThemeChange = (newTheme: string) => {
-    setTheme(newTheme);
-    // If selecting cyberpunk, force dark mode
-    if (newTheme === "cyberpunk") {
-      setDarkMode(true);
-    }
+  const handleThemeChange = (themeKey: string) => {
+    setCurrentTheme(themeKey);
+    const theme = themes[themeKey as keyof typeof themes];
     toast({
-      title: `${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} Theme Applied`,
-      description: "Interface colors updated",
+      title: `${theme.name} Applied`,
+      description: theme.description,
     });
   };
 
@@ -129,26 +154,32 @@ const ThemeSettings = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-2">
-              <button 
-                onClick={() => handleThemeChange("default")}
-                className={`w-8 h-8 rounded-full border-2 ${theme === "default" ? "border-mentat-highlight" : "border-mentat-border/30"}`}
-                style={{ background: "linear-gradient(135deg, #001018 0%, #00BBFF 100%)" }}
-                title="Default Theme"
-              />
-              <button 
-                onClick={() => handleThemeChange("light")}
-                className={`w-8 h-8 rounded-full border-2 ${theme === "light" ? "border-mentat-highlight" : "border-mentat-border/30"}`}
-                style={{ background: "linear-gradient(135deg, #F0F8FF 0%, #0062CC 100%)" }}
-                title="Light Theme"
-              />
-              <button 
-                onClick={() => handleThemeChange("cyberpunk")}
-                className={`w-8 h-8 rounded-full border-2 ${theme === "cyberpunk" ? "border-mentat-highlight" : "border-mentat-border/30"}`}
-                style={{ background: "linear-gradient(135deg, #0D0221 0%, #FA00FF 100%)" }}
-                title="Cyberpunk Theme"
-              />
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="bg-mentat-secondary/30 border-mentat-border text-mentat-primary hover:bg-mentat-secondary/50"
+                >
+                  {themes[currentTheme as keyof typeof themes].name}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-mentat-secondary border-mentat-border text-mentat-primary min-w-[200px]">
+                <DropdownMenuItem 
+                  className={`flex items-center gap-2 hover:bg-mentat-mid-tone/50 cursor-pointer ${currentTheme === 'spiceBlue' ? 'bg-mentat-mid-tone/30' : ''}`}
+                  onClick={() => handleThemeChange('spiceBlue')}
+                >
+                  <div className="w-4 h-4 rounded-full" style={{ background: "linear-gradient(135deg, #001018 0%, #00BBFF 100%)" }}></div>
+                  Spice Blue
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className={`flex items-center gap-2 hover:bg-mentat-mid-tone/50 cursor-pointer ${currentTheme === 'harkonnenMonotone' ? 'bg-mentat-mid-tone/30' : ''}`}
+                  onClick={() => handleThemeChange('harkonnenMonotone')}
+                >
+                  <div className="w-4 h-4 rounded-full" style={{ background: "linear-gradient(135deg, #000000 0%, #FFFFFF 100%)" }}></div>
+                  Harkonnen Monotone
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
