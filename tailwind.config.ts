@@ -29,7 +29,6 @@ export default {
           background: "var(--mentat-background)",
           primary: "var(--mentat-primary)",
           secondary: "var(--mentat-secondary)",
-          accent: "var(--mentat-accent)",
           highlight: "var(--mentat-highlight)",
           border: "var(--mentat-border)",
         },
@@ -73,10 +72,10 @@ export default {
         },
         "text-glow": {
           "0%, 100%": { 
-            textShadow: "0 0 4px rgba(var(--mentat-accent-rgb), 0.6)" 
+            textShadow: "0 0 4px rgba(var(--mentat-primary-rgb), 0.6)" 
           },
           "50%": { 
-            textShadow: "0 0 16px rgba(var(--mentat-accent-rgb), 0.8)" 
+            textShadow: "0 0 16px rgba(var(--mentat-primary-rgb), 0.8)" 
           },
         },
         "scan-line": {
@@ -85,12 +84,12 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { 
-            boxShadow: "0 0 5px rgba(var(--mentat-accent-rgb), 0.6)",
-            borderColor: "rgba(var(--mentat-accent-rgb), 0.6)",
+            boxShadow: "0 0 5px rgba(var(--mentat-primary-rgb), 0.6)",
+            borderColor: "rgba(var(--mentat-primary-rgb), 0.6)",
           },
           "50%": { 
-            boxShadow: "0 0 20px rgba(var(--mentat-accent-rgb), 0.8)",
-            borderColor: "rgba(var(--mentat-accent-rgb), 0.8)",
+            boxShadow: "0 0 20px rgba(var(--mentat-primary-rgb), 0.8)",
+            borderColor: "rgba(var(--mentat-primary-rgb), 0.8)",
           },
         },
       },

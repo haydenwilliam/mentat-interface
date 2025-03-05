@@ -15,7 +15,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         className={`
           p-3 rounded-lg max-w-[80%] backdrop-blur-sm
           ${message.sender === 'user' 
-            ? 'bg-mentat-primary/10 text-mentat-accent ml-auto border border-mentat-accent/20' 
+            ? 'bg-mentat-primary/10 text-mentat-primary ml-auto border border-mentat-primary/20' 
             : 'bg-mentat-secondary/10 border border-mentat-highlight/20 text-mentat-highlight/90'}
         `}
       >

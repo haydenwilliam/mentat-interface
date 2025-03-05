@@ -50,11 +50,11 @@ const FileExplorer = ({ currentDirectory = '', onDirectorySelect, onAddToContext
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search files..."
-            className="w-full bg-mentat-secondary/30 border border-mentat-border/50 rounded-md 
-              px-8 py-1.5 text-sm text-mentat-accent placeholder:text-mentat-accent/40
+            className="w-full bg-mentat-secondary/20 border border-mentat-border/30 rounded-md 
+              px-8 py-1.5 text-sm text-mentat-primary placeholder:text-mentat-primary/40
               focus:outline-none focus:ring-1 focus:ring-mentat-highlight/50"
           />
-          <Search className="w-4 h-4 text-mentat-accent/40 absolute left-2 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-mentat-primary/40 absolute left-2 top-1/2 -translate-y-1/2" />
         </div>
       </div>
 
