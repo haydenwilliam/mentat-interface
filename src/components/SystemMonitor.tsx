@@ -9,7 +9,7 @@ const SystemMonitor = () => {
   const { deployedProjects } = useBuild();
 
   return (
-    <div className="h-full flex flex-col gap-4 p-4 rounded-lg border border-mentat-border">
+    <div className="h-full flex flex-col gap-4 p-4 rounded-lg border-2 border-mentat-border">
       <SystemMetrics
         cpuUsage={metrics.cpuUsage}
         memoryUsage={metrics.memoryUsage}
