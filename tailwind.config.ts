@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -29,6 +28,7 @@ export default {
           background: "var(--mentat-background)",
           primary: "var(--mentat-primary)",
           secondary: "var(--mentat-secondary)",
+          "mid-tone": "var(--mentat-mid-tone)",
           highlight: "var(--mentat-highlight)",
           border: "var(--mentat-border)",
         },

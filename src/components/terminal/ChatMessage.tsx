@@ -13,15 +13,18 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
     >
       <div 
         className={`
-          p-3 rounded-lg max-w-[80%] backdrop-blur-sm
+          p-3 rounded-lg max-w-[80%] backdrop-blur-sm border-2
           ${message.sender === 'user' 
-            ? 'bg-mentat-primary/10 text-mentat-primary ml-auto border border-mentat-primary/20' 
-            : 'bg-mentat-secondary/10 border border-mentat-highlight/20 text-mentat-highlight/90'}
+            ? 'bg-mentat-mid-tone/20 text-mentat-primary ml-auto border-mentat-primary/30' 
+            : 'bg-mentat-secondary/40 border-mentat-highlight/30 text-mentat-highlight/90'}
         `}
       >
         <div className="flex items-center gap-2 mb-1">
-          {message.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-          <span className="text-xs opacity-70">
+          {message.sender === 'user' ? 
+            <User className="w-4 h-4 text-mentat-primary" /> : 
+            <Bot className="w-4 h-4 text-mentat-highlight" />
+          }
+          <span className="text-xs opacity-80">
             {message.sender === 'user' ? 'You' : 'Thufir'}
           </span>
         </div>

@@ -24,7 +24,7 @@ export const InputBar = ({
   const { currentProject } = useBuild();
   
   return (
-    <div className="p-4 border-t border-mentat-border/30 bg-mentat-secondary/10 px-[10px]">
+    <div className="p-4 border-t-2 border-mentat-border/40 bg-mentat-mid-tone/10 px-[10px]">
       <div className="space-y-3 px-3">
         {/* Mode Toggle */}
         <div className="flex justify-between px-0 py-0 mx-[7px]">
@@ -34,7 +34,7 @@ export const InputBar = ({
               className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
                 !isInTerminalMode
                   ? 'border-mentat-highlight text-mentat-highlight'
-                  : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'
+                  : 'border-transparent text-mentat-primary/50 hover:text-mentat-primary/70'
               }`}
             >
               <Bot className="w-4 h-4" />
@@ -45,7 +45,7 @@ export const InputBar = ({
               className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
                 isInTerminalMode
                   ? 'border-mentat-highlight text-mentat-highlight'
-                  : 'border-transparent text-mentat-primary/40 hover:text-mentat-primary/60'
+                  : 'border-transparent text-mentat-primary/50 hover:text-mentat-primary/70'
               }`}
             >
               <TerminalIcon className="w-4 h-4" />
@@ -56,7 +56,7 @@ export const InputBar = ({
           <button
             onClick={() => console.log('Context Management clicked')}
             className="text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 
-              border-transparent text-mentat-primary/40 hover:text-mentat-primary/60"
+              border-transparent text-mentat-primary/50 hover:text-mentat-primary/70"
           >
             <BrainCircuit className="w-4 h-4" />
             Context Manager
@@ -64,10 +64,10 @@ export const InputBar = ({
         </div>
 
         {/* Input Area */}
-        <form onSubmit={handleSubmit} className="flex items-center gap-3 bg-mentat-secondary/20 rounded-lg p-3 border border-mentat-border/30">
+        <form onSubmit={handleSubmit} className="flex items-center gap-3 bg-mentat-secondary/40 rounded-lg p-3 border-2 border-mentat-border/40 shadow-inner">
           {isInTerminalMode ? (
-            <div className="text-sm text-mentat-primary/70 font-mono whitespace-nowrap">
-              <span className="opacity-70">{username}@mentat:</span>
+            <div className="text-sm text-mentat-primary/80 font-mono whitespace-nowrap">
+              <span className="opacity-80">{username}@mentat:</span>
               <span className="text-mentat-highlight">{currentDirectory}</span>
               {currentProject && (
                 <span className="text-blue-400"> [{currentProject.name}]</span>
@@ -75,7 +75,7 @@ export const InputBar = ({
               <span className="text-mentat-primary">$</span>
             </div>
           ) : (
-            <Bot className="w-5 h-5 text-mentat-primary/50" />
+            <Bot className="w-5 h-5 text-mentat-primary/60" />
           )}
           <input
             type="text"

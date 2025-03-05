@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -38,26 +37,31 @@
 
     --radius: 0.5rem;
 
-    /* Mentat theme variables - more blue focused */
-    --mentat-background: #001620;
+    /* Mentat theme variables - enhanced blue theme with more depth */
+    --mentat-background: #00121A;
     --mentat-primary: #00BBFF;
-    --mentat-secondary: #002B38;
+    --mentat-secondary: #003B4D;
+    --mentat-mid-tone: #00527A;  /* New intermediate shade */
     --mentat-highlight: #80DDFF;
-    --mentat-border: #003D4C;
+    --mentat-border: #007EA6;    /* Adjusted border color */
     
     /* RGB versions for rgba usage */
     --mentat-primary-rgb: 0, 187, 255;
     --mentat-highlight-rgb: 128, 221, 255;
+    --mentat-mid-tone-rgb: 0, 82, 122;
+    --mentat-border-rgb: 0, 126, 166;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-mentat-border;
   }
   
   body {
     @apply bg-mentat-background text-mentat-primary font-mono antialiased;
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #001D29 100%);
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -65,13 +69,13 @@
   }
 
   .retro-container {
-    @apply relative overflow-hidden border border-mentat-border bg-mentat-secondary/10 rounded-lg p-4;
+    @apply relative overflow-hidden border-2 border-mentat-border bg-mentat-secondary/30 rounded-lg p-4;
     background: linear-gradient(
       165deg,
-      rgba(var(--mentat-primary-rgb), 0.03) 0%,
-      rgba(var(--mentat-primary-rgb), 0.01) 100%
+      rgba(var(--mentat-mid-tone-rgb), 0.1) 0%,
+      rgba(var(--mentat-primary-rgb), 0.05) 100%
     );
-    box-shadow: inset 0 0 20px rgba(var(--mentat-primary-rgb), 0.05);
+    box-shadow: inset 0 0 20px rgba(var(--mentat-primary-rgb), 0.1);
   }
 
   .retro-container::before {
@@ -88,9 +92,9 @@
   }
 
   .glow-border {
-    @apply border border-mentat-primary/50;
-    box-shadow: 0 0 10px rgba(var(--mentat-primary-rgb), 0.2),
-                inset 0 0 10px rgba(var(--mentat-primary-rgb), 0.1);
+    @apply border-2 border-mentat-primary/60;
+    box-shadow: 0 0 10px rgba(var(--mentat-primary-rgb), 0.3),
+                inset 0 0 10px rgba(var(--mentat-primary-rgb), 0.2);
     animation: pulse-glow 4s ease-in-out infinite;
   }
 
@@ -158,17 +162,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(var(--mentat-secondary), 0.2);
+  background-color: rgba(var(--mentat-secondary), 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background-color: rgba(var(--mentat-primary-rgb), 0.5);
+  background-color: rgba(var(--mentat-border-rgb), 0.7);
   transition: background-color 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--mentat-primary-rgb), 0.7);
+  background-color: rgba(var(--mentat-primary-rgb), 0.8);
 }
 
 /* Add holographic effect to monitor cards */

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Message } from "../types/terminal";
 import { InputBar } from "./terminal/InputBar";
@@ -121,7 +120,7 @@ const Terminal = () => {
   };
 
   return (
-    <div className="flex-1 relative overflow-hidden border border-mentat-border bg-mentat-background rounded-lg flex flex-col">
+    <div className="flex-1 relative overflow-hidden border-2 border-mentat-border bg-mentat-background rounded-lg flex flex-col shadow-lg">
       <TerminalHeader
         currentDirectory={currentDirectory}
         currentProject={currentProject}

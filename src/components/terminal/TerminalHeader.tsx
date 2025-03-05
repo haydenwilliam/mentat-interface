@@ -38,12 +38,12 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-between py-2 px-3 border-b border-mentat-border">
+    <div className="flex items-center justify-between py-2 px-3 border-b-2 border-mentat-border/50 bg-mentat-mid-tone/10">
       <div className="flex items-center space-x-2">
         <div className="flex items-center">
-          <Folder className="w-4 h-4 text-mentat-primary/60" />
-          <ChevronRight className="w-3 h-3 text-mentat-primary/60" />
-          <span className="text-sm text-mentat-primary/80">
+          <Folder className="w-4 h-4 text-mentat-primary/70" />
+          <ChevronRight className="w-3 h-3 text-mentat-primary/70" />
+          <span className="text-sm text-mentat-primary/90">
             {currentDirectory}
           </span>
         </div>
@@ -65,8 +65,8 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             onClick={handleToggleBuildView}
             className={`text-xs px-2 py-0.5 rounded ${
               showBuildView 
-                ? "bg-mentat-secondary/40 text-mentat-highlight" 
-                : "bg-mentat-secondary/20 text-mentat-primary/80 hover:bg-mentat-secondary/30"
+                ? "bg-mentat-mid-tone/40 text-mentat-highlight border border-mentat-highlight/30" 
+                : "bg-mentat-secondary/30 text-mentat-primary/90 hover:bg-mentat-secondary/50 border border-mentat-border/30"
             }`}
           >
             <Terminal className="w-3.5 h-3.5" />
