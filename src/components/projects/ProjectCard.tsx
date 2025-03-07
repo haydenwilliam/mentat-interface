@@ -1,4 +1,4 @@
-
+import React from "react";
 import { Settings, Play, Share2, MoreVertical, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,7 +45,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
   return (
     <div
-      className="border border-mentat-border bg-mentat-secondary/20 rounded-lg p-4 hover:bg-mentat-secondary/30 transition-colors h-[140px] flex flex-col"
+      className="mentat-card mentat-content-padding hover:bg-mentat-secondary/30 transition-colors h-[140px] flex flex-col"
     >
       <div className="flex flex-col flex-1 min-h-0">
         <div className="flex items-start justify-between mb-2">
@@ -104,7 +104,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="mt-auto">
+        <div className="mt-auto pt-2">
           <StatusDisplay project={project} />
         </div>
       </div>

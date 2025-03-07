@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Card } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
-import { Moon, Zap, Palette } from "lucide-react";
+import { Moon, Zap, Palette, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
@@ -12,66 +11,29 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
+import { useTheme } from "@/contexts/ThemeContext";
+import { typography } from "../../styles/fontSchema";
 
 const ThemeSettings = () => {
-  const [darkMode, setDarkMode] = useState(true);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState("spiceBlue"); // spiceBlue, harkonnenMonotone
+  const { 
+    mode, 
+    theme, 
+    reducedMotion, 
+    setMode, 
+    setTheme, 
+    toggleMode, 
+    setReducedMotion,
+    availableThemes
+  } = useTheme();
   const { toast } = useToast();
 
-  // Theme configurations with Dune-inspired names
-  const themes = {
-    spiceBlue: {
-      name: "Spice Blue",
-      description: "The original blue theme inspired by the spice melange",
-      class: "spice-blue-theme",
-    },
-    harkonnenMonotone: {
-      name: "Harkonnen Monotone", 
-      description: "Black and white theme inspired by House Harkonnen's stark aesthetics",
-      class: "harkonnen-monotone-theme",
-    }
-  };
-
-  useEffect(() => {
-    // Apply theme changes when component mounts or settings change
-    const body = document.body;
-    
-    // Apply dark/light mode
-    if (darkMode) {
-      body.classList.add("dark-mode");
-      body.classList.remove("light-mode");
-    } else {
-      body.classList.add("light-mode");
-      body.classList.remove("dark-mode");
-    }
-    
-    // Apply theme
-    Object.values(themes).forEach(theme => {
-      body.classList.remove(theme.class);
-    });
-    
-    if (currentTheme === "spiceBlue") {
-      // Original blue theme
-      body.classList.add(themes.spiceBlue.class);
-    } else if (currentTheme === "harkonnenMonotone") {
-      // Monochrome theme
-      body.classList.add(themes.harkonnenMonotone.class);
-    }
-    
-    // Apply reduced motion
-    if (reducedMotion) {
-      body.classList.add("reduce-motion");
-    } else {
-      body.classList.remove("reduce-motion");
-    }
-  }, [darkMode, reducedMotion, currentTheme]);
+  const isDarkMode = mode === 'dark';
 
   const handleDarkModeToggle = () => {
-    setDarkMode(!darkMode);
+    toggleMode();
     toast({
-      title: !darkMode ? "Dark Mode Enabled" : "Light Mode Enabled",
-      description: !darkMode ? "Interface switched to dark theme" : "Interface switched to light theme",
+      title: !isDarkMode ? "Dark Mode Enabled" : "Light Mode Enabled",
+      description: !isDarkMode ? "Interface switched to dark theme" : "Interface switched to light theme",
     });
   };
 
@@ -86,100 +48,122 @@ const ThemeSettings = () => {
   };
 
   const handleThemeChange = (themeKey: string) => {
-    setCurrentTheme(themeKey);
-    const theme = themes[themeKey as keyof typeof themes];
+    setTheme(themeKey as any);
+    const themeConfig = availableThemes[themeKey as keyof typeof availableThemes];
     toast({
-      title: `${theme.name} Applied`,
-      description: theme.description,
+      title: `${themeConfig.name} Applied`,
+      description: themeConfig.description,
     });
   };
 
   return (
-    <Card className="bg-mentat-secondary/20 border-mentat-border">
-      <div className="p-8">
+    <Card className="bg-mentat-background border-2 border-mentat-border/80 shadow-lg rounded-xl overflow-hidden">
+      {/* Clean background without any accent elements that cause shadows */}
+      <div className="relative p-6 z-10">
         <div className="space-y-6">
-          <div className="flex items-center justify-between group">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 rounded-md bg-mentat-secondary/40 text-mentat-primary/70 group-hover:text-mentat-highlight transition-colors">
-                <Moon className="w-4 h-4" />
+          {/* Dark Mode Section */}
+          <div className="relative group hover:bg-mentat-primary/10 rounded-xl p-5 transition-all border border-mentat-border/40 bg-mentat-secondary/10 mentat-card mentat-content-padding">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-md bg-mentat-primary/10 border border-mentat-primary/20 shadow-md">
+                  <Moon className="w-7 h-7 text-mentat-primary" />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-base font-medium text-mentat-highlight">
+                    Dark Mode
+                  </Label>
+                  <p className="text-sm text-mentat-highlight leading-relaxed max-w-md">
+                    Toggle between light and dark color schemes.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1">
-                <Label className="text-base font-display text-mentat-primary group-hover:text-mentat-highlight transition-colors">
-                  Dark Mode
-                </Label>
-                <p className="text-sm font-mono text-mentat-primary/70">
-                  Toggle between light and dark theme
-                </p>
-              </div>
+              <Switch 
+                checked={isDarkMode} 
+                onCheckedChange={handleDarkModeToggle}
+                className="data-[state=checked]:bg-mentat-primary bg-mentat-background border-2 border-mentat-primary/20 h-7 w-12"
+              />
             </div>
-            <Switch 
-              checked={darkMode} 
-              onCheckedChange={handleDarkModeToggle}
-              className="data-[state=checked]:bg-mentat-primary bg-mentat-secondary/40" 
-            />
           </div>
 
-          <div className="flex items-center justify-between group">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 rounded-md bg-mentat-secondary/40 text-mentat-primary/70 group-hover:text-mentat-highlight transition-colors">
-                <Zap className="w-4 h-4" />
+          {/* Reduced Motion Section */}
+          <div className="relative group hover:bg-mentat-primary/10 rounded-xl p-5 transition-all border border-mentat-border/40 bg-mentat-secondary/10 mentat-card mentat-content-padding">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-md bg-mentat-primary/10 border border-mentat-primary/20 shadow-md">
+                  <Zap className="w-7 h-7 text-mentat-primary" />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-base font-medium text-mentat-highlight">
+                    Reduced Motion
+                  </Label>
+                  <p className="text-sm text-mentat-highlight leading-relaxed max-w-md">
+                    
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1">
-                <Label className="text-base font-display text-mentat-primary group-hover:text-mentat-highlight transition-colors">
-                  Reduced Motion
-                </Label>
-                <p className="text-sm font-mono text-mentat-primary/70">
-                  Minimize animations throughout the interface
-                </p>
-              </div>
+              <Switch 
+                checked={reducedMotion} 
+                onCheckedChange={handleReducedMotionToggle}
+                className="data-[state=checked]:bg-mentat-primary bg-mentat-background border-2 border-mentat-primary/20 h-7 w-12"
+              />
             </div>
-            <Switch 
-              checked={reducedMotion} 
-              onCheckedChange={handleReducedMotionToggle}
-              className="data-[state=checked]:bg-mentat-primary bg-mentat-secondary/40" 
-            />
           </div>
 
-          <div className="flex items-center justify-between group pt-4 border-t border-mentat-border/30">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 rounded-md bg-mentat-secondary/40 text-mentat-primary/70 group-hover:text-mentat-highlight transition-colors">
-                <Palette className="w-4 h-4" />
+          {/* Theme Selection Section */}
+          <div className="relative group hover:bg-mentat-primary/10 rounded-xl p-5 transition-all border border-mentat-border/40 bg-mentat-secondary/10 mentat-card mentat-content-padding">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-md bg-mentat-primary/10 border border-mentat-primary/20 shadow-md">
+                  <Palette className="w-7 h-7 text-mentat-primary" />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-base font-medium text-mentat-highlight">
+                    Color Theme
+                  </Label>
+                  <p className="text-sm text-mentat-highlight leading-relaxed max-w-md">
+                    Select from a variety of themes inspired by the Dune saga.
+                  </p>
+                </div>
               </div>
-              <div className="space-y-1">
-                <Label className="text-base font-display text-mentat-primary group-hover:text-mentat-highlight transition-colors">
-                  Color Theme
-                </Label>
-                <p className="text-sm font-mono text-mentat-primary/70">
-                  Choose your interface color scheme
-                </p>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="min-w-[180px] bg-mentat-primary/10 border-2 border-mentat-primary/20 text-mentat-highlight hover:bg-mentat-primary/20 flex justify-between items-center group"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-4 h-4 rounded-full border border-mentat-primary/30" 
+                        style={{ background: availableThemes[theme].gradient }}
+                      ></div>
+                      <span className="text-sm">{availableThemes[theme].name}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-mentat-primary/70 group-hover:text-mentat-primary transition-all transform group-hover:translate-x-0.5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  align="end" 
+                  className="min-w-[220px] bg-mentat-background/95 backdrop-blur-lg border-2 border-mentat-border/50 rounded-lg shadow-xl"
+                >
+                  {Object.entries(availableThemes).map(([key, themeConfig]) => (
+                    <DropdownMenuItem 
+                      key={key}
+                      className={`flex items-center gap-2 py-3 px-4 hover:bg-mentat-primary/10 cursor-pointer transition-colors ${theme === key ? 'bg-mentat-primary/5 text-mentat-highlight' : 'text-mentat-primary'}`}
+                      onClick={() => handleThemeChange(key)}
+                    >
+                      <div className="w-4 h-4 rounded-full border border-mentat-border/50" style={{ background: themeConfig.gradient }}></div>
+                      <div className="flex-1">
+                        <div className="text-base font-medium text-mentat-highlight">{themeConfig.name}</div>
+                        <div className="text-sm text-mentat-highlight">{themeConfig.description}</div>
+                      </div>
+                      {theme === key && (
+                        <div className="h-2 w-2 rounded-full bg-mentat-primary"></div>
+                      )}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  className="bg-mentat-secondary/30 border-mentat-border text-mentat-primary hover:bg-mentat-secondary/50"
-                >
-                  {themes[currentTheme as keyof typeof themes].name}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-mentat-secondary border-mentat-border text-mentat-primary min-w-[200px]">
-                <DropdownMenuItem 
-                  className={`flex items-center gap-2 hover:bg-mentat-mid-tone/50 cursor-pointer ${currentTheme === 'spiceBlue' ? 'bg-mentat-mid-tone/30' : ''}`}
-                  onClick={() => handleThemeChange('spiceBlue')}
-                >
-                  <div className="w-4 h-4 rounded-full" style={{ background: "linear-gradient(135deg, #001018 0%, #00BBFF 100%)" }}></div>
-                  Spice Blue
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  className={`flex items-center gap-2 hover:bg-mentat-mid-tone/50 cursor-pointer ${currentTheme === 'harkonnenMonotone' ? 'bg-mentat-mid-tone/30' : ''}`}
-                  onClick={() => handleThemeChange('harkonnenMonotone')}
-                >
-                  <div className="w-4 h-4 rounded-full" style={{ background: "linear-gradient(135deg, #000000 0%, #FFFFFF 100%)" }}></div>
-                  Harkonnen Monotone
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
         </div>
       </div>

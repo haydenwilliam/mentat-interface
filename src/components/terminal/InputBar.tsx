@@ -1,12 +1,12 @@
-
+import React from "react";
 import { Bot, Terminal as TerminalIcon, BrainCircuit } from "lucide-react";
 import { useBuild } from "@/contexts/BuildContext";
 
 interface InputBarProps {
   isInTerminalMode: boolean;
-  setIsInTerminalMode: (value: boolean) => void;
+  setIsInTerminalMode: (mode: boolean) => void;
   input: string;
-  setInput: (value: string) => void;
+  setInput: (input: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
   currentDirectory: string;
   username: string;
@@ -24,7 +24,7 @@ export const InputBar = ({
   const { currentProject } = useBuild();
   
   return (
-    <div className="p-4 border-t-2 border-mentat-border/50 bg-mentat-secondary/70 shadow-inner px-[10px]">
+    <div className="mentat-footer flex-col shadow-inner px-[10px]">
       <div className="space-y-3 px-3">
         {/* Mode Toggle */}
         <div className="flex justify-between px-0 py-0 mx-[7px]">
@@ -34,7 +34,7 @@ export const InputBar = ({
               className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
                 !isInTerminalMode
                   ? 'border-mentat-highlight text-mentat-highlight'
-                  : 'border-transparent text-mentat-primary/50 hover:text-mentat-primary/70'
+                  : 'border-transparent text-mentat-primary opacity-50 hover:text-mentat-primary hover:opacity-70'
               }`}
             >
               <Bot className="w-4 h-4" />
@@ -45,7 +45,7 @@ export const InputBar = ({
               className={`text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 ${
                 isInTerminalMode
                   ? 'border-mentat-highlight text-mentat-highlight'
-                  : 'border-transparent text-mentat-primary/50 hover:text-mentat-primary/70'
+                  : 'border-transparent text-mentat-primary opacity-50 hover:text-mentat-primary hover:opacity-70'
               }`}
             >
               <TerminalIcon className="w-4 h-4" />
@@ -56,7 +56,7 @@ export const InputBar = ({
           <button
             onClick={() => console.log('Context Management clicked')}
             className="text-sm flex items-center gap-2 py-1 border-b-2 transition-all duration-200 
-              border-transparent text-mentat-primary/50 hover:text-mentat-primary/70"
+              border-transparent text-mentat-primary opacity-50 hover:text-mentat-primary hover:opacity-70"
           >
             <BrainCircuit className="w-4 h-4" />
             Context Manager
@@ -64,9 +64,9 @@ export const InputBar = ({
         </div>
 
         {/* Input Area */}
-        <form onSubmit={handleSubmit} className="flex items-center gap-3 bg-mentat-mid-tone/50 rounded-lg p-3 border-2 border-mentat-border/40 shadow-inner">
+        <form onSubmit={handleSubmit} className="mentat-form-element flex items-center gap-3">
           {isInTerminalMode ? (
-            <div className="text-sm text-mentat-primary/80 font-mono whitespace-nowrap">
+            <div className="text-sm text-mentat-primary opacity-80 font-mono whitespace-nowrap">
               <span className="opacity-80">{username}@mentat:</span>
               <span className="text-mentat-highlight">{currentDirectory}</span>
               {currentProject && (
@@ -75,7 +75,7 @@ export const InputBar = ({
               <span className="text-mentat-primary">$</span>
             </div>
           ) : (
-            <Bot className="w-5 h-5 text-mentat-primary/60" />
+            <Bot className="w-5 h-5 text-mentat-primary opacity-60" />
           )}
           <input
             type="text"

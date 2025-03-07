@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Folder, Bot, Play, Settings, Share2, Edit } from "lucide-react";
 import { Project } from "../projects/types";
@@ -21,7 +20,7 @@ const ProjectInfoHeader = ({ currentProject, setShowBuildView }: ProjectInfoHead
   };
 
   return (
-    <div className="flex items-center justify-between gap-2 p-2 rounded-lg bg-mentat-secondary/80 border-2 border-mentat-border/50 mb-3 shadow-lg">
+    <div className="mentat-card mentat-content-padding flex items-center justify-between gap-2 mb-3">
       <div className="flex items-center gap-2">
         <div className="p-1.5 rounded-full bg-mentat-mid-tone/70 border-2 border-mentat-border/40">
           {currentProject.type === "software" && <Folder className="w-3.5 h-3.5 text-mentat-highlight" />}
@@ -48,38 +47,37 @@ const ProjectInfoHeader = ({ currentProject, setShowBuildView }: ProjectInfoHead
           title="Start LLM code generation"
         >
           <Settings className="w-3 h-3" />
-          Build
+          <span>Build</span>
         </button>
         <button 
           onClick={() => {
             deployProject(currentProject);
-            setShowBuildView(true);
           }}
-          className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-green-500/20 hover:bg-green-500/30 text-green-400 border-2 border-green-500/30"
+          className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-mentat-mid-tone/60 hover:bg-mentat-mid-tone/80 text-mentat-primary border-2 border-mentat-border/50"
           title="Run the generated code"
         >
           <Play className="w-3 h-3" />
-          Deploy
+          <span>Deploy</span>
         </button>
         <button 
           onClick={() => {
             shareProject(currentProject);
           }}
-          className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border-2 border-purple-500/30"
+          className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-mentat-mid-tone/60 hover:bg-mentat-mid-tone/80 text-mentat-primary border-2 border-mentat-border/50"
           title="Generate share link"
         >
           <Share2 className="w-3 h-3" />
-          Share
+          <span>Share</span>
         </button>
         <button 
           onClick={() => {
             configureProject(currentProject);
           }}
-          className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border-2 border-blue-500/30"
+          className="flex items-center gap-1.5 text-xs py-1 px-2 rounded bg-mentat-mid-tone/60 hover:bg-mentat-mid-tone/80 text-mentat-primary border-2 border-mentat-border/50"
           title="Edit project settings"
         >
           <Edit className="w-3 h-3" />
-          Configure
+          <span>Config</span>
         </button>
       </div>
     </div>

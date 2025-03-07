@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -104,6 +103,9 @@ export default {
       fontFamily: {
         mono: ['IBM Plex Mono', 'monospace'],
         display: ['Space Grotesk', 'sans-serif'],
+      },
+      boxShadow: {
+        'glow': '0 0 6px rgba(var(--mentat-highlight-rgb), 0.6)',
       },
     },
   },

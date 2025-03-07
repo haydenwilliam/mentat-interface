@@ -1,0 +1,47 @@
+/* Scroll bounce animation styles */
+
+.scroll-bounce {
+  overscroll-behavior-y: contain;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.scroll-bounce::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-bounce::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.scroll-bounce::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.scroll-bounce::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* This supports the bounce animation in modern browsers */
+@supports (overflow-y: overlay) {
+  .scroll-bounce {
+    overflow-y: overlay;
+    scrollbar-gutter: stable;
+  }
+}
+
+/* For the bounce effect */
+@keyframes bounce-scroll {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(-10px); }
+  40% { transform: translateY(0); }
+  60% { transform: translateY(-5px); }
+  80% { transform: translateY(0); }
+  100% { transform: translateY(0); }
+}
+
+.scroll-bounce.at-bottom {
+  animation: bounce-scroll 0.5s ease-out;
+} 

@@ -1,4 +1,4 @@
-
+import React from "react";
 import { Bot, User } from "lucide-react";
 import { Message } from "../../types/terminal";
 
@@ -15,8 +15,8 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         className={`
           p-3 rounded-lg max-w-[80%] backdrop-blur-sm border-2 shadow-lg
           ${message.sender === 'user' 
-            ? 'bg-mentat-mid-tone/40 text-mentat-primary ml-auto border-mentat-primary/30' 
-            : 'bg-mentat-secondary/60 border-mentat-highlight/30 text-mentat-highlight/90'}
+            ? 'bg-mentat-mid-tone bg-opacity-40 text-mentat-primary ml-auto border-mentat-border border-opacity-50' 
+            : 'bg-mentat-secondary bg-opacity-60 border-mentat-border border-opacity-50 text-mentat-highlight opacity-90'}
         `}
       >
         <div className="flex items-center gap-2 mb-1">

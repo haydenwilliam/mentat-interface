@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -70,7 +69,6 @@ const ConfigurationModal = ({ open, onOpenChange }: ConfigurationModalProps) => 
               key={config.id} 
               className="relative p-6 bg-mentat-secondary/30 border-mentat-border hover:bg-mentat-secondary/40 transition-colors group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-mentat-primary/5 to-transparent pointer-events-none" />
               <div className="relative flex justify-between items-start">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">

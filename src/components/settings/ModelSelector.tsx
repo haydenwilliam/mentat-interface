@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -33,7 +32,6 @@ const ModelSelector = ({ open, onOpenChange }: ModelSelectorProps) => {
           <Card 
             className="relative p-6 bg-mentat-secondary/30 border-mentat-border hover:bg-mentat-secondary/40 transition-colors group cursor-pointer"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-mentat-primary/5 to-transparent pointer-events-none" />
             <div className="relative flex justify-between items-center">
               <div className="space-y-2">
                 <h3 className="font-display font-semibold text-mentat-primary group-hover:text-mentat-highlight transition-colors">
@@ -50,7 +48,6 @@ const ModelSelector = ({ open, onOpenChange }: ModelSelectorProps) => {
           <Card 
             className="relative p-6 bg-mentat-secondary/30 border-mentat-border hover:bg-mentat-secondary/40 transition-colors group cursor-pointer"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-mentat-primary/5 to-transparent pointer-events-none" />
             <div className="relative flex justify-between items-center">
               <div className="space-y-2">
                 <h3 className="font-display font-semibold text-mentat-primary group-hover:text-mentat-highlight transition-colors">

@@ -1,14 +1,12 @@
-
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import './themes.css';
+@import './components.css';
+@import './animations.css';
+@import './design-system.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import our modularized CSS files */
-@import './themes.css';
-@import './components.css';
-@import './animations.css';
 
 @layer base {
   * {
@@ -23,11 +21,17 @@
 
   /* Spice Blue theme background styling */
   .spice-blue-theme.dark-mode body {
-    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #001B29 100%);
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(4, 162, 218, 0.08) 0%, transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(4, 162, 218, 0.05) 0%, transparent 30%),
+      linear-gradient(170deg, var(--mentat-background) 0%, #071827 100%);
   }
 
   .spice-blue-theme.light-mode body {
-    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #B0D9FF 100%);
+    background-image: 
+      radial-gradient(circle at 85% 30%, rgba(4, 162, 218, 0.1) 0%, transparent 30%),
+      radial-gradient(circle at 15% 50%, rgba(4, 162, 218, 0.08) 0%, transparent 25%),
+      linear-gradient(170deg, var(--mentat-background) 0%, #D2EAF7 100%);
   }
 
   /* Harkonnen Monotone theme background styling */
@@ -37,6 +41,33 @@
 
   .harkonnen-monotone-theme.light-mode body {
     background-image: linear-gradient(170deg, var(--mentat-background) 0%, #E0E0E0 100%);
+  }
+
+  /* Imperial Gold theme background styling */
+  .imperial-gold-theme.dark-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #2E2200 100%);
+  }
+
+  .imperial-gold-theme.light-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #FFE7A8 100%);
+  }
+
+  /* Deep Desert theme background styling */
+  .deep-desert-theme.dark-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #351A00 100%);
+  }
+
+  .deep-desert-theme.light-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #FFCA99 100%);
+  }
+
+  /* Bene Gesserit theme background styling */
+  .bene-gesserit-theme.dark-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #300051 100%);
+  }
+
+  .bene-gesserit-theme.light-mode body {
+    background-image: linear-gradient(170deg, var(--mentat-background) 0%, #E0B0FF 100%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -56,10 +87,10 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background-color: rgba(var(--mentat-border-rgb), 0.7);
+  background-color: rgba(var(--mentat-highlight-rgb), 0.5);
   transition: background-color 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--mentat-primary-rgb), 0.8);
+  background-color: rgba(var(--mentat-highlight-rgb), 0.8);
 }

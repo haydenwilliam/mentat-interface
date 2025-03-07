@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Project } from "../projects/types";
 import { useBuild } from "@/contexts/BuildContext";
@@ -38,12 +37,12 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-between py-2 px-3 border-b-2 border-mentat-border/50 bg-mentat-secondary/70 shadow-md">
+    <div className="mentat-header">
       <div className="flex items-center space-x-2">
         <div className="flex items-center">
-          <Folder className="w-4 h-4 text-mentat-primary/70" />
-          <ChevronRight className="w-3 h-3 text-mentat-primary/70" />
-          <span className="text-sm text-mentat-primary/90">
+          <Folder className="w-4 h-4 text-mentat-primary opacity-70" />
+          <ChevronRight className="w-3 h-3 text-mentat-primary opacity-70" />
+          <span className="text-sm text-mentat-primary opacity-90">
             {currentDirectory}
           </span>
         </div>
@@ -65,11 +64,11 @@ const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             onClick={handleToggleBuildView}
             className={`text-xs px-2 py-0.5 rounded ${
               showBuildView 
-                ? "bg-mentat-mid-tone/60 text-mentat-highlight border-2 border-mentat-highlight/30" 
-                : "bg-mentat-secondary/80 text-mentat-primary/90 hover:bg-mentat-mid-tone/40 border-2 border-mentat-border/40"
+                ? "bg-mentat-mid-tone bg-opacity-60 text-mentat-highlight border-2 border-mentat-highlight border-opacity-30" 
+                : "bg-mentat-secondary bg-opacity-80 text-mentat-primary opacity-90 hover:bg-mentat-mid-tone hover:bg-opacity-40 border-2 border-mentat-border border-opacity-40"
             }`}
           >
-            <Terminal className="w-3.5 h-3.5" />
+            {showBuildView ? 'Build Panel' : 'Show Build Panel'}
           </button>
         )}
       </div>

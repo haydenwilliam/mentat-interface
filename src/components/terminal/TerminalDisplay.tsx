@@ -1,4 +1,3 @@
-
 import React, { useRef } from "react";
 import { Message } from "../../types/terminal";
 import { ChatMessage } from "./ChatMessage";
@@ -26,7 +25,7 @@ const TerminalDisplay = ({
   return (
     <div 
       ref={terminalRef} 
-      className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-mentat-border/50 scrollbar-track-transparent terminal-text space-y-2 p-2"
+      className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-mentat-border/50 scrollbar-track-transparent terminal-text space-y-2 mentat-content-padding"
     >
       {currentProject && (
         <ProjectInfoHeader 

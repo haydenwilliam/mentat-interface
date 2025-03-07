@@ -1,4 +1,3 @@
-
 import { ChevronDown, ChevronRight, File, Folder, PlusCircle } from 'lucide-react';
 import { FileSystemStructure } from './types';
 
@@ -63,12 +62,12 @@ const FileExplorerItem = ({
           {isFolder ? (
             <Folder className={`w-4 h-4 ${isCurrent ? 'text-mentat-highlight animate-pulse' : 'text-mentat-primary'}`} />
           ) : (
-            <File className="w-4 h-4 text-mentat-primary/80" />
+            <File className="w-4 h-4 text-mentat-primary opacity-80" />
           )}
           <span 
             className={`
               text-sm transition-all duration-200
-              ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary/90'} 
+              ${isCurrent ? 'text-mentat-highlight font-medium' : 'text-mentat-primary opacity-90'} 
               ${isSelected ? 'text-mentat-highlight' : ''}
             `}
           >
